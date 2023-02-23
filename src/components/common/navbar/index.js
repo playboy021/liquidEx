@@ -22,9 +22,9 @@ export default function Navbar() {
                             <Link href="/" legacyBehavior>
                                 <a className="font-medium mr-8 text-gray-500 hover:text-gray-900">Product</a>
                             </Link>
-                            <Link href="/" legacyBehavior>
-                                <a className="font-medium mr-8 text-indigo-600 hover:text-indigo-500">Log in</a>
-                            </Link>
+
+                            <a className="px-8 py-3 border shadow rounded-md text-base font-medium text-white bg-indigo-600 hover:bg-indigo-500">Connect Wallet</a>
+
                         </div>
                     </div>
                 </nav>

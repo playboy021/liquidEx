@@ -48,11 +48,14 @@ export default function Course({ course }) {
           />
         </div>
 
-        <Keypoints />
+        <Keypoints 
+          points={course.wsl}
+        />
 
         <div className="pb-4">
           <Curriculum 
             lectures={lectures}
+            locked={true}
           />
         </div>
 
