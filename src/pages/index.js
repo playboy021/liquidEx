@@ -1,36 +1,25 @@
-import { Breadcrumbs, Footer, Hero, Navbar } from "@/components/common";
+import { Breadcrumbs, Hero } from "@/components/common";
 import { CourseList } from "@/components/course";
+import { BaseLayout } from "@/components/layout";
 import { OrderCard } from "@/components/order";
 import { WalletInfo, EthRates } from "@/components/web3";
 
 export default function Home() {
   return (
-    <div>
-      <div className="relative bg-white overflow-hidden">
-        <div className="relative max-w-7xl mx-auto px-4">
-          
-          <Navbar />
-          
-          <div className="fit">
+    <BaseLayout>
 
-            <Hero />            
+      <Hero />            
 
-            <Breadcrumbs />            
+      <Breadcrumbs />            
 
-            <WalletInfo />
+      <WalletInfo />
 
-            <EthRates />
+      <EthRates />
 
-            <OrderCard />
+      <OrderCard />
 
-            <CourseList />
+      <CourseList />
 
-          </div>
-        </div>
-        
-        <Footer/>
-        
-      </div>
-    </div>
+    </BaseLayout>
   )
 }
