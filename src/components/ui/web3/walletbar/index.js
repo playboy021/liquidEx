@@ -1,10 +1,10 @@
 export default function WalletBar({account}) {
 
   return (
-    <section className="text-white bg-indigo-600">
+    <section className="text-white bg-indigo-600 rounded-md">
       <div className="p-8">
-        <h1 className="text-2xl">Hello, {account.data}</h1>
-        <h2 className="subtitle mb-5 text-xl">I hope you are having a great day!</h2>
+        <h1 className="text-2xl">Hello, {account.data === undefined ? 'please use "Connect Wallet" button.' : account.data}</h1>
+        <h2 className="subtitle mb-5 text-xl">{account.data === undefined ? null : 'I hope you are having a great day!'}</h2>
         <div className="flex justify-between items-center">
           <div className="sm:flex sm:justify-center lg:justify-start">
             <div className="rounded-md shadow">
