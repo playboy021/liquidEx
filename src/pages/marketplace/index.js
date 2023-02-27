@@ -1,4 +1,5 @@
 import { useAccount } from "@/components/hooks/web3/useAccount"
+import { useNetwork } from "@/components/hooks/web3/useNetwork"
 import { WalletBar } from "@/components/ui/web3"
 import { CourseList } from "@components/ui/course"
 import { BaseLayout } from "@components/ui/layout"
@@ -16,6 +17,7 @@ export function getStaticProps() {
 export default function Marketplace({courses}) {
 
     const { account } = useAccount()
+    const { network } = useNetwork()
 
     return (
         <>
