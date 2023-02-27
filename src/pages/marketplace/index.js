@@ -4,6 +4,8 @@ import { WalletBar } from "@/components/ui/web3"
 import { CourseCard, CourseList } from "@components/ui/course"
 import { BaseLayout } from "@components/ui/layout"
 import { getAllCourses } from "@content/courses/fetcher"
+import { Button } from '@/components/ui/common'
+import { OrderModal } from '@/components/ui/order'
 
 export function getStaticProps() {
     const { data } = getAllCourses()
@@ -38,9 +40,16 @@ export default function Marketplace({courses}) {
                         <CourseCard 
                             key={course.id} 
                             course={course}
+                            Footer={() => 
+                            <div className='mt-4'>
+                                <Button variant='light'>
+                                    Purchase
+                                </Button>
+                            </div>}
                         />
                 }
             </CourseList>
+            <OrderModal />
         </>
   )
 }

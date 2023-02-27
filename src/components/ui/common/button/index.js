@@ -15,6 +15,7 @@ export default function Button({
         gray: `text-white bg-gray-600 ${hoverable && 'hover:bg-gray-700'}`,
         white: `text-gray-700 bg-white ${hoverable && 'hover:bg-gray-100'}`,
         black: `text-white bg-black ${hoverable && 'hover:bg-gray-900'}`,
+        light: `text-indigo-600 bg-indigo-100 ${hoverable && 'hover:bg-indigo-200'}`,
     }
 
     return (
