@@ -1,4 +1,18 @@
-export default function WalletBar({account}) {
+export default function WalletBar({account, network}) {
+
+  const networkInfo = {
+    1: 'MAINNET',
+    5: 'GOERLI',
+    1337: 'LOCALHOST',
+    137: 'POLYGON',
+    250: 'FANTOM',
+    43114: 'AVALANCHE',
+    80001: 'MUMBAI',
+    42161: 'ARBITRUM',
+    56: 'Binance Smart Chain',
+    97: 'Binance Smart Chain Testnet',
+    1666600000: 'HARMONY',
+  }
 
   return (
     <section className="text-white bg-indigo-600 rounded-md">
@@ -14,7 +28,7 @@ export default function WalletBar({account}) {
             </div>
           </div>
           <div>
-            <div><span>Currently on </span><strong className="text-2xl">Ethereum Main Network</strong></div>
+            <div><span className="text-md">Currently on </span><strong className="text-2xl">{networkInfo[network]}</strong></div>
           </div>
         </div>
       </div>
