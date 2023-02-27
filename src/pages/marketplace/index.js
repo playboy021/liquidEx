@@ -6,6 +6,7 @@ import { BaseLayout } from "@components/ui/layout"
 import { getAllCourses } from "@content/courses/fetcher"
 import { Button } from '@/components/ui/common'
 import { OrderModal } from '@/components/ui/order'
+import { useState } from 'react'
 
 export function getStaticProps() {
     const { data } = getAllCourses()
@@ -17,6 +18,8 @@ export function getStaticProps() {
 }
 
 export default function Marketplace({courses}) {
+
+    const [selectedCourse, setSelectedCourse] = useState(null)
 
     const { account } = useAccount()
     const { network } = useNetwork()
@@ -42,14 +45,22 @@ export default function Marketplace({courses}) {
                             course={course}
                             Footer={() => 
                             <div className='mt-4'>
-                                <Button variant='light'>
+                                <Button 
+                                    variant='light'
+                                    onClick={() => setSelectedCourse(course)}
+                                >
                                     Purchase
                                 </Button>
                             </div>}
                         />
                 }
             </CourseList>
-            <OrderModal />
+            { selectedCourse &&
+            <OrderModal 
+                course={selectedCourse}
+                setSelectedCourse={setSelectedCourse}
+            />
+            }
         </>
   )
 }
