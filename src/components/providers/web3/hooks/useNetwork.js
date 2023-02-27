@@ -4,7 +4,7 @@ import { useEffect } from 'react';
 
 export const handler = (web3, provider) => () => {
 
-    const { mutate, ...rest } = useSWR(() => 
+    const { mutate, error, ...rest } = useSWR(() => 
         web3 ? 'web3/network' : null,
         async () => {
             const provider = new ethers.providers.Web3Provider(window.ethereum);
@@ -22,9 +22,9 @@ export const handler = (web3, provider) => () => {
         }, [web3])
 
     return {
-        network: {
-            mutate,
-            ...rest
-        }
+        mutate, 
+        isLoading: !web3 || !error && !rest.data,
+        isSupported: false,
+        ...rest
     }
 }

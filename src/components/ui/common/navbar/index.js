@@ -1,10 +1,10 @@
 import { useWeb3 } from "@/components/providers"
 import Link from "next/link"
 import Button from "../button"
-import { useAccount } from "@/components/hooks/web3/useAccount"
+import { useAccount } from '@components/hooks/web3'
 
-export default function Footer() {
-  const { connect, isLoading, isWeb3Loaded } = useWeb3()
+export default function Navbar() {
+  const { connect, isLoading, web3 } = useWeb3()
   const { account } = useAccount()
 
   return (
@@ -45,7 +45,7 @@ export default function Footer() {
                   disabled={true}
                 >
                   Loading...
-                </Button> : isWeb3Loaded ? account.data ?
+                </Button> : web3 != null ? account.data ?
                 <Button
                   className="cursor-default button"
                   data-hover={account.isAdmin ? 'Admin Privileges' : 'User Privileges'}

@@ -1,5 +1,5 @@
-import { useAccount } from "@/components/hooks/web3/useAccount"
-import { useNetwork } from "@/components/hooks/web3/useNetwork"
+import { useAccount } from '@components/hooks/web3'
+import { useNetwork } from '@components/hooks/web3'
 import { WalletBar } from "@/components/ui/web3"
 import { CourseCard, CourseList } from "@components/ui/course"
 import { BaseLayout } from "@components/ui/layout"
@@ -25,6 +25,8 @@ export default function Marketplace({courses}) {
                 <WalletBar
                     account={account}
                     network={network.data}
+                    isLoading={network.isLoading}
+                    hasInitialResponse={network.hasInitialResponse}
                 />
             </div>
 
