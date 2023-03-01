@@ -1,13 +1,11 @@
-import { useAccount } from '@components/hooks/web3'
-import { useNetwork } from '@components/hooks/web3'
-import { EthRates, WalletBar } from "@/components/ui/web3"
+import { useWalletInfo } from '@components/hooks/web3'
 import { CourseCard, CourseList } from "@components/ui/course"
 import { BaseLayout } from "@components/ui/layout"
 import { getAllCourses } from "@content/courses/fetcher"
 import { Button } from '@/components/ui/common'
 import { OrderModal } from '@/components/ui/order'
 import { useState } from 'react'
-import { useEthPrice } from '@/components/hooks/useEthPrice'
+import { MarketHeader } from '@/components/ui/marketplace'
 
 export function getStaticProps() {
     const { data } = getAllCourses()
@@ -22,24 +20,12 @@ export default function Marketplace({courses}) {
 
     const [selectedCourse, setSelectedCourse] = useState(null)
 
-    const { account } = useAccount()
-    const { network } = useNetwork()
-
-    const data = useEthPrice()
+    const { canPurchase } = useWalletInfo()
 
     return (
         <>
             <div className='py-4'>
-                <WalletBar
-                    account={account}
-                    network={network.data}
-                    isLoading={network.isLoading}
-                    hasInitialResponse={network.hasInitialResponse}
-                />
-                <EthRates
-                    ethPrice={data['eth'].data} 
-                    ethPricePerItem={data['eth'].perItem}
-                />
+                <MarketHeader />
             </div>
 
             <CourseList
@@ -48,12 +34,14 @@ export default function Marketplace({courses}) {
                 {
                     (course) => 
                         <CourseCard 
+                            disabled={!canPurchase}
                             key={course.id} 
                             course={course}
                             Footer={() => 
                             <div className='mt-4'>
                                 <Button 
                                     variant='light'
+                                    disabled={!canPurchase}
                                     onClick={() => setSelectedCourse(course)}
                                 >
                                     Purchase

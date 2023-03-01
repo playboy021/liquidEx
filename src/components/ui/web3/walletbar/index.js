@@ -1,6 +1,9 @@
+import { useWalletInfo } from "@/components/hooks/web3";
 import { useWeb3 } from "@/components/providers";
 
-export default function WalletBar({account, network, isLoading, hasInitialResponse}) {
+export default function WalletBar() {
+
+  const { account, network } = useWalletInfo()
 
   const networkInfo = {
     1: 'ETHEREUM MAINNET',
@@ -58,7 +61,7 @@ export default function WalletBar({account, network, isLoading, hasInitialRespon
   return (
     <section className="text-white bg-indigo-600 rounded-md">
       <div className="p-8">
-        <h1 className="text-2xl">Hello, {network === undefined ? 'please use "Install Metamask" button.' : account.data === undefined ? 'please use "Connect Wallet" button.' : account.data}</h1>
+        <h1 className="text-2xl">Hello, {network.data === undefined ? 'please use "Install Metamask" button.' : account.data === undefined ? 'please use "Connect Wallet" button.' : account.data}</h1>
         <h2 className="subtitle mb-5 text-xl">{account.data === undefined ? null : 'I hope you are having a great day!'}</h2>
         <div className="flex justify-between items-center">
           <div className="sm:flex sm:justify-center lg:justify-start">
@@ -70,21 +73,23 @@ export default function WalletBar({account, network, isLoading, hasInitialRespon
           </div>
           <div>
               { 
-                network === undefined ? null :
-                network !== targetNetwork && !isLoading ? 
-                <div className="text-red-600 bg-red-300 rounded-lg p-4 text-center">
+                network.data === undefined ? null :
+                network.data !== targetNetwork && !network.isLoading ? 
+                <div className="text-white bg-red-600 rounded-lg p-4 text-center mb-4">
                   <div>
-                    <strong className="text-lg font-bold p-1">{networkInfo[network]}</strong> network is not supported.
+                    <strong className="text-lg font-bold p-1">{networkInfo[network.data]}</strong> network is not supported.
                   </div>
                   <div>
-                    Please swtich network to <strong className="text-lg font-bold cursor-pointer hover:text-red-300 rounded-md hover:bg-red-600 p-1" onClick={changeNetwork}>{networkInfo[targetNetwork]}</strong>
+                    Please swtich network to <strong className="text-lg font-bold cursor-pointer hover:text-red-600 rounded-md hover:bg-white p-1" onClick={changeNetwork}>{networkInfo[targetNetwork]}</strong>
                   </div> 
                 </div> :
-                <div>
-                  <span className="text-md">Currently on </span>
-                    <strong className="text-2xl">{networkInfo[network]}</strong>
-                </div>
+                null
               }
+              {network === undefined || account.data === undefined ? null : 
+              <div className='text-center'>
+                <span className="text-md">Currently on </span>
+                  <strong className="text-2xl">{networkInfo[network.data]}</strong>
+              </div>}
           </div>
         </div>
       </div>
