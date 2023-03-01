@@ -1,12 +1,13 @@
 import { useAccount } from '@components/hooks/web3'
 import { useNetwork } from '@components/hooks/web3'
-import { WalletBar } from "@/components/ui/web3"
+import { EthRates, WalletBar } from "@/components/ui/web3"
 import { CourseCard, CourseList } from "@components/ui/course"
 import { BaseLayout } from "@components/ui/layout"
 import { getAllCourses } from "@content/courses/fetcher"
 import { Button } from '@/components/ui/common'
 import { OrderModal } from '@/components/ui/order'
 import { useState } from 'react'
+import { useEthPrice } from '@/components/hooks/useEthPrice'
 
 export function getStaticProps() {
     const { data } = getAllCourses()
@@ -24,6 +25,8 @@ export default function Marketplace({courses}) {
     const { account } = useAccount()
     const { network } = useNetwork()
 
+    const data = useEthPrice()
+
     return (
         <>
             <div className='py-4'>
@@ -32,6 +35,10 @@ export default function Marketplace({courses}) {
                     network={network.data}
                     isLoading={network.isLoading}
                     hasInitialResponse={network.hasInitialResponse}
+                />
+                <EthRates
+                    ethPrice={data['eth'].data} 
+                    ethPricePerItem={data['eth'].perItem}
                 />
             </div>
 
