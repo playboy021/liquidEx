@@ -4,7 +4,7 @@ import { EthRates, WalletBar } from "../../web3";
 export default function Header() {
 
     const LINKS = [{
-        href: '/marketplace',
+        href: '/marketplace/courses/buy',
         value: 'Buy'
     }, {
         href: '/marketplace/courses/owned',
