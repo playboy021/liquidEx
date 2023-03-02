@@ -35,6 +35,11 @@ contract Marketplace {
 	/// Item already purchased!
 	error ItemHasOwner();
 
+	modifier onlyOwner() {
+		require(msg.sender == owner, "You are not the owner of this contract");
+		_;
+	}
+
 	function purchaseItem(
 		bytes16 _itemId, // 0x00000000000000000000000000003130 hex value so it fits the bytes16 format of the itemId
 		bytes32 _proof // 0x0000000000000000000000000000313000000000000000000000000000003130 placeholder 
@@ -62,6 +67,16 @@ contract Marketplace {
 		);
 	}
 
+	function transferOwnership(address _newOwner) 
+		external 
+		onlyOwner
+	{
+		require(_newOwner != address(0), "You must provide a valid address");
+		require(_newOwner != owner, "You are already the owner of this contract");
+
+		_setContractOwner(_newOwner);
+	}
+
 	function getItemCount()
 		external
 		view
@@ -84,6 +99,14 @@ contract Marketplace {
 		returns (Item memory)
 	{
 		return ownedItems[_itemHash];
+	}
+
+	function getContractOwner()
+		external
+		view
+		returns (address)
+	{
+		return owner;
 	}
 
 	function _setContractOwner(address _newOwner)
