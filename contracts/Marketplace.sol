@@ -17,10 +17,10 @@ contract Marketplace {
 	}
 
 	// mapping itemHash to Item data
-	mapping(bytes32 => Item) public ownedItems;
+	mapping(bytes32 => Item) private ownedItems;
 
 	// mapping of itemId to ItemHash			
-	mapping(uint => bytes32) public ownedItemsHash;
+	mapping(uint => bytes32) private ownedItemsHash;
 
 	// number of all items + id of the items
 	uint private totalOwnedItems;
@@ -44,5 +44,29 @@ contract Marketplace {
 			msg.sender, 
 			State.Purchased
 		);
+	}
+
+	function getItemCount()
+		external
+		view
+		returns (uint) 
+	{
+		return totalOwnedItems;
+	}
+
+	function getItemHashAtIndex(uint _index)
+		external
+		view
+		returns (bytes32)
+	{
+		return ownedItemsHash[_index];
+	}
+
+	function getItemByHash(bytes32 _itemHash)
+		external
+		view
+		returns (Item memory)
+	{
+		return ownedItems[_itemHash];
 	}
 }
