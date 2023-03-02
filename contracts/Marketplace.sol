@@ -25,6 +25,13 @@ contract Marketplace {
 	// number of all items + id of the items
 	uint private totalOwnedItems;
 
+	// contract owner
+	address payable private owner;
+
+	constructor() {
+		_setContractOwner(msg.sender);
+	}
+
 	/// Item already purchased!
 	error ItemHasOwner();
 
@@ -37,7 +44,7 @@ contract Marketplace {
 		uint _id = totalOwnedItems++;
 		bytes32 itemHash = keccak256(abi.encodePacked(_itemId, msg.sender));
 		
-		if (hasItemOwnership(itemHash)) {
+		if (_hasItemOwnership(itemHash)) {
 			revert ItemHasOwner();
 		}
 		// keccak256 hash of the item id and the msg.sender
@@ -79,7 +86,15 @@ contract Marketplace {
 		return ownedItems[_itemHash];
 	}
 
-	function hasItemOwnership(bytes32 _itemHash)
+	function _setContractOwner(address _newOwner)
+		private
+	{
+		require(msg.sender == owner, "You are not the owner of this contract");
+		owner = payable(_newOwner);
+		owner.transfer(address(this).balance);
+	}
+
+	function _hasItemOwnership(bytes32 _itemHash)
 		private
 		view
 		returns (bool)
