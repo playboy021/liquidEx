@@ -25,12 +25,21 @@ contract Marketplace {
 	// number of all items + id of the items
 	uint private totalOwnedItems;
 
+	/// Item already purchased!
+	error ItemHasOwner();
+
 	function purchaseItem(
 		bytes16 _itemId, // 0x00000000000000000000000000003130 hex value so it fits the bytes16 format of the itemId
 		bytes32 _proof // 0x0000000000000000000000000000313000000000000000000000000000003130 placeholder 
 	) external payable {
+		require(msg.value > 0, "You must send some Ether");
+
 		uint _id = totalOwnedItems++;
 		bytes32 itemHash = keccak256(abi.encodePacked(_itemId, msg.sender));
+		
+		if (hasItemOwnership(itemHash)) {
+			revert ItemHasOwner();
+		}
 		// keccak256 hash of the item id and the msg.sender
 			// site - 0xc4eaa3558504e2baa2669001b43f359b8418b44a4477ff417b4b007d7cc86e37
 			// function itemHash - 0xc4eaa3558504e2baa2669001b43f359b8418b44a4477ff417b4b007d7cc86e37
@@ -68,5 +77,13 @@ contract Marketplace {
 		returns (Item memory)
 	{
 		return ownedItems[_itemHash];
+	}
+
+	function hasItemOwnership(bytes32 _itemHash)
+		private
+		view
+		returns (bool)
+	{
+		return ownedItems[_itemHash].owner == msg.sender;
 	}
 }
