@@ -6,6 +6,16 @@
   min-height: calc(100vh - 88px);
 }
 
+::-webkit-scrollbar {
+	background: #fff;
+	width: 5px;
+}
+
+::-webkit-scrollbar-thumb {
+	background: #4338CA;
+	border-radius: 15px;
+}
+
 .next-image-wrapper > div {
     height: 100%;
 }
