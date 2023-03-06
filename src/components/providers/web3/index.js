@@ -1,6 +1,7 @@
 import { ethers } from "ethers";
 import detectEthereumProvider from "@metamask/detect-provider";
 import { setupHooks } from "./hooks/setupHooks";
+import { loadContract } from "@/utils/loadContract";
 const { createContext, useContext, useEffect, useState, useMemo } = require("react");
 
 const Web3Context = createContext(null)
@@ -48,12 +49,17 @@ export default function Web3Provider({children}) {
       const provider = await detectEthereumProvider()
       if (provider) {
         const web3 = new ethers.providers.Web3Provider(provider)
-        // From now on, this should always be true:
-        // provider === window.ethereum
+
+        const contractAddress = '0xA96a737A28b9AeA20C36287cFed3ABFad4fc9b09' // (Goerli Testnet)
+        const Marketplace = require('./abi/Marketplace.json')
+        const contract = await loadContract(contractAddress, Marketplace.abi, web3.getSigner())
+        console.log(await contract.getContractOwner())
+        console.log(Number(await contract.getItemCount()))
+
         setWeb3Api({
           provider,
           web3,
-          contract: null,
+          contract,
           isLoading: false,
           hooks: setupHooks(web3, provider)
         }); // initialize your app
