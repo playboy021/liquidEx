@@ -8,11 +8,31 @@ const defaultOrder = {
     confirmationEmail: '',
 }
 
+const _createFormState = (isDisabled = false, message =  "") => ({isDisabled, message})
+
+const createFormState = ({price, email, confirmationEmail}) => {
+    const { eth } = useEthPrice()
+
+    if (email !== confirmationEmail) {
+        return _createFormState(true, 'Emails do not match')
+    } else if (Number(price) <= 0) {
+        return _createFormState(true, 'Price must be greater than 0')
+    } 
+    else if (price < eth?.perItem) {
+        return _createFormState(true, `Price must be greater or equal than ${eth.perItem}`)
+    } 
+    else if (confirmationEmail.length === 1 || email.length === 1) {
+        return _createFormState(true, 'Please fill the email fields')
+    }
+}
+
 export default function OrderModal({course, setSelectedCourse}) {
     const [isOpen, setIsOpen] = useState(false)
     const [order, setOrder] = useState(defaultOrder)
     const [enablePrice, setEnablePrice] = useState(false)
     const { eth } = useEthPrice()
+
+    const formState = createFormState(order)
 
     useEffect(() => {
         if(!!course) {
@@ -21,7 +41,7 @@ export default function OrderModal({course, setSelectedCourse}) {
                 ...defaultOrder,
                 price: eth.perItem
             })
-        }
+        } 
     }, [course])
 
     return (
@@ -120,11 +140,12 @@ export default function OrderModal({course, setSelectedCourse}) {
                         </label>
                         <span>I accept Eincode &apos;terms of service&apos; and I agree that my order can be rejected in the case data provided above are not correct</span>
                     </div>
+                    {formState?.message && <p className="text-red-600 text-sm bg-red-200 rounded-md px-3 py-1 mt-4">{formState?.message}</p>}
                     </div>
                 </div>
                 </div>
-                <div className="bg-gray-50 px-4 py-3 sm:px-6 sm:flex">
-                <Button disabled={order.price < eth.perItem || order.email != order.confirmationEmail} onClick={() => {
+                <div className="bg-gray-50 px-4 py-3 pt-0 sm:px-6 sm:flex">
+                <Button disabled={formState?.isDisabled} onClick={() => {
                     console.log(JSON.stringify(order, null, 2))
                 }}>
                     Submit
