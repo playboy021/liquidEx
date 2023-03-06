@@ -75,12 +75,12 @@ export default function WalletBar() {
               { 
                 network.data === undefined ? null :
                 network.data !== targetNetwork && !network.isLoading ? 
-                <div className="text-white bg-red-600 rounded-lg p-4 text-center mb-4">
+                <div className="text-red-900 bg-red-200 rounded-lg p-4 text-center mb-4">
                   <div>
                     <strong className="text-lg font-bold p-1">{networkInfo[network.data]}</strong> network is not supported.
                   </div>
                   <div>
-                    Please swtich network to <strong className="text-lg font-bold cursor-pointer hover:text-red-600 rounded-md hover:bg-white p-1" onClick={changeNetwork}>{networkInfo[targetNetwork]}</strong>
+                    Please swtich network to <strong className="text-lg font-bold cursor-pointer hover:text-red-200 rounded-md hover:bg-red-900 p-1" onClick={changeNetwork}>{networkInfo[targetNetwork]}</strong>
                   </div> 
                 </div> :
                 null
