@@ -6,6 +6,8 @@ import { Button } from '@/components/ui/common'
 import { OrderModal } from '@/components/ui/order'
 import { useState } from 'react'
 import { MarketHeader } from '@/components/ui/marketplace'
+import { useWeb3 } from '@/components/providers'
+import { ethers } from 'ethers'
 
 export function getStaticProps() {
     const { data } = getAllCourses()
@@ -17,13 +19,33 @@ export function getStaticProps() {
 }
 
 export default function Marketplace({courses}) {
-
+    const { web3 } = useWeb3()
+    const { canPurchase, account } = useWalletInfo()
+    
     const [selectedCourse, setSelectedCourse] = useState(null)
 
-    const { canPurchase } = useWalletInfo()
-
     const purchaseItem = (order) => {
-        alert(JSON.stringify(order, null, 2))
+        const hexItemId = ethers.utils.hexlify(ethers.utils.toUtf8Bytes(selectedCourse.id));
+        console.log('hexItemId: ', hexItemId) // looks good so far fix rest below
+
+        // const orderHash = ethers.utils.solidityKeccak256(
+        //     { ['bytes16']: [hexItemId] },
+        //     { ['address']: [account.data] },
+        // )
+        // console.log('orderHash: ', orderHash)
+
+        // const emailHash = ethers.utils.solidityKeccak256(
+        //     order.email
+        // )
+        // console.log('emailHash: ', emailHash)
+
+        // const proof = ethers.utils.solidityKeccak256(
+        //     { ['bytes32']: [emailHash] },
+        //     { ['bytes32']: [orderHash] }
+        // )
+        // console.log('proof: ', proof)
+
+        // emailHash + itemHash
     }
 
     return (
