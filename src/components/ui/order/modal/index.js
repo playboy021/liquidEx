@@ -10,7 +10,7 @@ const defaultOrder = {
 
 const _createFormState = (isDisabled = false, message =  "") => ({isDisabled, message})
 
-const createFormState = ({price, email, confirmationEmail}) => {
+const createFormState = ({price, email, confirmationEmail}, hasAgreedTOS) => {
     const { eth } = useEthPrice()
 
     if (email !== confirmationEmail) {
@@ -23,16 +23,20 @@ const createFormState = ({price, email, confirmationEmail}) => {
     } 
     else if (confirmationEmail.length === 1 || email.length === 1) {
         return _createFormState(true, 'Please fill the email fields')
+    } else if (!hasAgreedTOS) {
+        return _createFormState(true, 'Please agree to the terms of service')
     }
 }
 
-export default function OrderModal({course, setSelectedCourse}) {
+export default function OrderModal({course, setSelectedCourse, onSubmit}) {
     const [isOpen, setIsOpen] = useState(false)
     const [order, setOrder] = useState(defaultOrder)
     const [enablePrice, setEnablePrice] = useState(false)
+    const [hasAgreedTOS, setHasAgreedTOS] = useState(false)
+
     const { eth } = useEthPrice()
 
-    const formState = createFormState(order)
+    const formState = createFormState(order, hasAgreedTOS)
 
     useEffect(() => {
         if(!!course) {
@@ -135,6 +139,10 @@ export default function OrderModal({course, setSelectedCourse}) {
                     <div className="text-xs text-gray-700 flex">
                         <label className="flex items-center mr-2">
                         <input
+                            checked={hasAgreedTOS}
+                            onChange={({target: {checked}}) => {
+                                setHasAgreedTOS(checked)
+                            }}
                             type="checkbox"
                             className="form-checkbox" />
                         </label>
@@ -145,13 +153,11 @@ export default function OrderModal({course, setSelectedCourse}) {
                 </div>
                 </div>
                 <div className="bg-gray-50 px-4 py-3 pt-0 sm:px-6 sm:flex">
-                <Button disabled={formState?.isDisabled} onClick={() => {
-                    console.log(JSON.stringify(order, null, 2))
-                }}>
+                <Button disabled={formState?.isDisabled} onClick={() => onSubmit(order)}>
                     Submit
                 </Button>
                 <Button
-                    onClick={() => {setIsOpen(false); setSelectedCourse(null); setOrder(defaultOrder)}}
+                    onClick={() => {setIsOpen(false); setSelectedCourse(null); setOrder(defaultOrder); setHasAgreedTOS(false); setEnablePrice(false)}}
                     variant="red">
                     Cancel
                 </Button>
