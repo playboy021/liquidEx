@@ -21,12 +21,13 @@ export const useNetwork = () => {
     }
 }
 
-export const useOwnedCourses = () => {
-    const res = useHooks(hooks => hooks.useOwnedCourses)()
+export const useOwnedCourses = (...args) => {
+    const swrRes = useHooks(hooks => hooks.useOwnedCourses)(...args)
+  
     return {
-        ownedCourses: res
+      ownedCourses: swrRes
     }
-}
+  }
 
 export const useWalletInfo = () => {
     const { account } = useAccount()
