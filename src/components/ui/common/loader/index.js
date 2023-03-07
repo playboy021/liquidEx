@@ -9,3 +9,14 @@ export default function Loader() {
         </>
     )
 }
+
+export function LoaderBig() {
+
+    return (
+        <>
+            <div>
+                <span className="loaderBig"></span>
+            </div>
+        </>
+    )
+}

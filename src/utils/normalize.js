@@ -9,7 +9,7 @@ export const ITEM_STATE = {
 export const normalizeOwnedItem = (web3) => (item, ownedItem) => {
     return {
         ...item,
-        id: ownedItem.id,
+        ownedItemId: ownedItem.id,
         proof: ownedItem.proof,
         owner: ownedItem.owner,
         price: ethers.utils.formatEther(ownedItem.price),

@@ -1,5 +1,6 @@
 import { useAccount, useOwnedCourses } from "@/components/hooks/web3";
-import { Button, Message } from "@/components/ui/common";
+import { Button, Loader, Message } from "@/components/ui/common";
+import { LoaderBig } from "@/components/ui/common/loader";
 import { OwnedCourseCard } from "@/components/ui/course";
 import { BaseLayout } from "@/components/ui/layout";
 import { MarketHeader } from "@/components/ui/marketplace";
@@ -25,14 +26,25 @@ export default function OwnedCourses({courses}) {
             </div>
             
             <section className='grid grid-cols-1'>
-                <OwnedCourseCard>
-                    <Message>
-                        <span>You have not purchased any courses yet.</span>
-                    </Message>
-                    <Button>
-                        <span>View Item</span>
-                    </Button>
-                </OwnedCourseCard>
+                {ownedCourses.data == undefined ? 
+                <div className="w-full flex justify-center">
+                    <LoaderBig />
+                </div>
+                :
+                ownedCourses.data?.map((course) => 
+                    <OwnedCourseCard
+                        key={course.id}
+                        course={course}
+                    >
+                        {/* <Message>
+                            <span>You have not purchased any courses yet.</span>
+                        </Message> */}
+                        <Button>
+                            <span>View Item</span>
+                        </Button>
+                    </OwnedCourseCard>
+                )}
+                
             </section>
         </>
     )
