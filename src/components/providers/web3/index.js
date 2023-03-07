@@ -6,6 +6,16 @@ const { createContext, useContext, useEffect, useState, useMemo } = require("rea
 
 const Web3Context = createContext(null)
 
+const createWeb3State = ({web3, provider, contract, isLoading}) => {
+  return {
+    web3,
+    provider,
+    contract,
+    isLoading,
+    hooks: setupHooks({web3, provider, contract})
+  }
+}
+
 export function useWeb3() {
   return useContext(Web3Context)
 }
@@ -16,13 +26,16 @@ export function useHooks(cb) {
 }
 
 export default function Web3Provider({children}) {
-  const [ web3Api, setWeb3Api ] = useState({
-    provider: null,
-    web3: null,
-    contract: null,
-    isLoading: true,
-    hooks: setupHooks({provider: null, web3: null, contract: null})
-  })
+  const [ web3Api, setWeb3Api ] = useState(
+    createWeb3State(
+      {
+        web3: null,
+        provider: null,
+        contract: null,
+        isLoading: true
+      }
+    )
+  )
 
   const _web3Api = useMemo(() => {
     const { provider, web3, isLoading } = web3Api
@@ -54,13 +67,14 @@ export default function Web3Provider({children}) {
         const Marketplace = require('./abi/Marketplace.json')
         const contract = await loadContract(contractAddress, Marketplace.abi, web3.getSigner())
 
-        setWeb3Api({
-          provider,
-          web3,
-          contract,
-          isLoading: false,
-          hooks: setupHooks({web3, provider, contract})
-        }); // initialize your app
+        setWeb3Api(
+          createWeb3State({
+            web3,
+            provider,
+            contract,
+            isLoading: false
+          })
+        ); // initialize your app
       } else {
         setWeb3Api(api => ({...api, isLoading: false}))
         console.log('Please install MetaMask!');

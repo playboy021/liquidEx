@@ -27,7 +27,7 @@ export default function Marketplace({courses}) {
     const purchaseItem = async (order) => {
         const hexItemId = ethers.utils.hexlify(ethers.utils.toUtf8Bytes(selectedCourse.id));
         const hexItemIdWithPadding = ethers.utils.hexZeroPad(hexItemId, 16)
-        const price = ethers.utils.parseEther((order.price).toString())
+        const value = ethers.utils.parseEther((order.price).toString())
 
         const orderHash = ethers.utils.solidityKeccak256(
             ["bytes16", "address"],
@@ -44,7 +44,7 @@ export default function Marketplace({courses}) {
         )
 
         try{
-            await contract.purchaseItem(hexItemIdWithPadding, proof).send({from: account.data, value: price})
+            await contract.purchaseItem(hexItemIdWithPadding, proof, {from: account.data, value})
         } catch (error) {
             console.log(error)
         }
