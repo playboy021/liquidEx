@@ -26,26 +26,22 @@ export default function Marketplace({courses}) {
 
     const purchaseItem = (order) => {
         const hexItemId = ethers.utils.hexlify(ethers.utils.toUtf8Bytes(selectedCourse.id));
-        console.log('hexItemId: ', hexItemId) // looks good so far fix rest below
+        console.log(hexItemId)
+        const hexItemIdWithPadding = ethers.utils.hexZeroPad(hexItemId, 16)
 
-        // const orderHash = ethers.utils.solidityKeccak256(
-        //     { ['bytes16']: [hexItemId] },
-        //     { ['address']: [account.data] },
-        // )
-        // console.log('orderHash: ', orderHash)
+        const orderHash = ethers.utils.solidityKeccak256(
+            ["bytes16", "address"],
+            [hexItemIdWithPadding, account.data] 
+        )
 
-        // const emailHash = ethers.utils.solidityKeccak256(
-        //     order.email
-        // )
-        // console.log('emailHash: ', emailHash)
+        const emailHash = ethers.utils.solidityKeccak256(
+            ['string'], [order.email]
+        )
 
-        // const proof = ethers.utils.solidityKeccak256(
-        //     { ['bytes32']: [emailHash] },
-        //     { ['bytes32']: [orderHash] }
-        // )
-        // console.log('proof: ', proof)
-
-        // emailHash + itemHash
+        const proof = ethers.utils.solidityKeccak256(
+            ['bytes32', 'bytes32'],
+            [emailHash, orderHash]
+        )
     }
 
     return (

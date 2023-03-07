@@ -6,6 +6,8 @@ import { Button } from '@/components/ui/common'
 import { OrderModal } from '@/components/ui/order'
 import { useState } from 'react'
 import { MarketHeader } from '@/components/ui/marketplace'
+import { useWeb3 } from '@/components/providers'
+import { ethers } from 'ethers'
 
 export function getStaticProps() {
     const { data } = getAllCourses()
@@ -16,11 +18,31 @@ export function getStaticProps() {
     }
 }
 
-export default function BuyCourses({courses}) {
-
+export default function Marketplace({courses}) {
+    const { web3 } = useWeb3()
+    const { canPurchase, account } = useWalletInfo()
+    
     const [selectedCourse, setSelectedCourse] = useState(null)
 
-    const { canPurchase } = useWalletInfo()
+    const purchaseItem = (order) => {
+        const hexItemId = ethers.utils.hexlify(ethers.utils.toUtf8Bytes(selectedCourse.id));
+        console.log(hexItemId)
+        const hexItemIdWithPadding = ethers.utils.hexZeroPad(hexItemId, 16)
+
+        const orderHash = ethers.utils.solidityKeccak256(
+            ["bytes16", "address"],
+            [hexItemIdWithPadding, account.data] 
+        )
+
+        const emailHash = ethers.utils.solidityKeccak256(
+            ['string'], [order.email]
+        )
+
+        const proof = ethers.utils.solidityKeccak256(
+            ['bytes32', 'bytes32'],
+            [emailHash, orderHash]
+        )
+    }
 
     return (
         <>
@@ -52,6 +74,7 @@ export default function BuyCourses({courses}) {
             </CourseList>
             { selectedCourse &&
             <OrderModal 
+                onSubmit={purchaseItem}
                 course={selectedCourse}
                 setSelectedCourse={setSelectedCourse}
             />
@@ -60,4 +83,4 @@ export default function BuyCourses({courses}) {
   )
 }
 
-BuyCourses.Layout = BaseLayout
+Marketplace.Layout = BaseLayout
