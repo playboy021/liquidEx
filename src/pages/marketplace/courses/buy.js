@@ -19,15 +19,15 @@ export function getStaticProps() {
 }
 
 export default function Marketplace({courses}) {
-    const { web3 } = useWeb3()
+    const { contract } = useWeb3()
     const { canPurchase, account } = useWalletInfo()
     
     const [selectedCourse, setSelectedCourse] = useState(null)
 
-    const purchaseItem = (order) => {
+    const purchaseItem = async (order) => {
         const hexItemId = ethers.utils.hexlify(ethers.utils.toUtf8Bytes(selectedCourse.id));
-        console.log(hexItemId)
         const hexItemIdWithPadding = ethers.utils.hexZeroPad(hexItemId, 16)
+        const price = ethers.utils.parseEther((order.price).toString())
 
         const orderHash = ethers.utils.solidityKeccak256(
             ["bytes16", "address"],
@@ -42,6 +42,12 @@ export default function Marketplace({courses}) {
             ['bytes32', 'bytes32'],
             [emailHash, orderHash]
         )
+
+        try{
+            await contract.purchaseItem(hexItemIdWithPadding, proof).send({from: account.data, value: price})
+        } catch (error) {
+            console.log(error)
+        }
     }
 
     return (
