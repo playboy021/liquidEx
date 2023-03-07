@@ -20,7 +20,6 @@ export default function OwnedCourses({courses}) {
 
     return (
         <>
-            {console.log('ownedCourses', ownedCourses.data)}
             <div className='py-4'>
                 <MarketHeader />
             </div>
