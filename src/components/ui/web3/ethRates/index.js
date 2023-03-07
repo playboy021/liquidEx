@@ -6,9 +6,9 @@ export default function EthRates() {
   const data = useEthPrice()
 
   return (
-    <div className="grid grid-cols-4 my-4">
-      <div className="flex flex-1 items-stretch text-center">
-        <div className="p-10 border drop-shadow rounded-md">
+    <div className="flex flex-col xs:flex-row justify-evenly my-4">
+      <div className="flex items-stretch text-center">
+        <div className="p-10 border drop-shadow rounded-lg glow-on-hover border-indigo-200">
           <div className='flex items-center'>
             { data['eth'].data ? 
               <> 
@@ -24,11 +24,11 @@ export default function EthRates() {
               <div className="grid grid-cols-5"><div className="col-start-3"><Loader /></div></div>
             }
           </div>
-          <p className="text-xl text-gray-500">Current eth Price</p>
+          <p className="text-md text-gray-500">Current eth Price</p>
         </div>
       </div>
-      <div className="flex flex-1 items-stretch text-center">
-        <div className="p-10 border drop-shadow rounded-md">
+      <div className="flex items-stretch text-center">
+        <div className="p-10 border drop-shadow rounded-lg glow-on-hover border-indigo-200">
           <div className='flex items-center'>
             { data['eth'].data ?
               <>
@@ -48,7 +48,7 @@ export default function EthRates() {
               <div className="grid grid-cols-5"><div className="col-start-3"><Loader /></div></div>
             }
           </div>
-          <p className="text-xl text-gray-500">Price per Item</p>
+          <p className="text-md text-gray-500">Price per Item</p>
         </div>
       </div>
     </div>
