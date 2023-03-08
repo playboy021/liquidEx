@@ -13,7 +13,7 @@ export default function Button({
         blue: `text-white bg-blue-600 ${hoverable && 'hover:bg-blue-700'}`,
         yellow: `text-white bg-yellow-600 ${hoverable && 'hover:bg-yellow-700'}`,
         gray: `text-white bg-gray-600 ${hoverable && 'hover:bg-gray-700'}`,
-        white: `text-gray-700 bg-white ${hoverable && 'hover:bg-gray-100'}`,
+        white: `text-black bg-white ${hoverable && 'hover:bg-gray-300'}`,
         black: `text-white bg-black ${hoverable && 'hover:bg-gray-900'}`,
         light: `text-indigo-600 bg-indigo-100 ${hoverable && 'hover:bg-indigo-200'}`,
     }

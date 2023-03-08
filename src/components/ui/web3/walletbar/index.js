@@ -1,5 +1,6 @@
 import { useWalletInfo } from "@/components/hooks/web3";
 import { useWeb3 } from "@/components/providers";
+import { Button } from "../../common";
 
 export default function WalletBar() {
 
@@ -61,15 +62,14 @@ export default function WalletBar() {
   return (
     <section className="text-white bg-indigo-600 rounded-md">
       <div className="p-8">
-        <h1 className="text-2xl">Hello, {network.data === undefined ? 'please use "Install Metamask" button.' : account.data === undefined ? 'please use "Connect Wallet" button.' : account.data}</h1>
+        <h1 className="text-base xs:text-2xl break-words">Hello, {network.data === undefined ? 'please use "Install Metamask" button.' : account.data === undefined ? 'please use "Connect Wallet" button.' : <a className="btn btn-one" href={`https://goerli.etherscan.io/address/${account.data}`} target="_blank"><span className="p-2">{account.data}</span></a>}</h1>
         <h2 className="subtitle mb-5 text-xl">{account.data === undefined ? null : 'I hope you are having a great day!'}</h2>
         <div className="flex justify-between items-center">
           <div className="sm:flex sm:justify-center lg:justify-start">
-            <div className="rounded-md shadow">
-              <a href="#" className="w-full flex items-center justify-center px-8 py-3 border border-transparent text-base font-medium rounded-md text-black bg-white hover:bg-gray-100 md:py-4 md:text-lg md:px-10">
-                Learn how to purchase
-              </a>
-            </div>
+            <Button variant="light" className="mr-2 text-base xs:text-lg"> 
+              {/* make this a special button as is the wallet address button */}
+              Learn how to purchase
+            </Button>
           </div>
           <div>
               { 

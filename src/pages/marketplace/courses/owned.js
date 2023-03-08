@@ -25,7 +25,7 @@ export default function OwnedCourses({courses}) {
             
             <section className='grid grid-cols-1'>
                 {ownedCourses.data == undefined ? 
-                <div className="w-full flex justify-center">
+                <div className="w-full flex justify-center mt-8">
                     <LoaderBig />
                 </div>
                 :
