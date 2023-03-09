@@ -20,3 +20,14 @@ export function LoaderBig() {
         </>
     )
 }
+
+export function LoaderV2() {
+
+    return (
+        <>
+            <div>
+                <span className="loaderV2"></span>
+            </div>
+        </>
+    )
+}

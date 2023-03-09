@@ -47,10 +47,12 @@ export default function Course({course}) {
   const { account } = useAccount()
   const { ownedCourse } = useOwnedCourse(course, account.data)
 
-  const itemState = ownedCourse.data?.state
+  const itemState =  ownedCourse.data?.state
+  const isLocked = itemState === '' || itemState === ('purchased').toUpperCase() || itemState === ('deactivated').toUpperCase()
 
   return (
     <>
+    {console.log(isLocked)}
       <div className="py-4">
         <CourseHero
           hasOwner={!!ownedCourse.data}
@@ -91,7 +93,8 @@ export default function Course({course}) {
         }
 
       <Curriculum
-        locked={true}
+        locked={isLocked}
+        itemState={itemState}
         lectures={lectures}
       />
       

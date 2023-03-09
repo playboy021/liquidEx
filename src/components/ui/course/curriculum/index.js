@@ -1,4 +1,7 @@
-export default function Curriculum({locked, lectures}) {
+import Link from "next/link"
+import { LoaderV2 } from "../../common/loader"
+
+export default function Curriculum({locked, lectures, itemState}) {
 
   const statusClass = "px-2 inline-flex text-xs leading-5 font-semibold rounded-full"
   return (
@@ -45,11 +48,42 @@ export default function Curriculum({locked, lectures}) {
                         </span>
                       </td>
                       <td className="px-6 py-4 whitespace-nowrap text-right text-sm font-medium">
-                        <a
-                          href="#"
-                          className="text-indigo-600 hover:text-indigo-900">
-                          { locked ? "Get Access" : "Play" }
-                        </a>
+                        { locked ? 
+                          <>
+                            { itemState === ('deactivated').toUpperCase() &&
+                              <Link
+                                href="/marketplace"
+                              >
+                                <a
+                                  className="text-indigo-600 hover:text-indigo-900"
+                                >
+                                  Get Access
+                                </a>
+                              </Link>
+                            }
+                            { itemState === ('purchased').toUpperCase() &&
+                              <Link
+                                href="#"
+                              >
+                                <a
+                                  className="text-indigo-600 hover:text-indigo-900"
+                                >
+                                  {/* <LoaderV2/> */}
+                                  <span>Waiting for vendor...</span>
+                                </a>
+                              </Link>
+                            }
+                          </> :
+                          <Link
+                            href="/watch"
+                          >
+                            <a
+                              className="text-indigo-600 hover:text-indigo-900"
+                            >
+                              Watch
+                            </a>
+                          </Link>
+                        }
                       </td>
                     </tr>
                   )}
