@@ -51,8 +51,8 @@ export default function Course({course}) {
   return (
     <>
       <div className="py-4">
-        {console.log(ownedCourse)}
         <CourseHero
+          hasOwner={!!ownedCourse.data}
           title={course.title}
           description={course.description}
           image={course.coverImage}
