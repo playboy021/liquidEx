@@ -4,6 +4,7 @@ const TYPES = {
     SUCCESS: 'green',
     ERROR: 'red',
     WARNING: 'yellow',
+    INFO: 'indigo'
 }
 
 export default function Message({ type = 'SUCCESS', children}) {

@@ -1,5 +1,5 @@
 import { useAccount, useOwnedCourse } from "@/components/hooks/web3";
-import { Modal } from "@components/ui/common";
+import { Message, Modal } from "@components/ui/common";
 import {
   CourseHero,
   Curriculum,
@@ -45,8 +45,9 @@ export function getStaticProps({params}) {
 export default function Course({course}) {
   
   const { account } = useAccount()
-
   const { ownedCourse } = useOwnedCourse(course, account.data)
+
+  const itemState = ownedCourse.data?.state
 
   return (
     <>
@@ -62,6 +63,32 @@ export default function Course({course}) {
       <Keypoints
         points={course.wsl}
       />
+
+        {  itemState &&
+          <div>
+            { itemState === ('purchased').toUpperCase() &&
+          
+                <Message>
+                  You have purchased this item waiting for vendors response. This could take up to 24 hours. <i className="block font-normal">In case of any questions, please contact <a className="hover:text-green-600 hover:underline cursor-pointer">companymail@mail.com</a></i>
+                </Message>
+              
+            }
+            { itemState === ('activated').toUpperCase() &&
+          
+                <Message type="INFO">
+                  Vendor has accepted your order and is currently shipping your item. ETA is 2 weeks. <i className="block font-normal">In case of any questions, please contact <a className="hover:text-indigo-600 hover:underline cursor-pointer">companymail@mail.com</a></i>
+                </Message>
+              
+            }
+            { itemState === ('deactivated').toUpperCase() &&
+          
+                <Message type="ERROR">
+                  There was an issue with your order, please be patient the vendor is resolving this issue. <i className="block font-normal">In case of any questions, please contact <a className="hover:text-red-600 hover:underline cursor-pointer">companymail@mail.com</a></i>
+                </Message>
+              
+            }
+          </div>
+        }
 
       <Curriculum
         locked={true}
