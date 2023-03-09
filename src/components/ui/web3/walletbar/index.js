@@ -66,9 +66,8 @@ export default function WalletBar() {
         <h2 className="subtitle mb-5 text-xl">{account.data === undefined ? null : 'I hope you are having a great day!'}</h2>
         <div className="flex justify-between items-center">
           <div className="sm:flex sm:justify-center lg:justify-start">
-            <Button variant="light" className="mr-2 text-base xs:text-lg"> 
-              {/* make this a special button as is the wallet address button */}
-              Learn how to purchase
+            <Button variant="light" className="mr-2 text-base xs:text-lg button" data-hover='Pay with Crypto' data-active='$$$'>
+              <span>Learn how to purchase</span>
             </Button>
           </div>
           <div>
