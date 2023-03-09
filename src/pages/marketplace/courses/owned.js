@@ -5,6 +5,7 @@ import { OwnedCourseCard } from "@/components/ui/course";
 import { BaseLayout } from "@/components/ui/layout";
 import { MarketHeader } from "@/components/ui/marketplace";
 import { getAllCourses } from "@/content/courses/fetcher";
+import { useRouter } from "next/router";
 
 export function getStaticProps() {
     const { data } = getAllCourses()
@@ -16,6 +17,7 @@ export function getStaticProps() {
 }
 
 export default function OwnedCourses({courses}) {
+    const router = useRouter()
     const { account } = useAccount()
     const { ownedCourses } = useOwnedCourses(courses, account.data)
 
@@ -37,7 +39,7 @@ export default function OwnedCourses({courses}) {
                         {/* <Message>
                             <span>You have not purchased any courses yet.</span>
                         </Message> */}
-                        <Button>
+                        <Button onClick={() => router.push(`/courses/${course?.slug}`)}>
                             <span>View Item</span>
                         </Button>
                     </OwnedCourseCard>
