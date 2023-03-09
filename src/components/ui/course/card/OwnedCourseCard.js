@@ -12,9 +12,9 @@ export default function OwnedCourseCard({children, course}) {
 
   return (
     <div className="bg-white border shadow overflow-hidden sm:rounded-lg mb-3">
-      <div className='flex'>
+      <div className='block sm:flex'>
         <div className='flex-1'>
-          <div className='h-full next-image-wrapper'>
+          <div className='h-72 sm:h-full next-image-wrapper'>
             <Image 
               className='object-cover'
               src={course.coverImage}
@@ -49,7 +49,7 @@ export default function OwnedCourseCard({children, course}) {
                 <dt className="text-sm font-medium text-gray-500">
                   Proof
                 </dt>
-                <dd className="mt-1 text-sm text-gray-900 sm:mt-0 sm:col-span-2">
+                <dd className="mt-1 text-sm text-gray-900 sm:mt-0 sm:col-span-2 sm:break-normal break-words">
                 {course?.proof}
                 </dd>
               </div>
