@@ -1,3 +1,4 @@
+import { useAccount, useOwnedCourse } from "@/components/hooks/web3";
 import { Modal } from "@components/ui/common";
 import {
   CourseHero,
@@ -42,10 +43,15 @@ export function getStaticProps({params}) {
 }
 
 export default function Course({course}) {
+  
+  const { account } = useAccount()
+
+  const { ownedCourse } = useOwnedCourse(course, account.data)
 
   return (
     <>
       <div className="py-4">
+        {console.log(ownedCourse)}
         <CourseHero
           title={course.title}
           description={course.description}
