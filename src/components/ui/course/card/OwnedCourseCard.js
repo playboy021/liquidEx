@@ -12,7 +12,6 @@ export default function OwnedCourseCard({children, course}) {
 
   return (
     <div className="bg-white border shadow overflow-hidden sm:rounded-lg mb-3">
-      {course?.state}
       <div className='flex'>
         <div className='flex-1'>
           <div className='h-full next-image-wrapper'>
