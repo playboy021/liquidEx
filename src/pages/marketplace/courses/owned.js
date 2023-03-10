@@ -24,6 +24,7 @@ export default function OwnedCourses({courses}) {
 
     return (
         <>
+        
             <MarketHeader />
             <section className='grid grid-cols-1'>
                 { account.isEmpty ? <Message type="INFO">Please connect to Metamask</Message> :
