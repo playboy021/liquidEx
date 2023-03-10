@@ -93,6 +93,7 @@ export default function Course({course}) {
         }
 
       <Curriculum
+        hasOwner={!!ownedCourse.data}
         locked={isLocked}
         itemState={itemState}
         lectures={lectures}

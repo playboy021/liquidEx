@@ -1,11 +1,12 @@
 import Link from "next/link"
 import { LoaderV2 } from "../../common/loader"
 
-export default function Curriculum({locked, lectures, itemState}) {
+export default function Curriculum({locked, lectures, itemState, hasOwner}) {
 
   const statusClass = "px-2 inline-flex text-xs leading-5 font-semibold rounded-full"
   return (
     <section className="max-w-5xl mx-auto">
+      {console.log(itemState)}
       <div className="flex flex-col mb-5">
         <div className="-my-2 overflow-x-auto sm:-mx-6 lg:-mx-8">
           <div className="py-2 align-middle inline-block min-w-full sm:px-6 lg:px-8">
@@ -39,20 +40,20 @@ export default function Curriculum({locked, lectures, itemState}) {
                       <td className="px-6 py-4 whitespace-nowrap">
                         <span
                           className={
-                            locked ?
+                            hasOwner || itemState == undefined ?
                              `bg-red-300 text-red-800 ${statusClass}` :
                              `bg-green-300 text-green-800 ${statusClass}`
                           }
                         >
-                          { locked ? "Locked" : "Unlocked" }
+                          { hasOwner || itemState == undefined ? "Locked" : "Unlocked" }
                         </span>
                       </td>
                       <td className="px-6 py-4 whitespace-nowrap text-right text-sm font-medium">
-                        { locked ? 
+                        { hasOwner || itemState == undefined ? 
                           <>
-                            { itemState === ('deactivated').toUpperCase() &&
+                            { itemState === ('deactivated').toUpperCase() || hasOwner || itemState == undefined &&
                               <Link
-                                href="/marketplace"
+                                href="/marketplace" 
                               >
                                 <a
                                   className="text-indigo-600 hover:text-indigo-900"
