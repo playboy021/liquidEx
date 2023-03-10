@@ -18,13 +18,15 @@ export const handler = (web3, provider) => () => {
         }
     )
 
-        useEffect(() => {
-        provider &&
-            provider.on('chainChanged', 
-            chainId => {
-                mutate(parseInt(chainId, 16))
-            })
-        }, [web3])
+    useEffect(() => {
+        const mutator = chainId =>  mutate(parseInt(chainId, 16))
+
+        provider?.on('chainChanged', mutator)
+
+        return () => {
+            provider?.removeListener('accountsChanged', mutator)
+        }
+    }, [provider])
 
     return {
         mutate, 
