@@ -13,7 +13,13 @@ export const handler = (web3, provider) => () => {
         async () => {
             const provider = new ethers.providers.Web3Provider(window.ethereum);
             const accounts = await provider.listAccounts()
-            return accounts[0]
+            const account = accounts[0]
+
+            if (!account) {
+                throw new Error('No account found')
+            }
+
+            return account
         }
     )
 
