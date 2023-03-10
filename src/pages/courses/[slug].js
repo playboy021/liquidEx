@@ -48,11 +48,10 @@ export default function Course({course}) {
   const { ownedCourse } = useOwnedCourse(course, account.data)
 
   const itemState =  ownedCourse.data?.state
-  const isLocked = itemState === '' || itemState === ('purchased').toUpperCase() || itemState === ('deactivated').toUpperCase()
+  const isLocked = !itemState || itemState === '' || itemState === ('purchased').toUpperCase() || itemState === ('deactivated').toUpperCase()
 
   return (
     <>
-    {console.log(isLocked)}
       <div className="py-4">
         <CourseHero
           hasOwner={!!ownedCourse.data}
@@ -70,7 +69,7 @@ export default function Course({course}) {
           <div>
             { itemState === ('purchased').toUpperCase() &&
           
-                <Message>
+                <Message type="WARNING">
                   You have purchased this item waiting for vendors response. This could take up to 24 hours. <i className="block font-normal">In case of any questions, please contact <a className="hover:text-green-600 hover:underline cursor-pointer">companymail@mail.com</a></i>
                 </Message>
               
