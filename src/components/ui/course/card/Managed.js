@@ -18,39 +18,39 @@ export default function MangedItemCard({children, item}) {
   return (
     <div className="bg-white border shadow overflow-hidden sm:rounded-lg mb-3">
         <div className="border-t border-gray-200">
-                <Item 
-                    title='Item ID' 
-                    value={item?.ownedItemId && (item.ownedItemId).toString()} 
-                    bgColor='indigo-100'
-                />
-                
-                <Item 
-                    title='Proof' 
-                    value={item?.proof} 
-                    bgColor='white'
-                />
+            <Item 
+                title='Item ID' 
+                value={item?.ownedItemId && (item.ownedItemId).toString()} 
+                bgColor='indigo-100'
+            />
+            
+            <Item 
+                title='Proof' 
+                value={item?.proof} 
+                bgColor='white'
+            />
 
-                <Item 
-                    title='Proof' 
-                    value={item?.proof} 
-                    bgColor='white'
-                />
+            <Item 
+                title='Owner' 
+                value={item?.owner} 
+                bgColor='indigo-100'
+            />
 
-                <Item 
-                    title='Proof' 
-                    value={item?.proof} 
-                    bgColor='white'
-                />
+            <Item 
+                title='Price' 
+                value={item?.price} 
+                bgColor='white'
+            />
 
-                <Item 
-                    title='Proof' 
-                    value={item?.proof} 
-                    bgColor='white'
-                />
-                
-                <div className="bg-white px-4 py-5 sm:px-6">
+            <Item 
+                title='Status' 
+                value={item?.state} 
+                bgColor='indigo-100'
+            />
+            
+            <div className="bg-white px-4 py-5 sm:px-6">
                 {children}
-                </div>
+            </div>
         </div>
     </div>
   )
