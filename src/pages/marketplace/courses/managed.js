@@ -1,14 +1,22 @@
 import { useAccount, useManagedItems } from "@/components/hooks/web3";
-import { useWeb3 } from "@/components/providers";
 import { Button } from "@/components/ui/common";
 import { LoaderBig } from "@/components/ui/common/loader";
 import { CourseFilter, ManagedItemCard, OwnedCourseCard } from "@/components/ui/course";
 import { BaseLayout } from "@/components/ui/layout";
 import { MarketHeader } from "@/components/ui/marketplace";
+import { useState } from "react";
 
 export default function ManagedCourses() {
+    const [email, setEmail] = useState('')
+
     const { account } = useAccount()
     const { managedItems } = useManagedItems(account.data)
+
+    const verifyItem = (email, {hash, proof}) => {
+        console.log('email', email)
+        console.log('hash', hash)
+        console.log('proof', proof)
+    }
 
     return (
         <>
@@ -24,32 +32,25 @@ export default function ManagedCourses() {
                         <ManagedItemCard key={item.ownedItemId} item={item}>
                             <div className="flex mr-2 relative rounded-md">
                                 <input 
+                                    value={email}
+                                    onChange={e => setEmail(e.target.value)}
                                     type="text"
                                     name="account"
                                     id="account"
                                     className="w-96 foucs:ring-indigo-500 shadow-md focus:border-indigo-500 block sm:text-sm border-gray-300 rounded-md pl-7 p-4"
                                     placeholder='0x2341ab...'
                                 />
-                                <Button className='ml-3'>
+                                <Button 
+                                    className='ml-3' 
+                                    onClick={() => verifyItem(email, {
+                                        hash: item.hash, proof: item.proof
+                                    })}
+                                >
                                     Verify
                                 </Button>
                             </div>
                         </ManagedItemCard>
                 )}
-                {/* <OwnedCourseCard>
-                    <div className="flex mr-2 relative rounded-md">
-                        <input 
-                            type="text"
-                            name="account"
-                            id="account"
-                            className="w-96 foucs:ring-indigo-500 shadow-md focus:border-indigo-500 block sm:text-sm border-gray-300 rounded-md pl-7 p-4"
-                            placeholder='0x2341ab...'
-                        />
-                        <Button>
-                            Verify
-                        </Button>
-                    </div>
-                </OwnedCourseCard> */}
             </section>
         </>
     )
