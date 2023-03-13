@@ -9,9 +9,8 @@ export default function Hero() {
           </text>
         </svg>
       </div>
-      <div className="mt-6 text-xl font-light text-true-gray-500 antialiased">
 
-      <div className="hero">
+      <div className="hero font-light text-true-gray-500 antialiased mt-4">
         <span className="text-lg">Lorem</span>&nbsp;
         <span className="text-lg">ipsum</span>&nbsp;
         <span className="text-lg">dolor</span>&nbsp;
@@ -44,7 +43,6 @@ export default function Hero() {
         <span className="text-lg">quam.</span>&nbsp;
       </div>
 
-      </div>
       <div className="mt-4 flex lg:justify-start">
         <div className="rounded-md shadow">
           <a href="#" className="w-full flex items-center justify-center px-8 py-3 border border-transparent text-base font-medium rounded-md text-white bg-indigo-600 hover:bg-indigo-700 md:py-4 md:text-lg md:px-10">

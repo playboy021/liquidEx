@@ -422,7 +422,7 @@
 
 svg text {
   font-family: monospace;
-  letter-spacing: 10px;
+  letter-spacing: 8px;
   stroke: black;
   font-size: 150px;
   font-weight: 700;
@@ -450,6 +450,10 @@ svg text {
 
 /* 
   HERO TITLE END
+*/
+
+/* 
+  HERO DESCRIPTION START
 */
 
 .hero {
@@ -597,3 +601,7 @@ svg text {
     filter: blur(0);
   }
 }
+
+/* 
+  HERO DESCRIPTION END
+*/
