@@ -1,12 +1,17 @@
+import { useAccount, useManagedItems } from "@/components/hooks/web3";
+import { useWeb3 } from "@/components/providers";
 import { Button } from "@/components/ui/common";
 import { CourseFilter, OwnedCourseCard } from "@/components/ui/course";
 import { BaseLayout } from "@/components/ui/layout";
 import { MarketHeader } from "@/components/ui/marketplace";
 
 export default function ManageCourses() {
+    const { account } = useAccount()
+    const { managedItems } = useManagedItems(account.data)
 
     return (
         <>
+        {console.log(managedItems.data)}
             <MarketHeader />
             <CourseFilter />
             

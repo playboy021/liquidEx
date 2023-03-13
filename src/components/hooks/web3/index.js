@@ -45,6 +45,14 @@ export const useOwnedCourses = (...args) => {
     }
 }
 
+export const useManagedItems = (...args) => {
+    const swrRes = enhanceHook(useHooks(hooks => hooks.useManagedItems)(...args))
+  
+    return {
+      managedItems: swrRes
+    }
+}
+
 export const useOwnedCourse = (...args) => {
     const swrRes = enhanceHook(useHooks(hooks => hooks.useOwnedCourse)(...args))
   

@@ -1,6 +1,5 @@
 import { createItemHash } from "@/utils/hash"
 import { normalizeOwnedItem } from "@/utils/normalize"
-import { ethers } from "ethers"
 import useSWR from "swr"
 
 export const handler = (web3, contract) => (courses, account) => {
