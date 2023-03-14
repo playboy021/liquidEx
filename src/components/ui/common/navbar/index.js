@@ -9,39 +9,39 @@ export default function Navbar() {
 
   return (
     <section>
-      <div className="relative pt-6 px-4 sm:px-6 lg:px-8 fontTurrentRoad">
+      <div className="relative pt-6 fontTurrentRoad">
         <nav className="relative" aria-label="Global">
           <div className="flex flex-col xs:flex-row justify-between items-center">
-            <div>
+            <div className="lightBlueGlass rounded-lg p-4 flex text-center">
               <ActiveLink href="/" >
                 <a
-                  className="font-medium mr-8 text-gray-500 hover:text-gray-900">
+                  className="font-medium ml-8 mr-8 text-white hover:text-gray-900">
                   Home
                 </a>
               </ActiveLink>
               <ActiveLink href="/marketplace" >
                 <a
-                  className="font-medium mr-8 text-gray-500 hover:text-gray-900">
+                  className="font-medium mr-8 text-white hover:text-gray-900">
                   Marketplace
                 </a>
               </ActiveLink>
               <ActiveLink href="/bridge" >
                 <a
-                  className="font-medium mr-8 text-gray-500 hover:text-gray-900">
+                  className="font-medium mr-8 text-white hover:text-gray-900">
                   Bridge
                 </a>
               </ActiveLink>
               <ActiveLink href="/swap" >
                 <a
-                  className="font-medium mr-8 text-gray-500 hover:text-gray-900">
+                  className="font-medium mr-8 text-white hover:text-gray-900">
                   Swap
                 </a>
               </ActiveLink>
             </div>
-            <div className="text-center">
+            <div className="text-center lightBlueGlass rounded-lg">
               <ActiveLink href="/wishlist" >
                 <a
-                  className="font-medium sm:mr-8 mr-2 text-gray-500 hover:text-gray-900">
+                  className="font-medium sm:mr-8 mr-2 sm:ml-8 ml-2 text-white hover:text-gray-900">
                   CHAINSLCTBTN
                   {/* use React Select */}
                 </a>
@@ -54,7 +54,7 @@ export default function Navbar() {
                   Loading...
                 </Button> : web3 != null ? account.data ?
                 <Button
-                  className="cursor-default button"
+                  className="cursor-default button border-indigo-600"
                   data-hover={account.isAdmin ? 'Admin Privileges' : 'User Privileges'}
                   data-active={account.isAdmin ? 'You Awesome' : 'You Meh'}
                 >

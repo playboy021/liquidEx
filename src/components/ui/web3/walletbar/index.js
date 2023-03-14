@@ -71,10 +71,15 @@ export default function WalletBar() {
             </Button>
           </div>
           <div>
+              {network === undefined || account.data === undefined ? null : 
+                <div className='text-center'>
+                  <span className="text-md">Currently on </span>
+                    <strong className="text-2xl">{networkInfo[network.data]}</strong>
+                </div>}
               { 
                 network.data === undefined ? null :
                 network.data !== targetNetwork && !network.isLoading ? 
-                <div className="text-red-900 bg-red-200 rounded-lg p-4 text-center mb-4">
+                <div className="text-red-900 bg-red-200 rounded-lg p-3 text-center mt-2">
                   <div>
                     <strong className="text-lg font-bold p-1">{networkInfo[network.data]}</strong> network is not supported.
                   </div>
@@ -84,11 +89,6 @@ export default function WalletBar() {
                 </div> :
                 null
               }
-              {network === undefined || account.data === undefined ? null : 
-              <div className='text-center'>
-                <span className="text-md">Currently on </span>
-                  <strong className="text-2xl">{networkInfo[network.data]}</strong>
-              </div>}
           </div>
         </div>
       </div>

@@ -36,7 +36,8 @@
 .lightBlueGlass {
   /* From https://css.glass */
   backdrop-filter: blur(5px);
-  background-color: rgba(79, 70, 229, 0.3);
+  background-color: rgba(79, 70, 229, 0.4);
+  border: 1px solid rgba(79, 70, 229, 0.5);
 }
 
 /* 
@@ -679,6 +680,130 @@ svg text {
 
 .hero span:nth-child(30) {
   animation: fade-in 0.8s 3.0s forwards cubic-bezier(0.11, 0, 0.5, 0);
+}
+
+.hero span:nth-child(31) {
+  animation: fade-in 0.8s 3.1s forwards cubic-bezier(0.11, 0, 0.5, 0);
+}
+
+.hero span:nth-child(32) {
+  animation: fade-in 0.8s 3.2s forwards cubic-bezier(0.11, 0, 0.5, 0);
+}
+
+.hero span:nth-child(33) {
+  animation: fade-in 0.8s 3.3s forwards cubic-bezier(0.11, 0, 0.5, 0);
+}
+
+.hero span:nth-child(34) {
+  animation: fade-in 0.8s 3.4s forwards cubic-bezier(0.11, 0, 0.5, 0);
+}
+
+.hero span:nth-child(35) {
+  animation: fade-in 0.8s 3.5s forwards cubic-bezier(0.11, 0, 0.5, 0);
+}
+
+.hero span:nth-child(36) {
+  animation: fade-in 0.8s 3.6s forwards cubic-bezier(0.11, 0, 0.5, 0);
+}
+
+.hero span:nth-child(37) {
+  animation: fade-in 0.8s 3.7s forwards cubic-bezier(0.11, 0, 0.5, 0);
+}
+
+.hero span:nth-child(38) {
+  animation: fade-in 0.8s 3.8s forwards cubic-bezier(0.11, 0, 0.5, 0);
+}
+
+.hero span:nth-child(39) {
+  animation: fade-in 0.8s 3.9s forwards cubic-bezier(0.11, 0, 0.5, 0);
+}
+
+.hero span:nth-child(40) {
+  animation: fade-in 0.8s 4.0s forwards cubic-bezier(0.11, 0, 0.5, 0);
+}
+
+.hero span:nth-child(41) {
+  animation: fade-in 0.8s 4.1s forwards cubic-bezier(0.11, 0, 0.5, 0);
+}
+
+.hero span:nth-child(42) {
+  animation: fade-in 0.8s 4.2s forwards cubic-bezier(0.11, 0, 0.5, 0);
+}
+
+.hero span:nth-child(43) {
+  animation: fade-in 0.8s 4.3s forwards cubic-bezier(0.11, 0, 0.5, 0);
+}
+
+.hero span:nth-child(44) {
+  animation: fade-in 0.8s 4.4s forwards cubic-bezier(0.11, 0, 0.5, 0);
+}
+
+.hero span:nth-child(45) {
+  animation: fade-in 0.8s 4.5s forwards cubic-bezier(0.11, 0, 0.5, 0);
+}
+
+.hero span:nth-child(46) {
+  animation: fade-in 0.8s 4.6s forwards cubic-bezier(0.11, 0, 0.5, 0);
+}
+
+.hero span:nth-child(47) {
+  animation: fade-in 0.8s 4.7s forwards cubic-bezier(0.11, 0, 0.5, 0);
+}
+
+.hero span:nth-child(48) {
+  animation: fade-in 0.8s 4.8s forwards cubic-bezier(0.11, 0, 0.5, 0);
+}
+
+.hero span:nth-child(49) {
+  animation: fade-in 0.8s 4.9s forwards cubic-bezier(0.11, 0, 0.5, 0);
+}
+
+.hero span:nth-child(50) {
+  animation: fade-in 0.8s 5.0s forwards cubic-bezier(0.11, 0, 0.5, 0);
+}
+
+.hero span:nth-child(51) {
+  animation: fade-in 0.8s 5.1s forwards cubic-bezier(0.11, 0, 0.5, 0);
+}
+
+.hero span:nth-child(52) {
+  animation: fade-in 0.8s 5.2s forwards cubic-bezier(0.11, 0, 0.5, 0);
+}
+
+.hero span:nth-child(53) {
+  animation: fade-in 0.8s 5.3s forwards cubic-bezier(0.11, 0, 0.5, 0);
+}
+
+.hero span:nth-child(54) {
+  animation: fade-in 0.8s 5.4s forwards cubic-bezier(0.11, 0, 0.5, 0);
+}
+
+.hero span:nth-child(55) {
+  animation: fade-in 0.8s 5.5s forwards cubic-bezier(0.11, 0, 0.5, 0);
+}
+
+.hero span:nth-child(56) {
+  animation: fade-in 0.8s 5.6s forwards cubic-bezier(0.11, 0, 0.5, 0);
+}
+
+.hero span:nth-child(57) {
+  animation: fade-in 0.8s 5.7s forwards cubic-bezier(0.11, 0, 0.5, 0);
+}
+
+.hero span:nth-child(58) {
+  animation: fade-in 0.8s 5.8s forwards cubic-bezier(0.11, 0, 0.5, 0);
+}
+
+.hero span:nth-child(59) {
+  animation: fade-in 0.8s 5.9s forwards cubic-bezier(0.11, 0, 0.5, 0);
+}
+
+.hero span:nth-child(60) {
+  animation: fade-in 0.8s 6.0s forwards cubic-bezier(0.11, 0, 0.5, 0);
+}
+
+.hero span:nth-child(61) {
+  animation: fade-in 0.8s 6.1s forwards cubic-bezier(0.11, 0, 0.5, 0);
 }
 
 @keyframes fade-in {
