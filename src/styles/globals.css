@@ -25,6 +25,20 @@
   background-color: rgba(107, 114, 128, 0.5);
 }
 
+.fontTurrentRoad {
+  font-family: 'Turret Road', cursive;
+}
+
+.fontMajorMonoDisplay {
+  font-family: 'Major Mono Display', monospace;
+}
+
+.lightBlueGlass {
+  /* From https://css.glass */
+  backdrop-filter: blur(5px);
+  background-color: rgba(79, 70, 229, 0.3);
+}
+
 /* 
   BACKGROUND START
 */
@@ -32,7 +46,7 @@
  * Twitter: @kootoopas
  */
 /* Exo thin font from Google. */
-@import url('https://fonts.googleapis.com/css2?family=Exo:wght@100;200;300;400;500;600;700;800;900&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Exo:wght@100;200;300;400;500;600;700;800;900&family=Major+Mono+Display&family=Turret+Road:wght@200;300;400;500;700;800&display=swap');
 /* Background data (Original source: https://subtlepatterns.com/grid-me/) */
 /* Animations */
 @-webkit-keyframes bg-scrolling-reverse {
@@ -78,7 +92,7 @@
 /* Main styles */
 body {
   color: #999;
-  font-family: 'Exo';
+  font-family: 'Exo', sans-serif;
   text-align: center;
   /* img size is 50x50 */
   background: url("data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAADIAAAAyCAIAAACRXR/mAAAACXBIWXMAAAsTAAALEwEAmpwYAAAAIGNIUk0AAHolAACAgwAA+f8AAIDpAAB1MAAA6mAAADqYAAAXb5JfxUYAAABnSURBVHja7M5RDYAwDEXRDgmvEocnlrQS2SwUFST9uEfBGWs9c97nbGtDcquqiKhOImLs/UpuzVzWEi1atGjRokWLFi1atGjRokWLFi1atGjRokWLFi1af7Ukz8xWp8z8AAAA//8DAJ4LoEAAlL1nAAAAAElFTkSuQmCC") repeat 0 0;
@@ -493,7 +507,8 @@ body {
 
 svg text {
   
-  letter-spacing: 8px;
+  letter-spacing: 10px;
+  font-family: 'Turret Road', monospace;
   stroke: black;
   font-size: 150px;
   font-weight: 700;

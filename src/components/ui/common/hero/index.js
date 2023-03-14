@@ -2,18 +2,15 @@ export default function Hero() {
 
   return (
     <div className="lg:2/6 text-left my-20">
-      
-      <div className="pt-2">
-        <svg width="100%" height="30%" className="pt-2">
-          <text x="0%" y="76%" className="mt-1">
-            Liquid
+        <svg width="100%" height="30%">
+          <text x="0%" y="76%" className="font-black">
+            '&gt;Liquid_EX'
           </text>
-          <text x="37%" y="76%" className="font-extralight">
+          {/* <text x="35%" y="76%" className="font-extralight">
             EX
-          </text>
+          </text> */}
           {/* Add polkadot background? and some blur */}
         </svg>
-      </div>
 
       <div className="hero font-light text-true-gray-500 antialiased mt-4"> 
         <span className="text-lg">Lorem</span>&nbsp;
@@ -50,7 +47,7 @@ export default function Hero() {
 
       <div className="mt-4 flex lg:justify-start">
         <div className="rounded-md shadow">
-          <a href="#" className="w-full flex items-center justify-center px-8 py-3 border border-transparent text-base font-medium rounded-md text-white bg-indigo-600 hover:bg-indigo-700 md:py-4 md:text-lg md:px-10">
+          <a href="#" className="w-full flex items-center justify-center px-8 py-3 border border-transparent text-xl font-medium rounded-md text-white bg-indigo-600 hover:bg-indigo-700 md:py-4 md:text-lg md:px-10">
             Get started
           </a>
         </div>

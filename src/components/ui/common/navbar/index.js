@@ -9,7 +9,7 @@ export default function Navbar() {
 
   return (
     <section>
-      <div className="relative pt-6 px-4 sm:px-6 lg:px-8">
+      <div className="relative pt-6 px-4 sm:px-6 lg:px-8 fontTurrentRoad">
         <nav className="relative" aria-label="Global">
           <div className="flex flex-col xs:flex-row justify-between items-center">
             <div>

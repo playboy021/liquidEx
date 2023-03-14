@@ -60,7 +60,7 @@ export default function OrderModal({course, setSelectedCourse, onSubmit}) {
                     <hr className="h-px bg-gray-500 border-0 dark:bg-gray-700 items-center mb-4"/>
                     <div className="mt-2 relative rounded-md">
                         <div className="mb-1">
-                        <label className="mb-2 font-bold">Price(eth)</label>
+                        <label className="mb-2 font-bold text-gray-900">Price(eth)</label>
                         <div className="text-xs text-gray-700 flex">
                             <label className="flex items-center mr-2">
                             <input
@@ -100,7 +100,7 @@ export default function OrderModal({course, setSelectedCourse, onSubmit}) {
                     </div>
                     <div className="mt-2 relative rounded-md">
                         <div className="mb-1">
-                        <label className="mb-2 font-bold">Email</label>
+                        <label className="mb-2 font-bold text-gray-900">Email</label>
                         </div>
                         <input
                             onChange={({target: {value}}) => {
@@ -121,7 +121,7 @@ export default function OrderModal({course, setSelectedCourse, onSubmit}) {
                     </div>
                     <div className="my-2 relative rounded-md">
                         <div className="mb-1">
-                        <label className="mb-2 font-bold">Repeat Email</label>
+                        <label className="mb-2 font-bold text-gray-900">Repeat Email</label>
                         </div>
                         <input
                             onChange={({target: {value}}) => {
