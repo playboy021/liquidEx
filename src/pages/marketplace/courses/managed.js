@@ -1,4 +1,4 @@
-import { useAccount, useManagedItems } from "@/components/hooks/web3";
+import { useAdmin, useManagedItems } from "@/components/hooks/web3";
 import { Button, Message } from "@/components/ui/common";
 import { LoaderBig } from "@/components/ui/common/loader";
 import { CourseFilter, ManagedItemCard } from "@/components/ui/course";
@@ -34,7 +34,7 @@ const VerificationInput = ({onVerify}) => {
 export default function ManagedCourses() {
     const [proofOfOwnership, setProofOfOwnership] = useState({})
 
-    const { account } = useAccount()
+    const { account } = useAdmin({redirectTo: '/marketplace'})
     const { managedItems } = useManagedItems(account)
 
     const verifyItem = (email, {hash, proof}) => {
@@ -64,8 +64,6 @@ export default function ManagedCourses() {
             })
 
     }
-
-    
 
     return (
         <>

@@ -1,4 +1,6 @@
 import { useHooks } from "@/components/providers/web3"
+import { useRouter } from "next/router"
+import { useEffect } from "react"
 
 const _isEmpty = data => {
 
@@ -28,6 +30,23 @@ export const useAccount = () => {
     return {
         account: swrRes
     }
+}
+
+export const useAdmin = ({redirectTo}) => {
+    const { account } = useAccount()
+    const router = useRouter()
+
+    useEffect(() => {
+        if( 
+            (account.hasInitialResponse && !account.isAdmin) || account.isEmpty 
+        ) {
+            router.push(redirectTo || '/')
+            alert('Only admin address can access this page')
+        }
+
+    }, [account.data])
+
+    return { account }
 }
 
 export const useNetwork = () => {

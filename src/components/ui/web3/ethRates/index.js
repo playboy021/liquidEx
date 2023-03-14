@@ -28,7 +28,7 @@ export default function EthRates() {
         </div>
       </div>
       <div className="flex items-stretch text-center">
-        <div className="p-10 border drop-shadow rounded-lg glow-on-hover border-indigo-200">
+        <div className="p-10 border drop-shadow rounded-lg glow-on-hover border-indigo-200 bg-white">
           <div className='flex items-center'>
             { data['eth'].data ?
               <>
