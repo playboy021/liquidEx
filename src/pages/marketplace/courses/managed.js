@@ -35,7 +35,7 @@ export default function ManagedCourses() {
     const [proofOfOwnership, setProofOfOwnership] = useState({})
 
     const { account } = useAccount()
-    const { managedItems } = useManagedItems(account.data)
+    const { managedItems } = useManagedItems(account)
 
     const verifyItem = (email, {hash, proof}) => {
         const emailHash = ethers.utils.solidityKeccak256(

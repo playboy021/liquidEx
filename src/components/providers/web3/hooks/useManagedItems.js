@@ -3,7 +3,9 @@ import useSWR from "swr"
 
 export const handler = (web3, contract) => account => {
     const swrRes = useSWR(() => 
-        (web3 && contract && account) ? `web3/managedItems/${account}` : null,
+        (web3 && 
+        contract && 
+        account.data && account.isAdmin) ? `web3/managedItems/${account.data}` : null,
         async () => {
             const items = []
 
