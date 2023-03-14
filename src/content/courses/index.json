@@ -229,22 +229,5 @@
       "Become fluent in concepts and tools like Vuex, MongoDb, Sockets, Authentication"
     ],
     "createdAt": ""
-  },
-  {
-    "id": "850741",
-    "type": "Nuxt JS",
-    "title": "The Complete Nuxt.js & Vue.js Course | Self Promo App",
-    "description": "Complete Developer Guide covering Vue.js and Nuxt.js basic to advance concepts. Get your hands on real projects.",
-    "coverImage": "https://thrangra.sirv.com/NuxtJS.jpeg",
-    "author": "Filip Jerga",
-    "link": "https://academy.eincode.com/courses/the-complete-nuxt-js-vue-js-course-self-promo-app",
-    "slug": "the-complete-nuxt-js-vue-js-course-self-promo-app",
-    "wsl": [
-      "Develop powerful, modern, real-world web applications with Nuxt JS, Vue JS 2 and Node",
-      "Completely understand the processes and concepts of Nuxt JS & Vue JS 2",
-      "Use gained knowledge to create your own Web Applications",
-      "Become fluent in concepts and tools like SSR, Vuex, Vuelidate and more"
-    ],
-    "createdAt": ""
   }
 ]

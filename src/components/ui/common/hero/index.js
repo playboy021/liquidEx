@@ -1,16 +1,21 @@
 export default function Hero() {
 
   return (
-    <section className="lg:2/6 text-left my-28">
-      <div className="text-6xl font-semibold text-gray-900 leading-none">
-        <svg width="100%" height="0%">
-          <text x="0%" y="80%">
-            LiquidEX
+    <div className="lg:2/6 text-left my-20">
+      
+      <div className="pt-2">
+        <svg width="100%" height="30%" className="pt-2">
+          <text x="0%" y="76%" className="mt-1">
+            Liquid
           </text>
+          <text x="37%" y="76%" className="font-extralight">
+            EX
+          </text>
+          {/* Add polkadot background? and some blur */}
         </svg>
       </div>
 
-      <div className="hero font-light text-true-gray-500 antialiased mt-4">
+      <div className="hero font-light text-true-gray-500 antialiased mt-4"> 
         <span className="text-lg">Lorem</span>&nbsp;
         <span className="text-lg">ipsum</span>&nbsp;
         <span className="text-lg">dolor</span>&nbsp;
@@ -50,6 +55,7 @@ export default function Hero() {
           </a>
         </div>
       </div>
-    </section>
+
+    </div>
   )
 }

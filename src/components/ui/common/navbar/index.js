@@ -25,10 +25,16 @@ export default function Navbar() {
                   Marketplace
                 </a>
               </ActiveLink>
-              <ActiveLink href="/blogs" >
+              <ActiveLink href="/bridge" >
                 <a
                   className="font-medium mr-8 text-gray-500 hover:text-gray-900">
-                  Blogs
+                  Bridge
+                </a>
+              </ActiveLink>
+              <ActiveLink href="/swap" >
+                <a
+                  className="font-medium mr-8 text-gray-500 hover:text-gray-900">
+                  Swap
                 </a>
               </ActiveLink>
             </div>
@@ -36,7 +42,8 @@ export default function Navbar() {
               <ActiveLink href="/wishlist" >
                 <a
                   className="font-medium sm:mr-8 mr-2 text-gray-500 hover:text-gray-900">
-                  Wishlist
+                  CHAINSLCTBTN
+                  {/* use React Select */}
                 </a>
               </ActiveLink>
               
