@@ -64,7 +64,7 @@ export default function Hero() {
         <span className="text-lg">Be</span>&nbsp;
         <span className="text-lg">water,</span>&nbsp;
         <span className="text-lg">my</span>&nbsp;
-        <span className="text-lg">friend.</span>&nbsp;
+        <span className="text-lg">friend.</span>
           {/* Insane what AI can do */}
 
       </div>

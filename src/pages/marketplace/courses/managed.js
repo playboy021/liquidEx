@@ -7,8 +7,31 @@ import { MarketHeader } from "@/components/ui/marketplace";
 import { ethers } from "ethers";
 import { useState } from "react";
 
-export default function ManagedCourses() {
+const VerificationInput = ({onVerify}) => {
     const [email, setEmail] = useState('')
+
+    return (
+        <div className="flex mr-2 relative rounded-md">
+            <input 
+                value={email}
+                onChange={({target: {value}}) => setEmail(value)}
+                type="email"
+                name="account"
+                id="account"
+                className="w-96 foucs:ring-indigo-500 shadow-md focus:border-indigo-500 block sm:text-sm border-gray-300 rounded-md pl-7 p-4 text-black"
+                placeholder='placeholder@mail.com'
+            />
+            <Button 
+                className='ml-3' 
+                onClick={() => onVerify(email)}
+            >
+                Verify
+            </Button>
+        </div>
+    )
+}
+
+export default function ManagedCourses() {
     const [proofOfOwnership, setProofOfOwnership] = useState({})
 
     const { account } = useAccount()
@@ -56,25 +79,11 @@ export default function ManagedCourses() {
                     </div> :
                     managedItems.data && managedItems.data.map(item => 
                         <ManagedItemCard key={item.ownedItemId} item={item}>
-                            <div className="flex mr-2 relative rounded-md">
-                                <input 
-                                    value={email}
-                                    onChange={({target: {value}}) => setEmail(value)}
-                                    type="email"
-                                    name="account"
-                                    id="account"
-                                    className="w-96 foucs:ring-indigo-500 shadow-md focus:border-indigo-500 block sm:text-sm border-gray-300 rounded-md pl-7 p-4 text-black"
-                                    placeholder='placeholder@mail.com'
-                                />
-                                <Button 
-                                    className='ml-3' 
-                                    onClick={() => verifyItem(email, {
-                                        hash: item.hash, proof: item.proof
-                                    })}
-                                >
-                                    Verify
-                                </Button>
-                            </div>
+
+                            <VerificationInput onVerify={email => {
+                                verifyItem(email, {hash: item.hash, proof: item.proof})
+                            }} />
+
                             { proofOfOwnership[item.hash] &&
                                 <div className="mt-4">
                                     <Message>
