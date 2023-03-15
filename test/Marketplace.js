@@ -29,7 +29,9 @@ describe("Marketplace", function () {
     const tx = await marketplace.connect(otherAccount).purchaseItem(itemId, proof, { value: value })
     await tx.wait()
 
-    return { marketplace, owner, otherAccount, tx, itemId, proof, value };
+    const item = await marketplace.connect(owner).getItemByHash('0xa4ec86bd63bb4d384e5032e115b5efbb60c32c67cc766ef19924c58ae2c6a23b')
+
+    return { marketplace, owner, otherAccount, tx, itemId, proof, value, item };
   }
 
   describe("Deployment", function () {
@@ -73,6 +75,14 @@ describe("Marketplace", function () {
       expect(isValid).to.equal(proof)
       expect(itemOwner).to.equal(otherAccount.address)
       expect(itemState).to.equal(0)
+    })
+  })
+
+  describe('Activate Item', function () {
+    it('can activate item', async function () {
+      const { marketplace, owner, otherAccount } = await loadFixture(deployMarketplaceFixture);
+      const { item1 } = await loadFixture(deployMarketplaceFixtureWithItem);
+      
     })
   })
   

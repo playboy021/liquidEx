@@ -77,7 +77,6 @@ contract Marketplace {
 	{
 		require(_itemHash != bytes32(0), "You must provide a valid item hash");
 		require(ownedItems[_itemHash].state == State.Purchased, "Item is not purchased yet || Item is already activated");
-		require(_hasItemOwnership(_itemHash), "You are not the owner of this item");
 
 		if (!_doesItemExist(_itemHash)) {
 			revert ItemDoesntExist();
