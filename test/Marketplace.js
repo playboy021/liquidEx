@@ -2,8 +2,8 @@ const {
   time,
   loadFixture,
 } = require("@nomicfoundation/hardhat-network-helpers");
-const { anyValue } = require("@nomicfoundation/hardhat-chai-matchers/withArgs");
 const { expect } = require("chai");
+
 
 describe("Marketplace", function () {
 
@@ -31,7 +31,9 @@ describe("Marketplace", function () {
 
     const item = await marketplace.connect(owner).getItemByHash('0xa4ec86bd63bb4d384e5032e115b5efbb60c32c67cc766ef19924c58ae2c6a23b')
 
-    return { marketplace, owner, otherAccount, tx, itemId, proof, value, item };
+    await marketplace.connect(owner).activateItem('0xa4ec86bd63bb4d384e5032e115b5efbb60c32c67cc766ef19924c58ae2c6a23b')
+
+    return { marketplace, owner, otherAccount, tx, proof, value, item };
   }
 
   describe("Deployment", function () {
@@ -74,14 +76,25 @@ describe("Marketplace", function () {
       expect(price).to.equal(value)
       expect(isValid).to.equal(proof)
       expect(itemOwner).to.equal(otherAccount.address)
-      expect(itemState).to.equal(0)
+      expect(itemState).to.equal(1)
     })
   })
 
   describe('Activate Item', function () {
     it('can activate item', async function () {
       const { marketplace, owner, otherAccount } = await loadFixture(deployMarketplaceFixture);
-      const { item1 } = await loadFixture(deployMarketplaceFixtureWithItem);
+
+      const itemId = '0x00000000000000000000000000003131'
+      const proof = '0x0000000000000000000000000000313100000000000000000000000000003131'
+      const value = '1000000000000000000'
+
+      const tx = await marketplace.connect(otherAccount).purchaseItem(itemId, proof, { value: value })
+
+      await tx.wait()
+
+      const item = await marketplace.getItemByHash('0xb0925ffcbc1b2ae8da705260ef7c5701e71b3190f5477e0dd16f80551c4c1081')
+      await marketplace.connect(owner).activateItem('0xb0925ffcbc1b2ae8da705260ef7c5701e71b3190f5477e0dd16f80551c4c1081')
+      console.log(item)
       
     })
   })
