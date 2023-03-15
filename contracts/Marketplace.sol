@@ -1,153 +1,259 @@
-//SPDX-License-Identifier: Unlicense
-pragma solidity 0.8.4;
+// SPDX-License-Identifier: MIT
+pragma solidity >=0.4.22 <0.9.0;
 
 contract Marketplace {
 
-	enum State {
-		Purchased,
-		Activated,
-		Deactivated
-	}
+  enum State {
+    Purchased,
+    Activated,
+    Deactivated
+  }
 
-	struct Item {
-		uint id;
-		uint price; 
-		bytes32 proof; 
-		address owner;
-		State state;
-	}
+  struct Item {
+    uint id; // 32
+    uint price; // 32
+    bytes32 proof; // 32
+    address owner; // 20
+    State state; // 1
+  }
 
-	// mapping itemHash to Item data
-	mapping(bytes32 => Item) private ownedItems;
+  bool public isStopped = false;
 
-	// mapping of itemId to ItemHash			
-	mapping(uint => bytes32) private ownedItemsHash;
+   
+  mapping(bytes32 => Item) private ownedItems;
 
-	// number of all items + id of the items
-	uint private totalOwnedItems;
+  mapping(uint => bytes32) private ownedItemHash;
 
-	// contract owner
-	address payable private owner;
 
-	constructor() {
-		owner = payable(msg.sender);
-	}
+  uint private totalOwnedItems;
 
-	/// Item already purchased!
-	error ItemHasOwner();
+  address payable private owner;
 
-	/// Item doesn't exist!
-	error ItemDoesntExist();
+  constructor() {
+    setContractOwner(msg.sender);
+  }
 
-	modifier onlyOwner() {
-		require(msg.sender == owner, "You are not the owner of this contract");
-		_;
-	}
+  /// Item has invalid state!
+  error InvalidState();
 
-	function purchaseItem(
-		bytes16 _itemId, // 0x00000000000000000000000000003130 hex value so it fits the bytes16 format of the itemId
-		bytes32 _proof // 0x0000000000000000000000000000313000000000000000000000000000003130 placeholder 
-	) external payable {
-		require(msg.value > 0, "You must send some Ether");
+  /// Item is not created!
+  error ItemIsNotCreated();
 
-		uint _id = totalOwnedItems++;
-		bytes32 itemHash = keccak256(abi.encodePacked(_itemId, msg.sender));
-		
-		if (_hasItemOwnership(itemHash)) {
-			revert ItemHasOwner();
-		}
-		// keccak256 hash of the item id and the msg.sender
-			// site - 0xc4eaa3558504e2baa2669001b43f359b8418b44a4477ff417b4b007d7cc86e37
-			// function itemHash - 0xc4eaa3558504e2baa2669001b43f359b8418b44a4477ff417b4b007d7cc86e37
-		// WORKS!!!
-		
-		ownedItemsHash[_id] = itemHash;
-		ownedItems[itemHash] = Item(
-			_id, 
-			msg.value, 
-			_proof, 
-			msg.sender, 
-			State.Purchased
-		);
-	}
+  /// Item has already a Owner!
+  error ItemHasOwner();
 
-	function activateItem(bytes32 _itemHash) 
-		external
-		onlyOwner
-	{
-		require(_itemHash != bytes32(0), "You must provide a valid item hash");
-		require(ownedItems[_itemHash].state == State.Purchased, "Item is not purchased yet || Item is already activated");
+  /// Sender is not Item owner!
+  error ItemOwner();
 
-		if (!_doesItemExist(_itemHash)) {
-			revert ItemDoesntExist();
-		}
+  /// Only owner has an access!
+  error OnlyOwner();
 
-		ownedItems[_itemHash].state = State.Activated;
-	}
+  /// Sender is not item owner!
+  error SenderIsNotItemOwner();
 
-	function transferOwnership(address _newOwner) 
-		external 
-		onlyOwner
-	{
-		require(_newOwner != address(0), "You must provide a valid address");
-		require(_newOwner != owner, "You are already the owner of this contract");
+  modifier onlyOwner() {
+    if (msg.sender != getContractOwner()) {
+      revert OnlyOwner();
+    }
+    _;
+  }
 
-		_setContractOwner(_newOwner);
-	}
+  modifier onlyWhenNotStopped {
+    require(!isStopped);
+    _;
+  }
 
-	function getItemCount()
-		external
-		view
-		returns (uint) 
-	{
-		return totalOwnedItems;
-	}
+  modifier onlyWhenStopped {
+    require(isStopped);
+    _;
+  }
 
-	function getItemHashAtIndex(uint _index)
-		external
-		view
-		returns (bytes32)
-	{
-		return ownedItemsHash[_index];
-	}
+  receive() external payable {}
 
-	function getItemByHash(bytes32 _itemHash)
-		external
-		view
-		returns (Item memory)
-	{
-		return ownedItems[_itemHash];
-	}
+  function withdraw(uint _amount)
+    external
+    onlyOwner
+  {
+    (bool success, ) = owner.call{value: _amount}("");
+    require(success, "Transfer failed.");
+  }
 
-	function getContractOwner()
-		external
-		view
-		returns (address)
-	{
-		return owner;
-	}
+  function emergencyWithdraw()
+    external
+    onlyWhenStopped
+    onlyOwner
+  {
+    (bool success, ) = owner.call{value: address(this).balance}("");
+    require(success, "Transfer failed.");
+  }
 
-	function _setContractOwner(address _newOwner)
-		private
-	{
-		require(msg.sender == owner, "You are not the owner of this contract");
-		owner = payable(_newOwner);
-		owner.transfer(address(this).balance);
-	}
+  function selfDestruct()
+    external
+    onlyWhenStopped
+    onlyOwner
+  {
+    selfdestruct(owner);
+  }
 
-	function _doesItemExist(bytes32 _itemHash)
-		private
-		view
-		returns (bool)
-	{
-		return ownedItems[_itemHash].owner != address(0);
-	}
+  function stopContract()
+    external
+    onlyOwner
+  {
+    isStopped = true;
+  }
 
-	function _hasItemOwnership(bytes32 _itemHash)
-		private
-		view
-		returns (bool)
-	{
-		return ownedItems[_itemHash].owner == msg.sender;
-	}
+  function resumeContract()
+    external
+    onlyOwner
+  {
+    isStopped = false;
+  }
+
+  function purchaseItem(
+    bytes16 _itemId, // 0x00000000000000000000000000003130
+    bytes32 _proof // 0x0000000000000000000000000000313000000000000000000000000000003130
+  )
+    external
+    payable
+    onlyWhenNotStopped
+  {
+    bytes32 itemHash = keccak256(abi.encodePacked(_itemId, msg.sender));
+
+    if (hasItemOwnership(itemHash)) {
+      revert ItemHasOwner();
+    }
+
+    uint id = totalOwnedItems++;
+
+    ownedItemHash[id] = itemHash;
+    ownedItems[itemHash] = Item({
+      id: id,
+      price: msg.value,
+      proof: _proof,
+      owner: msg.sender,
+      state: State.Purchased
+    });
+  }
+
+  function repurchaseItem(bytes32 _itemHash)
+    external
+    payable
+    onlyWhenNotStopped
+  {
+    if (!isItemCreated(_itemHash)) {
+      revert ItemIsNotCreated();
+    }
+
+    if (!hasItemOwnership(_itemHash)) {
+      revert SenderIsNotItemOwner();
+    }
+
+    Item storage item = ownedItems[_itemHash];
+
+    if (item.state != State.Deactivated) {
+      revert InvalidState();
+    }
+
+    item.state = State.Purchased;
+    item.price = msg.value;
+  }
+
+  function activateItem(bytes32 _itemHash)
+    external
+    onlyWhenNotStopped
+    onlyOwner
+  {
+    if (!isItemCreated(_itemHash)) {
+      revert ItemIsNotCreated();
+    }
+
+    Item storage item = ownedItems[_itemHash];
+
+    if (item.state != State.Purchased) {
+      revert InvalidState();
+    }
+
+    item.state = State.Activated;
+  }
+
+  function deactivateItem(bytes32 _itemHash)
+    external
+    onlyWhenNotStopped
+    onlyOwner
+  {
+    if (!isItemCreated(_itemHash)) {
+      revert ItemIsNotCreated();
+    }
+
+    Item storage item = ownedItems[_itemHash];
+
+    if (item.state != State.Purchased) {
+      revert InvalidState();
+    }
+
+    (bool success, ) = item.owner.call{value: item.price}("");
+    require(success, "Transfer failed!");
+
+    item.state = State.Deactivated;
+    item.price = 0;
+  }
+
+  function transferOwnership(address _newOwner)
+    external
+    onlyOwner
+  {
+    setContractOwner(_newOwner);
+  }
+
+  function getItemCount()
+    external
+    view
+    returns (uint)
+  {
+    return totalOwnedItems;
+  }
+
+  function getItemHashAtIndex(uint _index)
+    external
+    view
+    returns (bytes32)
+  {
+    return ownedItemHash[_index];
+  }
+
+  function getItemByHash(bytes32 _itemHash)
+    external
+    view
+    returns (Item memory)
+  {
+    return ownedItems[_itemHash];
+  }
+
+  function getContractOwner()
+    public
+    view
+    returns (address)
+  {
+    return owner;
+  }
+
+  function setContractOwner(address _newOwner) private {
+    owner = payable(_newOwner);
+  }
+
+  function isItemCreated(bytes32 _itemHash)
+    private
+    view
+    returns (bool)
+  {
+    return ownedItems[_itemHash].owner != 0x0000000000000000000000000000000000000000;
+  }
+
+  function hasItemOwnership(bytes32 _itemHash)
+    private
+    view
+    returns (bool)
+  {
+    return ownedItems[_itemHash].owner == msg.sender;
+  }
 }
