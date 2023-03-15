@@ -19,33 +19,41 @@ describe("Marketplace", function () {
     return { marketplace, owner, otherAccount };
   }
 
+  async function deployMarketplaceFixtureWithItem() {
+    const { marketplace, owner, otherAccount } = await loadFixture(deployMarketplaceFixture);
+  
+    const itemId = '0x00000000000000000000000000003130'
+    const proof = '0x0000000000000000000000000000313000000000000000000000000000003130'
+    const value = '1000000000000000000'
+
+    const tx = await marketplace.connect(otherAccount).purchaseItem(itemId, proof, { value: value })
+    await tx.wait()
+
+    return { marketplace, owner, otherAccount, tx };
+  }
+
   describe("Deployment", function () {
     it("Should set the right owner", async function () {
-      const { owner, marketplace, otherAccount } = await loadFixture(deployMarketplaceFixture);
+      const { owner, marketplace } = await loadFixture(deployMarketplaceFixture);
 
       expect(await marketplace.getContractOwner()).to.equal(owner.address);
     });
+  });    
 
-  //   it("Should receive and store the funds to lock", async function () {
-  //     const { lock, lockedAmount } = await loadFixture(
-  //       deployMarketplaceFixture
-  //     );
+  describe('Item Functionality', function () {
 
-  //     expect(await ethers.provider.getBalance(lock.address)).to.equal(
-  //       lockedAmount
-  //     );
-  //   });
+    it('Can get item hash at index', async function () {
+      const { marketplace, owner } = await loadFixture(deployMarketplaceFixture);
+      const { tx } = await loadFixture(deployMarketplaceFixtureWithItem);
 
-  //   it("Should fail if the unlockTime is not in the future", async function () {
-  //     // We don't use the fixture here because we want a different deployment
-  //     const latestTime = await time.latest();
-  //     const Lock = await ethers.getContractFactory("Lock");
-  //     await expect(Lock.deploy(latestTime, { value: 1 })).to.be.revertedWith(
-  //       "Unlock time should be in the future"
-  //     );
-  //   });
-  // });
+      await tx.wait()
 
+      const index = 0
+      const itemHash = await marketplace.connect(owner).getItemHashAtIndex(index)
+
+      expect(itemHash).to.equal('0xa4ec86bd63bb4d384e5032e115b5efbb60c32c67cc766ef19924c58ae2c6a23b')
+    })
+  })
   // describe("Withdrawals", function () {
   //   describe("Validations", function () {
   //     it("Should revert with the right error if called too soon", async function () {
@@ -110,5 +118,4 @@ describe("Marketplace", function () {
   //       );
   //     });
   //  });
-  });
 });
