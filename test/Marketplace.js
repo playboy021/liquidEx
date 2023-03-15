@@ -29,11 +29,11 @@ describe("Marketplace", function () {
     const tx = await marketplace.connect(otherAccount).purchaseItem(itemId, proof, { value: value })
     await tx.wait()
 
-    return { marketplace, owner, otherAccount, tx };
+    return { marketplace, owner, otherAccount, tx, itemId, proof, value };
   }
 
   describe("Deployment", function () {
-    it("Should set the right owner", async function () {
+    it("should set the right owner", async function () {
       const { owner, marketplace } = await loadFixture(deployMarketplaceFixture);
 
       expect(await marketplace.getContractOwner()).to.equal(owner.address);
@@ -42,7 +42,7 @@ describe("Marketplace", function () {
 
   describe('Item Functionality', function () {
 
-    it('Can get item hash at index', async function () {
+    it('can get item hash at index', async function () {
       const { marketplace, owner } = await loadFixture(deployMarketplaceFixture);
       const { tx } = await loadFixture(deployMarketplaceFixtureWithItem);
 
@@ -53,69 +53,27 @@ describe("Marketplace", function () {
 
       expect(itemHash).to.equal('0xa4ec86bd63bb4d384e5032e115b5efbb60c32c67cc766ef19924c58ae2c6a23b')
     })
+
+    it('purchased item should have correct info', async function () {
+      const { marketplace, owner, otherAccount } = await loadFixture(deployMarketplaceFixture);
+      const { tx, proof, value } = await loadFixture(deployMarketplaceFixtureWithItem);
+
+      await tx.wait()
+
+      const item = await marketplace.connect(owner).getItemByHash('0xa4ec86bd63bb4d384e5032e115b5efbb60c32c67cc766ef19924c58ae2c6a23b')
+
+      const id = item[0]
+      const price = item[1]
+      const isValid = item[2]
+      const itemOwner = item[3]
+      const itemState = item[4]
+
+      expect(id).to.equal(0)
+      expect(price).to.equal(value)
+      expect(isValid).to.equal(proof)
+      expect(itemOwner).to.equal(otherAccount.address)
+      expect(itemState).to.equal(0)
+    })
   })
-  // describe("Withdrawals", function () {
-  //   describe("Validations", function () {
-  //     it("Should revert with the right error if called too soon", async function () {
-  //       const { lock } = await loadFixture(deployMarketplaceFixture);
-
-  //       await expect(lock.withdraw()).to.be.revertedWith(
-  //         "You can't withdraw yet"
-  //       );
-  //     });
-
-  //     it("Should revert with the right error if called from another account", async function () {
-  //       const { lock, unlockTime, otherAccount } = await loadFixture(
-  //         deployMarketplaceFixture
-  //       );
-
-  //       // We can increase the time in Hardhat Network
-  //       await time.increaseTo(unlockTime);
-
-  //       // We use lock.connect() to send a transaction from another account
-  //       await expect(lock.connect(otherAccount).withdraw()).to.be.revertedWith(
-  //         "You aren't the owner"
-  //       );
-  //     });
-
-  //     it("Shouldn't fail if the unlockTime has arrived and the owner calls it", async function () {
-  //       const { lock, unlockTime } = await loadFixture(
-  //         deployMarketplaceFixture
-  //       );
-
-  //       // Transactions are sent using the first signer by default
-  //       await time.increaseTo(unlockTime);
-
-  //       await expect(lock.withdraw()).not.to.be.reverted;
-  //     });
-  //   });
-
-  //   describe("Events", function () {
-  //     it("Should emit an event on withdrawals", async function () {
-  //       const { lock, unlockTime, lockedAmount } = await loadFixture(
-  //         deployMarketplaceFixture
-  //       );
-
-  //       await time.increaseTo(unlockTime);
-
-  //       await expect(lock.withdraw())
-  //         .to.emit(lock, "Withdrawal")
-  //         .withArgs(lockedAmount, anyValue); // We accept any value as `when` arg
-  //     });
-  //   });
-
-  //   describe("Transfers", function () {
-  //     it("Should transfer the funds to the owner", async function () {
-  //       const { lock, unlockTime, lockedAmount, owner } = await loadFixture(
-  //         deployMarketplaceFixture
-  //       );
-
-  //       await time.increaseTo(unlockTime);
-
-  //       await expect(lock.withdraw()).to.changeEtherBalances(
-  //         [owner, lock],
-  //         [lockedAmount, -lockedAmount]
-  //       );
-  //     });
-  //  });
+  
 });
