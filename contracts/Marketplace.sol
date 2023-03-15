@@ -30,11 +30,14 @@ contract Marketplace {
 	address payable private owner;
 
 	constructor() {
-		_setContractOwner(msg.sender);
+		owner = payable(msg.sender);
 	}
 
 	/// Item already purchased!
 	error ItemHasOwner();
+
+	/// Item doesn't exist!
+	error ItemDoesntExist();
 
 	modifier onlyOwner() {
 		require(msg.sender == owner, "You are not the owner of this contract");
@@ -66,6 +69,21 @@ contract Marketplace {
 			msg.sender, 
 			State.Purchased
 		);
+	}
+
+	function activateItem(bytes32 _itemHash) 
+		external
+		onlyOwner
+	{
+		require(_itemHash != bytes32(0), "You must provide a valid item hash");
+		require(ownedItems[_itemHash].state == State.Purchased, "Item is not purchased yet || Item is already activated");
+		require(_hasItemOwnership(_itemHash), "You are not the owner of this item");
+
+		if (!_doesItemExist(_itemHash)) {
+			revert ItemDoesntExist();
+		}
+
+		ownedItems[_itemHash].state = State.Activated;
 	}
 
 	function transferOwnership(address _newOwner) 
@@ -116,6 +134,14 @@ contract Marketplace {
 		require(msg.sender == owner, "You are not the owner of this contract");
 		owner = payable(_newOwner);
 		owner.transfer(address(this).balance);
+	}
+
+	function _doesItemExist(bytes32 _itemHash)
+		private
+		view
+		returns (bool)
+	{
+		return ownedItems[_itemHash].owner != address(0);
 	}
 
 	function _hasItemOwnership(bytes32 _itemHash)
