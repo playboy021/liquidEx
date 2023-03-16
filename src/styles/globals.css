@@ -44,6 +44,13 @@
   border: 1px solid rgba(79, 70, 229, 0.5);
 }
 
+.lightBlueGlassLessBlur {
+  /* From https://css.glass */
+  backdrop-filter: blur(2px);
+  background-color: rgba(79, 70, 229, 0.4);
+  border: 1px solid rgba(79, 70, 229, 0.5);
+}
+
 /* 
   BACKGROUND START
 */
@@ -1340,5 +1347,20 @@ svg text {
 }
 
 /* 
-  CHAIN SELECT START
+  CHAIN SELECT END
+*/
+
+/* 
+  BRIDGE START
+*/
+
+.container{
+  max-width: 50%;
+  max-height: 70%;
+  min-width: 20%;
+  min-height: 20%;
+}
+
+/* 
+  BRIDGE END
 */

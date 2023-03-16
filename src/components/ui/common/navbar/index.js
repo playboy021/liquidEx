@@ -14,7 +14,7 @@ export default function Navbar() {
       <div className="relative pt-6 fontTurrentRoad">
         <nav className="relative" aria-label="Global">
           <div className="flex flex-col xs:flex-row justify-between items-center">
-            <div className="lightBlueGlass rounded-lg p-4 flex text-center">
+            <div className="lightBlueGlassLessBlur rounded-lg p-4 flex text-center">
               <ActiveLink href="/" >
                 <a
                   className="font-medium ml-8 mr-8 text-white hover:text-gray-900">
@@ -40,7 +40,7 @@ export default function Navbar() {
                 </a>
               </ActiveLink>
             </div>
-            <div className="text-center lightBlueGlass rounded-lg flex items-center z-20">
+            <div className="text-center lightBlueGlassLessBlur rounded-lg flex items-center z-20">
               <div className="p-1">
                 <NetworkSelector/>
               </div>
