@@ -1,12 +1,9 @@
 import { ChevronDownIcon } from '@heroicons/react/solid'
-import NumericalInput from 'app/components/Input/Numeric'
-import Typography from 'app/components/Typography'
-import { tryParseAmount } from 'app/functions'
-import { useUSDCValue } from 'app/hooks/useUSDCPrice'
+import { NumericalInput } from '../../common'
+import Typography from '../../common'
 import React, { useEffect, useRef, useState } from 'react'
 import axios from 'axios'
 import { Field } from 'app/state/bridge/actions'
-import { OptimalRate } from 'paraswap-core'
 import BridgeModal from 'app/modals/BridgeModal/BridgeModal'
 import Loader from 'app/components/Loader'
 import { Button } from '../../common'
@@ -56,8 +53,6 @@ const BridgeAssetPanel = ({
 }
 
 const InputPanel = ({ currency, value, onChange, disabled, inputType, amountToParaswap, isParaswap, selectedTokenBalance, setAmount, amount }) => {
-    const usdcValue = useUSDCValue(tryParseAmount(value || '1', currency))
-    const span = useRef<HTMLSpanElement | null>(null)
     const [width, setWidth] = useState(0)
 
 
