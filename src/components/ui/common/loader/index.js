@@ -10,6 +10,17 @@ export default function Loader() {
     )
 }
 
+export function LoaderSmall() {
+
+    return (
+        <>
+            <div>
+                <span className="loaderSmall"></span>
+            </div>
+        </>
+    )
+}
+
 export function LoaderBig() {
 
     return (

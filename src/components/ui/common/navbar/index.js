@@ -2,6 +2,7 @@ import { useWeb3 } from "@/components/providers"
 import Button from "../button"
 import { useAccount } from '@components/hooks/web3'
 import ActiveLink from "../link"
+import Loader, { LoaderSmall } from "../loader"
 
 export default function Navbar() {
   const { connect, isLoading, web3 } = useWeb3()
@@ -38,11 +39,11 @@ export default function Navbar() {
                 </a>
               </ActiveLink>
             </div>
-            <div className="text-center lightBlueGlass rounded-lg">
+            <div className="text-center lightBlueGlass rounded-lg flex items-center">
               <ActiveLink href="/wishlist" >
                 <a
-                  className="font-medium sm:mr-8 mr-2 sm:ml-8 ml-2 text-white hover:text-gray-900">
-                  CHAINSLCTBTN
+                  className="font-medium sm:mr-8 mr-2 sm:ml-8 ml-2 text-white hover:text-gray-900  p-1">
+                    CHAINSLCTBTN
                   {/* use React Select */}
                 </a>
               </ActiveLink>
@@ -50,23 +51,30 @@ export default function Navbar() {
               { isLoading ?
                 <Button
                   disabled={true}
+                  className='border-indigo-600 pt-2 pb-2'
                 >
-                  Loading...
-                </Button> : web3 != null ? account.data ?
+                  <div className="pt-2">
+                    <LoaderSmall />
+                  </div>
+                </Button> 
+                : web3 != null ? account.data ?
                 <Button
-                  className="cursor-default button border-indigo-600"
+                  className="cursor-default button border-indigo-600 
+                  h-14"
                   data-hover={account.isAdmin ? 'Admin Privileges' : 'User Privileges'}
                   data-active={account.isAdmin ? 'You Awesome' : 'You Meh'}
                 >
                   <span>{account.data.slice(0, 6) + '...' + account.data.slice(-4)}</span>
                 </Button> :
-                <Button
+              <Button
                 onClick={connect}
+                className='border-indigo-600'
               >
                 Connect Wallet
               </Button> :
                 <Button
                   onClick={() => window.open('https://metamask.io/download.html', '_blank')}
+                  className='border-indigo-600'
                 >
                   Install Metamask
                 </Button>
