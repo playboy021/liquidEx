@@ -872,3 +872,355 @@ svg text {
 /* 
   HERO DESCRIPTION END
 */
+
+/* 
+  CHAIN SELECT START
+*/
+
+.crncy_select_prnt .crnc_options {
+  display: flex;
+  align-items: center;
+  font-family: 'Turret Road', monospace;
+  font-style: normal;
+  font-weight: 700;
+  font-size: 16px;
+  line-height: 21px;
+  color: #FFFFFF;
+}
+.crncy_select_prnt .crnc_options>span {
+  margin-right: 8px !important;
+  min-width: 28px;
+}
+.crncy_select_inn__menu .crncy_select_inn__menu-list>div .crnc_options {
+  background: #0D0415;
+  border: 1px solid #202231;
+  border-radius: 8px;
+  padding: 6px 14px;
+  margin-bottom: 10px;
+}
+.crncy_select_inn__menu .crncy_select_inn__option.crncy_select_inn__option--is-selected .crnc_options {
+  position: relative;
+  border: 0.5px solid rgb(79, 70, 229);
+  overflow: visible;
+}
+.crncy_select_inn__menu .crncy_select_inn__option.crncy_select_inn__option--is-selected .crnc_options::before {
+  position: absolute;
+  content: "";
+  width: 6px;
+  height: 6px;
+  background: rgb(79, 70, 229);
+  left: -3px;
+  border-radius: 50%;
+}
+.landing_page .crncy_select_inn__value-container .crncy_select_inn__single-value .crnc_options p, .landing_page .crncy_select_inn__control .crncy_select_inn__indicators {
+ display: none;
+}
+.landing_page .crncy_select_prnt .crnc_options>span {
+  margin-right: 0 !important;
+}
+@media screen and (max-width:1023px) {
+  .crncy_select_prnt .crncy_select_inn__menu {
+    min-width: 280px;
+  }
+  .crncy_select_prnt .crnc_options {
+    font-size: 13px;
+  }
+  .crncy_select_prnt .crnc_options>span {
+    height: 25px !important;
+    width: 25px !important;
+    margin-right: 5px;
+  }
+}
+.landing_page .crncy_select_brdg__value-container .crncy_select_brdg__single-value .crnc_options p, .landing_page .crncy_select_brdg__control .crncy_select_brdg__indicators {
+  display: none;
+}
+.crncy_select_brdg__menu .crncy_select_brdg__option.crncy_select_brdg__option--is-selected .crnc_options::before {
+  position: absolute;
+  content: "";
+  width: 6px;
+  height: 6px;
+  background: rgb(79, 70, 229);
+  left: -3px;
+  border-radius: 50%;
+}
+.crncy_select_brdg__menu .crncy_select_brdg__option.crncy_select_brdg__option--is-selected .crnc_options {
+  position: relative;
+  border: 0.5px solid rgb(79, 70, 229);
+  overflow: visible;
+}
+.crncy_select_brdg__menu .crncy_select_brdg__menu-list>div .crnc_options {
+  background: #0D0415;
+  border: 1px solid #202231;
+  border-radius: 8px;
+  padding: 6px 14px;
+  margin-bottom: 10px;
+}
+
+.crncy_select_prnt .brdg_options {
+  font-size: 13px;
+}
+.crncy_select_prnt .brdg_options>span {
+  height: 30px !important;
+  width: 20px !important;
+  margin-right: 5px;
+}
+.landing_page .crncy_select_prnt .brdg_options>span {
+  margin-right: 0 !important;
+}
+.landing_page .crncy_select_inn__value-container .crncy_select_inn__single-value .brdg_options p, .landing_page .crncy_select_inn__control .crncy_select_inn__indicators {
+  display: none;
+}
+.landing_page .crncy_select_brdg__value-container .crncy_select_brdg__single-value .brdg_options p, .landing_page .crncy_select_brdg__control .crncy_select_brdg__indicators {
+  display: none;
+}
+.crncy_select_brdg__menu .crncy_select_brdg__option.crncy_select_brdg__option--is-selected .brdg_options::before {
+  position: absolute;
+  content: "";
+  width: 6px;
+  height: 6px;
+  background: rgb(79, 70, 229);
+  left: -3px;
+  border-radius: 50%;
+}
+.crncy_select_brdg__menu .crncy_select_brdg__option.crncy_select_brdg__option--is-selected .brdg_options {
+  position: relative;
+  border: 0.5px solid rgb(79, 70, 229);
+  overflow: visible;
+}
+.crncy_select_inn__menu .crncy_select_inn__option.crncy_select_inn__option--is-selected .brdg_options::before {
+  position: absolute;
+  content: "";
+  width: 6px;
+  height: 6px;
+  background: rgb(79, 70, 229);
+  left: -3px;
+  border-radius: 50%;
+}
+.crncy_select_inn__menu .crncy_select_inn__option.crncy_select_inn__option--is-selected .brdg_options {
+  position: relative;
+  border: 0.5px solid rgb(79, 70, 229);
+  overflow: visible;
+}
+.crncy_select_inn__menu .crncy_select_inn__menu-list>div .brdg_options {
+  background: #0D0415;
+  border: 1px solid #202231;
+  border-radius: 8px;
+  padding: 6px 14px;
+  margin-bottom: 10px;
+}
+.crncy_select_brdg__menu .crncy_select_brdg__menu-list>div .brdg_options {
+  background: #0D0415;
+  border: 1px solid #202231;
+  border-radius: 8px;
+  padding: 6px 14px;
+  margin-bottom: 10px;
+  margin-right: 8px;
+}
+.crncy_select_prnt .brdg_options>span {
+  margin-right: 8px !important;
+  min-width: 20px;
+}
+
+.crncy_select_prnt .brdg_options {
+  display: flex;
+  align-items: center;
+  font-family: 'Turret Road', monospace;
+  font-style: normal;
+  font-weight: 700;
+  font-size: 16px;
+  line-height: 21px;
+  color: #FFFFFF;
+}
+
+@media screen and (max-width: 575px){
+  .crncy_select_prnt .crncy_select_brdg__menu {
+    max-width: 150px !important;
+    background: #131928;
+    border-radius: 6px;
+    overflow: hidden;
+    font-size: 10px !important;
+    overflow-x: hidden !important;
+    padding: 53px 8px 10px 9px;
+    top: 48px;
+  }
+
+  .crncy_select_prnt .crncy_select_brdg__menu::after {
+    font-family: 'Turret Road', monospace;
+    content: "Choose network";
+    position: absolute;
+    top: 15px;
+    left: 11px;
+    font-style: normal;
+    font-weight: 500;
+    font-size: 15px !important;
+    line-height: 20px;
+    color: #FFFFFF;
+    opacity: 0.7;
+  }
+
+  .crncy_select_prnt .crncy_select_brdg__menu::before {
+    content: "";
+    position: absolute;
+    top: 0;
+    right: 0;
+    bottom: 0;
+    left: 0;
+    margin: 0px;
+    border: 1px solid transparent;
+    background: linear-gradient(rgb(79, 70, 229) 0px, rgb(79, 70, 229) 0px) padding-box padding-box;
+    /* background: linear-gradient(270.07deg, #00FFCF, #3D5DFF, #00FFCF,#FFD148 ); */
+    -webkit-mask: linear-gradient(rgb(79, 70, 229) 0 0) padding-box,
+      linear-gradient(rgb(79, 70, 229) 0 0);
+    mask-composite: exclude;
+    -webkit-mask-composite: destination-out;
+    border-radius: 6px;
+    pointer-events: none;
+  }
+
+  .crncy_select_prnt .crncy_select_brdg__menu {
+    overflow-x: hidden !important;
+    min-width: 150px !important;
+  }
+}
+.crncy_select_prnt .crncy_select_brdg__control {
+  border: none !important;
+  box-shadow: none !important;
+}
+.crncy_select_prnt_ash .crncy_select_brdg__menu {
+  min-width: 150px;
+  background: #131928;
+  border-radius: 6px;
+  overflow: hidden;
+  padding: 20px 20px 10px 9px;
+  top: 35px;
+}
+.crncy_select_prnt_ash .crncy_select_brdg__menu::after {
+  display: none;
+}
+.crncy_select_prnt .crncy_select_brdg__menu {
+  min-width: 280px;
+}
+.landing_page .crncy_select_brdg__value-container .crncy_select_brdg__single-value .crnc_options p, .landing_page .crncy_select_brdg__control .crncy_select_brdg__indicators {
+  display: none;
+}
+.landing_page .crncy_select_brdg__value-container .crncy_select_brdg__single-value .brdg_options p, .landing_page .crncy_select_brdg__control .crncy_select_brdg__indicators {
+  display: none;
+}
+
+.crncy_select_brdg__control--menu-is-open .crncy_select_brdg__indicator{
+  rotate: 180deg;
+}
+.crncy_select_brdg__menu .crncy_select_brdg__menu-list {
+  padding: 0;
+
+}
+.crncy_select_brdg__menu .crncy_select_brdg__menu-list>div {
+  padding: 0;
+  background: transparent;
+}
+
+.crncy_select_brdg__menu .crncy_select_brdg__option.crncy_select_brdg__option--is-selected .brdg_options::before {
+  position: absolute;
+  content: "";
+  width: 6px;
+  height: 6px;
+  background: rgb(79, 70, 229);
+  left: -3px;
+  border-radius: 50%;
+}
+.crncy_select_brdg__indicator svg {
+  color: #fff !important;
+}
+
+.crncy_select_brdg__menu .crncy_select_brdg__option.crncy_select_brdg__option--is-selected .brdg_options {
+  position: relative;
+  border: 0.5px solid rgb(79, 70, 229);
+  overflow: visible;
+}
+.crncy_select_brdg__menu .crncy_select_brdg__option.crncy_select_brdg__option--is-selected .crnc_options::before {
+  position: absolute;
+  content: "";
+  width: 6px;
+  height: 6px;
+  background: rgb(79, 70, 229);
+  left: -3px;
+  border-radius: 50%;
+}
+.crncy_select_brdg__menu .crncy_select_brdg__option.crncy_select_brdg__option {
+  padding-left: 3px;
+}
+.crncy_select_brdg__menu .crncy_select_brdg__option.crncy_select_brdg__option--is-selected .crnc_options {
+  position: relative;
+  border: 0.5px solid rgb(79, 70, 229);
+  overflow: visible;
+}
+.crncy_select_brdg__menu .crncy_select_brdg__menu-list>div .crnc_options {
+  background: #0D0415;
+  border: 1px solid #202231;
+  border-radius: 8px;
+  padding: 6px 14px;
+  margin-bottom: 10px;
+}
+.switch-margin_bottom{
+  margin-bottom: 62px;
+}
+.crncy_select_brdg__menu .crncy_select_brdg__menu-list>div .brdg_options {
+  background: #0D0415;
+  border: 1px solid #202231;
+  border-radius: 8px;
+  padding: 6px 14px;
+  margin-bottom: 10px;
+  margin-right: 8px;
+}
+
+.crncy_select_prnt .crncy_select_brdg__menu::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  left: 0;
+  margin: 0px;
+  border: 1px solid transparent;
+  background: linear-gradient(rgb(79, 70, 229) 0px, rgb(79, 70, 229) 0px) padding-box padding-box;
+    /* background: linear-gradient(270.07deg, #00FFCF, #3D5DFF, #00FFCF,#FFD148 ); */
+    -webkit-mask: linear-gradient(rgb(79, 70, 229) 0 0) padding-box,
+      linear-gradient(rgb(79, 70, 229) 0 0);
+  mask-composite: exclude;
+  -webkit-mask-composite: destination-out;
+  border-radius: 6px;
+  pointer-events: none;
+}
+.crncy_select_prnt .crncy_select_brdg__menu::after {
+  content: "Choose network";
+  position: absolute;
+  top: 15px;
+  left: 11px;
+  font-family: 'Turret Road', monospace;
+  font-style: normal;
+  font-weight: 500;
+  font-size: 15px;
+  line-height: 20px;
+  color: #FFFFFF;
+  opacity: 0.7;
+}
+
+.crncy_select_prnt .crncy_select_brdg__indicator-separator { display: none; }
+.crncy_select_prnt .crncy_select_brdg__menu {
+  min-width: 226px;
+  backdrop-filter: blur(5px);
+  background-color: rgba(79, 70, 229, 0.5);
+  border: 1px solid rgba(79, 70, 229, 0.5);
+  border-radius: 6px;
+  overflow: hidden;
+  padding: 53px 8px 10px 9px;
+  top: 48px;
+}
+.crncy_select_prnt .crncy_select_brdg__control {
+  background: transparent;
+  border: none;
+}
+
+/* 
+  CHAIN SELECT START
+*/

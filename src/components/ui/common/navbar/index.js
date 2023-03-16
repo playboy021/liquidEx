@@ -3,6 +3,7 @@ import Button from "../button"
 import { useAccount } from '@components/hooks/web3'
 import ActiveLink from "../link"
 import Loader, { LoaderSmall } from "../loader"
+import { NetworkSelector } from "../../web3"
 
 export default function Navbar() {
   const { connect, isLoading, web3 } = useWeb3()
@@ -39,14 +40,11 @@ export default function Navbar() {
                 </a>
               </ActiveLink>
             </div>
-            <div className="text-center lightBlueGlass rounded-lg flex items-center">
-              <ActiveLink href="/wishlist" >
-                <a
-                  className="font-medium sm:mr-8 mr-2 sm:ml-8 ml-2 text-white hover:text-gray-900  p-1">
-                    CHAINSLCTBTN
+            <div className="text-center lightBlueGlass rounded-lg flex items-center z-20">
+              <div className="p-1">
+                <NetworkSelector/>
+              </div>
                   {/* use React Select */}
-                </a>
-              </ActiveLink>
               
               { isLoading ?
                 <Button

@@ -6,23 +6,7 @@ const options = [
     {
         label: (
             <div className="crnc_options">
-                <Image src="/img/avx_ic.svg" alt="" height={28} width={28} /> <p>Avalanche</p>
-            </div>
-        ),
-        value: 43114,
-    },
-    {
-        label: (
-            <div className="crnc_options">
-                <Image src="/img/bsc_ic.svg" alt="" height={28} width={28} /> <p>BNB Smart Chain</p>
-            </div>
-        ),
-        value: 56,
-    },
-    {
-        label: (
-            <div className="crnc_options">
-                <Image src="/img/matic.svg" alt="" height={28} width={28} /> <p>Polygon</p>
+                <Image src="/img/matic.svg" alt="" height={28} width={28} /> <p className='fontTurrentRoad pl-1'>Polygon</p>
             </div>
         ),
         value: 137,
@@ -30,15 +14,7 @@ const options = [
     {
         label: (
             <div className="crnc_options">
-                <Image src="/img/fantom.svg" alt="" height={28} width={28} /> <p>Fantom</p>
-            </div>
-        ),
-        value: 250,
-    },
-    {
-        label: (
-            <div className="crnc_options">
-                <Image src="/img/optimism.svg" alt="" height={28} width={28} /> <p>Optimism</p>
+                <Image src="/img/optimism.svg" alt="" height={28} width={28} /> <p className='fontTurrentRoad pl-1'>Optimism</p>
             </div>
         ),
         value: 10,
@@ -46,7 +22,15 @@ const options = [
     {
         label: (
             <div className="crnc_options">
-                <Image src="/img/arbitrum.svg" alt="" height={28} width={28} /> <p>Arbitrum</p>
+                <Image src="/img/fantom.svg" alt="" height={28} width={28} /> <p className='fontTurrentRoad pl-1'>Fantom</p>
+            </div>
+        ),
+        value: 250,
+    },
+    {
+        label: (
+            <div className="crnc_options">
+                <Image src="/img/arbitrum.svg" alt="" height={28} width={28} /> <p className='fontTurrentRoad pl-1'>Arbitrum</p>
             </div>
         ),
         value: 42161
@@ -54,12 +38,19 @@ const options = [
     {
         label: (
             <div className="crnc_options">
-                <Image src="/img/ethereum.svg" alt="" height={28} width={28} /> <p>Ethereum</p>
+                <Image src="/img/avx_ic.svg" alt="" height={28} width={28} /> <p className='fontTurrentRoad pl-1'>Avalanche</p>
             </div>
         ),
-        value: 1,
+        value: 43114,
     },
-
+    {
+        label: (
+            <div className="crnc_options">
+                <Image src="/img/ethereum.svg" alt="" height={28} width={28} /> <p className='fontTurrentRoad pl-1'>Goerli</p>
+            </div>
+        ),
+        value: 5,
+    },
 ]
 
 function ChainSelect({ onChange }) {
@@ -82,7 +73,7 @@ function ChainSelect({ onChange }) {
                     className="crncy_select"
                     placeholder="Client"
                     classNamePrefix="crncy_select_brdg"
-                    value={options.filter(e => e.value == chainId)[0]}
+                    //value={options.filter(e => e.value == chainId)[0]}
                 />
             </div>
         </div>
