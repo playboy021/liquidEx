@@ -6,6 +6,10 @@
   min-height: calc(100vh - 88px);
 }
 
+.fitBridge {
+  min-height: 90vh;
+}
+
 ::-webkit-scrollbar {
 	background: #fff;
 	width: 5px;
