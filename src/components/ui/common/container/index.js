@@ -16,7 +16,11 @@ const TailwindMapper = {
 
 export function classNames(...classes) {
     return classes.filter(Boolean).join(' ')
-  }
+}
+
+export function escapeRegExp(string) {
+  return string.replace(/[.*+?^${}()|[\]\\]/g, '\\$&') // $& means the whole matched string
+}
   
 
 const Container = ({ children, maxWidth = '2xl', className = '', id }) => (

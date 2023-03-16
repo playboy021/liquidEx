@@ -1,5 +1,5 @@
-import { ClassicFactory } from 'react'
 import React, { FC, forwardRef } from 'react'
+import { classNames } from '../container'
 
 
 const WEIGHTS = {

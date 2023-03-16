@@ -1,13 +1,11 @@
-import { classNames } from '../container'
+import { classNames, escapeRegExp } from '../container'
 import React from 'react'
 
 const inputRegex = RegExp(`^\\d*(?:\\\\[.])?\\d*$`) // match escaped "." characters via in a non-capturing group
 
 const defaultClassName = 'w-0 p-0 text-2xl bg-transparent'
 
-export function escapeRegExp(string) {
-    return string.replace(/[.*+?^${}()|[\]\\]/g, '\\$&') // $& means the whole matched string
-}
+
 
 export const Input = React.memo(
   ({
