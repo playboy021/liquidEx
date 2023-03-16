@@ -144,7 +144,7 @@ body {
 
 .button:before {
     content: attr(data-hover);
-    padding-top: 0.28em;
+    //padding-top: 0.28em;
     -webkit-transform: translate(-150%,0);
     -moz-transform: translate(-150%,0);
     -ms-transform: translate(-150%,0);
@@ -156,7 +156,7 @@ body {
 
 .button:after {
     content: attr(data-active);
-    padding-top: 0.28em;
+    //padding-top: 0.28em;
     -webkit-transform: translate(150%,0);
     -moz-transform: translate(150%,0);
     -ms-transform: translate(150%,0);
@@ -217,6 +217,114 @@ body {
     overflow: hidden;
     text-decoration: none;
 }
+
+
+
+
+.button1 span {
+    -webkit-transition: 0.6s;
+    -moz-transition: 0.6s;
+    -o-transition: 0.6s;
+    transition: 0.6s;
+    -webkit-transition-delay: 0.2s;
+    -moz-transition-delay: 0.2s;
+    -o-transition-delay: 0.2s;
+    transition-delay: 0.2s;
+}
+
+.button1:before,
+.button1:after {
+    content: '';
+    position: absolute;
+    top: 0.67em;
+    left: 0;
+    width: 100%;
+    text-align: center;
+    opacity: 0;
+    -webkit-transition: .4s,opacity .6s;
+    -moz-transition: .4s,opacity .6s;
+    -o-transition: .4s,opacity .6s;
+    transition: .4s,opacity .6s;
+}
+
+/* :before */
+
+.button1:before {
+    content: attr(data-hover);
+    padding-top: 0.28em;
+    -webkit-transform: translate(-150%,0);
+    -moz-transform: translate(-150%,0);
+    -ms-transform: translate(-150%,0);
+    -o-transform: translate(-150%,0);
+    transform: translate(-150%,0);
+}
+
+/* :after */
+
+.button1:after {
+    content: attr(data-active);
+    padding-top: 0.28em;
+    -webkit-transform: translate(150%,0);
+    -moz-transform: translate(150%,0);
+    -ms-transform: translate(150%,0);
+    -o-transform: translate(150%,0);
+    transform: translate(150%,0);
+}
+
+/* Span on :hover and :active */
+
+.button1:hover span,
+.button1:active span {
+    opacity: 0;
+    -webkit-transform: scale(0.3);
+    -moz-transform: scale(0.3);
+    -ms-transform: scale(0.3);
+    -o-transform: scale(0.3);
+    transform: scale(0.3);
+}
+
+/*  
+    We show :before pseudo-element on :hover 
+    and :after pseudo-element on :active 
+*/
+
+.button1:hover:before,
+.button1:active:after {
+    opacity: 1;
+    -webkit-transform: translate(0,0);
+    -moz-transform: translate(0,0);
+    -ms-transform: translate(0,0);
+    -o-transform: translate(0,0);
+    transform: translate(0,0);
+    -webkit-transition-delay: .4s;
+    -moz-transition-delay: .4s;
+    -o-transition-delay: .4s;
+    transition-delay: .4s;
+}
+
+/* 
+  We hide :before pseudo-element on :active
+*/
+
+.button1:active:before {
+    -webkit-transform: translate(-150%,0);
+    -moz-transform: translate(-150%,0);
+    -ms-transform: translate(-150%,0);
+    -o-transform: translate(-150%,0);
+    transform: translate(-150%,0);
+    -webkit-transition-delay: 0s;
+    -moz-transition-delay: 0s;
+    -o-transition-delay: 0s;
+    transition-delay: 0s;
+}
+
+.button1 {
+    display: inline-block;
+    position: relative;
+    overflow: hidden;
+    text-decoration: none;
+}
+
 
 /* 
   BUTTON END
@@ -892,15 +1000,16 @@ svg text {
   min-width: 28px;
 }
 .crncy_select_inn__menu .crncy_select_inn__menu-list>div .crnc_options {
-  background: #0D0415;
-  border: 1px solid #202231;
+  background: rgb(79, 70, 229);
+  //background: #0D0415;
+  border: 1px solid rgb(79, 70, 229);
   border-radius: 8px;
   padding: 6px 14px;
   margin-bottom: 10px;
 }
 .crncy_select_inn__menu .crncy_select_inn__option.crncy_select_inn__option--is-selected .crnc_options {
   position: relative;
-  border: 0.5px solid rgb(79, 70, 229);
+  border: 0.5px solid #e0e7ff;
   overflow: visible;
 }
 .crncy_select_inn__menu .crncy_select_inn__option.crncy_select_inn__option--is-selected .crnc_options::before {
@@ -908,7 +1017,7 @@ svg text {
   content: "";
   width: 6px;
   height: 6px;
-  background: rgb(79, 70, 229);
+  background: #e0e7ff;
   left: -3px;
   border-radius: 50%;
 }
@@ -939,18 +1048,19 @@ svg text {
   content: "";
   width: 6px;
   height: 6px;
-  background: rgb(79, 70, 229);
+  background: #e0e7ff;
   left: -3px;
   border-radius: 50%;
 }
 .crncy_select_brdg__menu .crncy_select_brdg__option.crncy_select_brdg__option--is-selected .crnc_options {
   position: relative;
-  border: 0.5px solid rgb(79, 70, 229);
+  border: 0.5px solid #e0e7ff;
   overflow: visible;
 }
 .crncy_select_brdg__menu .crncy_select_brdg__menu-list>div .crnc_options {
-  background: #0D0415;
-  border: 1px solid #202231;
+  background: rgb(79, 70, 229);
+  //background: #0D0415;
+  border: 1px solid rgb(79, 70, 229);
   border-radius: 8px;
   padding: 6px 14px;
   margin-bottom: 10px;
@@ -978,13 +1088,13 @@ svg text {
   content: "";
   width: 6px;
   height: 6px;
-  background: rgb(79, 70, 229);
+  background: #e0e7ff;
   left: -3px;
   border-radius: 50%;
 }
 .crncy_select_brdg__menu .crncy_select_brdg__option.crncy_select_brdg__option--is-selected .brdg_options {
   position: relative;
-  border: 0.5px solid rgb(79, 70, 229);
+  border: 0.5px solid #e0e7ff;
   overflow: visible;
 }
 .crncy_select_inn__menu .crncy_select_inn__option.crncy_select_inn__option--is-selected .brdg_options::before {
@@ -998,19 +1108,21 @@ svg text {
 }
 .crncy_select_inn__menu .crncy_select_inn__option.crncy_select_inn__option--is-selected .brdg_options {
   position: relative;
-  border: 0.5px solid rgb(79, 70, 229);
+  border: 0.5px solid #e0e7ff;
   overflow: visible;
 }
 .crncy_select_inn__menu .crncy_select_inn__menu-list>div .brdg_options {
-  background: #0D0415;
-  border: 1px solid #202231;
+  background: rgb(79, 70, 229);
+  //background: #0D0415;
+  border: 1px solid rgb(79, 70, 229);
   border-radius: 8px;
   padding: 6px 14px;
   margin-bottom: 10px;
 }
 .crncy_select_brdg__menu .crncy_select_brdg__menu-list>div .brdg_options {
-  background: #0D0415;
-  border: 1px solid #202231;
+  background: rgb(79, 70, 229);
+  //background: #0D0415;
+  border: 1px solid rgb(79, 70, 229);
   border-radius: 8px;
   padding: 6px 14px;
   margin-bottom: 10px;
@@ -1134,7 +1246,7 @@ svg text {
 
 .crncy_select_brdg__menu .crncy_select_brdg__option.crncy_select_brdg__option--is-selected .brdg_options {
   position: relative;
-  border: 0.5px solid rgb(79, 70, 229);
+  border: 0.5px solid #e0e7ff;
   overflow: visible;
 }
 .crncy_select_brdg__menu .crncy_select_brdg__option.crncy_select_brdg__option--is-selected .crnc_options::before {
@@ -1142,7 +1254,7 @@ svg text {
   content: "";
   width: 6px;
   height: 6px;
-  background: rgb(79, 70, 229);
+  background: #e0e7ff;
   left: -3px;
   border-radius: 50%;
 }
@@ -1151,12 +1263,13 @@ svg text {
 }
 .crncy_select_brdg__menu .crncy_select_brdg__option.crncy_select_brdg__option--is-selected .crnc_options {
   position: relative;
-  border: 0.5px solid rgb(79, 70, 229);
+  border: 0.5px solid #e0e7ff;
   overflow: visible;
 }
 .crncy_select_brdg__menu .crncy_select_brdg__menu-list>div .crnc_options {
-  background: #0D0415;
-  border: 1px solid #202231;
+  background: rgb(79, 70, 229);
+  //background: #0D0415;
+  border: 1px solid rgb(79, 70, 229);
   border-radius: 8px;
   padding: 6px 14px;
   margin-bottom: 10px;
@@ -1165,8 +1278,9 @@ svg text {
   margin-bottom: 62px;
 }
 .crncy_select_brdg__menu .crncy_select_brdg__menu-list>div .brdg_options {
-  background: #0D0415;
-  border: 1px solid #202231;
+  background: rgb(79, 70, 229);
+  //background: #0D0415;
+  border: 1px solid rgb(79, 70, 229);
   border-radius: 8px;
   padding: 6px 14px;
   margin-bottom: 10px;

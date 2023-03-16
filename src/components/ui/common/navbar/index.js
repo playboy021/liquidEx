@@ -57,7 +57,7 @@ export default function Navbar() {
                 </Button> 
                 : web3 != null ? account.data ?
                 <Button
-                  className="cursor-default button border-indigo-600 
+                  className="cursor-default button1 border-indigo-600 
                   h-14"
                   data-hover={account.isAdmin ? 'Admin Privileges' : 'User Privileges'}
                   data-active={account.isAdmin ? 'You Awesome' : 'You Meh'}
