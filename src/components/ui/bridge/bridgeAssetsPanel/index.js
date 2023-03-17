@@ -71,11 +71,11 @@ export const InputPanel = () => {
     )
 }
 
-export const BridgeAssetPanelHeader = ({  selectedToken, setSelectedToken, account, destinationChain, setTokens, tokens}) => {
+export const BridgeAssetPanelHeader = ({  selectedToken, setSelectedToken, destinationChain, setTokens, tokens}) => {
 
     let [isOpen, setIsOpen] = useState(false)
 
-    const { network } = useWalletInfo()
+    const { network, account } = useWalletInfo()
 
     function closeModal() {
         setIsOpen(false)
@@ -197,9 +197,8 @@ export const BridgeAssetPanelHeader = ({  selectedToken, setSelectedToken, accou
 
     return (
         <>
-        {console.log(tokens, destinationChain)}
             <div className="flex flex-row-reverse items-end justify-between float-right gap-2">
-                {account == null || chainId.toString() == bridgedTo ?
+                {/* {account.data == undefined || chainId.toString() == bridgedTo ? */}
                     <ButtonSmall
                         className="flex items-center gap-2 shadow-md cursor-pointer text-high-emphesis hover:bg-dark-700 p-0 m-0 relative border-indigo-600"
                         // original className="bannerSwapCurrency flex items-center gap-2 px-2 py-1 shadow-md cursor-pointer text-high-emphesis bg-[#292D3C] hover:bg-dark-700 pb-1"
@@ -210,7 +209,8 @@ export const BridgeAssetPanelHeader = ({  selectedToken, setSelectedToken, accou
                         <img src='https://assets.coingecko.com/coins/images/11939/large/SHIBLOGO.png' width='24px' height='24px' alt='' />
                         <span>SHIB</span>
                         <ChevronDownIcon width={18} />
-                    </ButtonSmall> :
+                    </ButtonSmall> 
+                    {/* :
                     selectedToken == '' || tokens[selectedToken] == undefined ?
                         <Button
                             color="blue"
@@ -236,11 +236,11 @@ export const BridgeAssetPanelHeader = ({  selectedToken, setSelectedToken, accou
                             type='button'
                         >
                             <img src={tokens[selectedToken]?.logoUrl} width='24px' height='24px' alt='' />
-                            <span>{tokens[selectedToken]?.originalSymbol}</span>
+                            <span>{tokens[selectedToken]?.originalSymbol}</span> */}
                             {/* {i18n._(t`${tokens[selectedToken]?.symbol}`)} */}
-                            <ChevronDownIcon width={18} />
+                            {/* <ChevronDownIcon width={18} />
                         </Button>
-                }
+                } */}
             </div>
             {/* <BridgeModal
                 isOpen={isOpen}

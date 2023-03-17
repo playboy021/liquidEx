@@ -27,7 +27,7 @@ export default function Navbar() {
               
               
               <div className="lightBlueGlassLessBlur rounded-lg flex text-center">
-              <Button className={`fontTurrentRoad font-bold text-xl flex flex-col p-0 border-transparent navLogo ${openNav == true ? `bg-opacity-0 text-indigo-600 hover:text-white hover:bg-indigo-600` : `hover:bg-opacity-0 hover:text-indigo-600 bg-indigo-600 text-white`}`} onClick={() => setOpenNav(!openNav)}
+              <Button className={`fontTurrentRoad font-bold text-xl flex flex-col p-0 border-transparent navLogo ${openNav == false ? `bg-opacity-0 text-indigo-600 hover:text-white hover:bg-indigo-600` : `hover:bg-opacity-0 hover:text-indigo-600 bg-indigo-600 text-white`}`} onClick={() => setOpenNav(!openNav)}
                 //data-hover={openNav == true ? `'>Close'` : `'>Open'`} 
                 //data-active={openNav == true ? `'>Close'` : `'>Open'`}
                 hoverable={false}
@@ -38,7 +38,7 @@ export default function Navbar() {
               <>
                <ActiveLink href="/" >
                <a
-                 className="font-medium mr-8 text-white hover:shadow-lg p-4 rounded-lg">
+                 className="font-medium mr-8 ml-8 text-white hover:shadow-lg p-4 rounded-lg">
                     Home
                   </a>
                 </ActiveLink>
