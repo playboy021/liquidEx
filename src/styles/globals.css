@@ -78,6 +78,16 @@ input::-webkit-inner-spin-button {
   background: transparent;
 }
 
+.bridgeInputTransparentModal{
+  background: transparent;
+}
+.bridgeInputTransparentModal:focus{
+  border: 1px solid #4338CA;
+}
+.bridgeInputTransparentModal:active{
+  border: 1px solid #4338CA;
+}
+
 /* 
   BACKGROUND START
 */

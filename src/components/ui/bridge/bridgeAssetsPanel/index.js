@@ -6,6 +6,7 @@ import { Button } from '../../common'
 import { LoaderSmall } from '../../common/loader'
 import { ButtonSmall } from '../../common/button'
 import { useWalletInfo } from '@/components/hooks/web3'
+import BridgeAssetsModal from '../bridgeAssetsModal'
 
 const BridgeAssetPanel = (
     {
@@ -73,16 +74,16 @@ export const InputPanel = () => {
 
 export const BridgeAssetPanelHeader = ({  selectedToken, setSelectedToken, destinationChain, setTokens, tokens}) => {
 
-    let [isOpen, setIsOpen] = useState(false)
+    let [open, setOpen] = useState(false)
 
     const { network, account } = useWalletInfo()
 
     function closeModal() {
-        setIsOpen(false)
+        setOpen(false)
     }
 
     function openModal() {
-        setIsOpen(true)
+        setOpen(true)
     }
 
     const bridgeURL = `https://bridgeapi.anyswap.exchange/v4/tokenlistv4/${network.data}`
@@ -203,7 +204,7 @@ export const BridgeAssetPanelHeader = ({  selectedToken, setSelectedToken, desti
                         className="flex items-center gap-2 shadow-md cursor-pointer text-high-emphesis hover:bg-dark-700 p-0 m-0 relative border-indigo-600"
                         // original className="bannerSwapCurrency flex items-center gap-2 px-2 py-1 shadow-md cursor-pointer text-high-emphesis bg-[#292D3C] hover:bg-dark-700 pb-1"
                         style={{ zIndex: '1' , bottom: '22px'}}
-                        
+                        onClick={openModal}
                         type='button'
                     >
                         <img src='https://assets.coingecko.com/coins/images/11939/large/SHIBLOGO.png' width='24px' height='24px' alt='' />
@@ -242,12 +243,11 @@ export const BridgeAssetPanelHeader = ({  selectedToken, setSelectedToken, desti
                         </Button>
                 } */}
             </div>
-            {/* <BridgeModal
-                isOpen={isOpen}
+            <BridgeAssetsModal
+                closeModal={closeModal}
+                open={open}
                 tokens={tokens}
-                setIsOpen={setIsOpen}
-                setSelectedToken={setSelectedToken}
-            /> */}
+            />
         </>
     )
 }

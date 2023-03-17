@@ -61,3 +61,35 @@ export function ButtonSmall({
         </>
     )
 }
+
+export function ButtonBridgeAssetsModal({
+    children, 
+    className,
+    hoverable = true,
+    variant = 'indigo',
+    ...rest
+}) {
+
+    const variants = {
+        indigo: `text-white bg-indigo-600 ${hoverable && 'hover:shadow-lg'}`,
+        red: `text-white bg-red-600 ${hoverable && 'hover:bg-red-600'}`,
+        green: `text-white bg-green-600 ${hoverable && 'hover:bg-green-600'}`,
+        blue: `text-white bg-blue-600 ${hoverable && 'hover:bg-blue-600'}`,
+        yellow: `text-white bg-yellow-600 ${hoverable && 'hover:bg-yellow-600'}`,
+        gray: `text-white bg-gray-600 ${hoverable && 'hover:bg-gray-600'}`,
+        white: `text-black bg-white ${hoverable && 'hover:bg-gray-300'}`,
+        black: `text-white bg-black ${hoverable && 'hover:bg-gray-900'}`,
+        light: `text-indigo-600 bg-indigo-100 ${hoverable && 'hover:bg-indigo-200'}`,
+    }
+
+    return (
+        <>
+            <button
+                {...rest}
+                className={`disabled:opacity-50 disabled:cursor-not-allowed border rounded-md text-base font-medium text-left p-1 ${className} ${variants[variant]}`}
+            >
+                {children}
+            </button>
+        </>
+    )
+}
