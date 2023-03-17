@@ -4,8 +4,11 @@ import BridgeToSelect from "@/components/ui/bridge/bridgeTo"
 import { Button } from "@/components/ui/common"
 import { BridgeLayout } from "@/components/ui/layout"
 import Image from "next/image"
+import { useState } from "react"
 
 export default function Bridge() {
+    const [destinationChain, setDestinationChain] = useState('137')
+    const [tokens, setTokens] = useState({})
 
     return(
         <>
@@ -18,38 +21,14 @@ export default function Bridge() {
                             header={(props) => (
                                 <>
                                     <BridgeAssetPanel.Panel {...props}
-                                        // selectedToken={selectedToken}
-                                        // tokens={tokens}
-                                        // amount={amount}
-                                        // setAmount={setAmount}
-                                        // selectedTokenBalance={selectedTokenBalance}
                                     />
                                     <BridgeAssetPanel.Header
-                                        // bridgedTo={bridgedTo}
-                                        // chainId={chainId}
-                                        // tokens={tokens}
-                                        // setTokens={setTokens}
-                                        // selectedToken={selectedToken}
-                                        // setSelectedToken={setSelectedToken}
-                                        // account={account}
-                                        // anyToken={anyToken}
-                                        // setAnyToken={setAnyToken}
-                                        // underlyingToken={underlyingToken}
-                                        // setUnderlyingToken={setUnderlyingToken}
-                                        // routerContract={routerContract}
-                                        // setRouterContract={setRouterContract}
-                                        // chainTo={chainTo}
-                                        // chainFrom={chainFrom}
-                                        // amount={amount}
-                                        // setAmount={setAmount}
+                                        destinationChain={destinationChain}
+                                        setTokens={setTokens}
+                                        tokens={tokens}
                                     />
                                 </>
                             )}
-                            // currency={currencies[Field.INPUT] ?? Object.values(defaultTokens).find(token => token.isNative)}
-                            // value={formattedAmounts[Field.INPUT]}
-                            // onChange={useChange}
-                            // onSelect={handleInputSelect}
-                            // inputType={Field.INPUT}
                         />
                         </div>
                     </div>
@@ -66,8 +45,11 @@ export default function Bridge() {
                                     height="16"
                                 />
                             </div>
-                            <div>
-                                <BridgeToSelect />
+                            <div className="cursor-pointer">
+                                <BridgeToSelect 
+                                    destinationChain={destinationChain}
+                                    setDestinationChain={setDestinationChain}
+                                />
                             </div>
                         </div>
                     </div>

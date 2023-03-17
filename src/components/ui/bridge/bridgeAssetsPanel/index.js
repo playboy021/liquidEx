@@ -71,7 +71,7 @@ export const InputPanel = () => {
     )
 }
 
-export const BridgeAssetPanelHeader = ({ bridgedTo, chainId, tokens, setTokens, selectedToken, setSelectedToken, account, anyToken, setAnyToken, underlyingToken, setUnderlyingToken, routerContract, setRouterContract, chainTo, chainFrom, amount, setAmount }) => {
+export const BridgeAssetPanelHeader = ({  selectedToken, setSelectedToken, account, destinationChain, setTokens, tokens}) => {
 
     let [isOpen, setIsOpen] = useState(false)
 
@@ -108,13 +108,31 @@ export const BridgeAssetPanelHeader = ({ bridgedTo, chainId, tokens, setTokens, 
         const res = await getBridgeParams()
         const data = {}
         const tokens = Object.keys(res);
-        console.log(tokens)
+        for (let i = 0; i < tokens.length; i++) {
+            const currentTokenData = res[tokens[i]]
+            const currentDestinationChainTokens = Object?.keys(currentTokenData.destChains)
+            if (currentDestinationChainTokens.includes(destinationChain)){
+                const logoUrl = res[tokens[i]].logoUrl
+                const isNative = res[tokens[i]].tokenType
+                const srcAddress = res[tokens[i]].address
+                const originalSymbol = res[tokens[i]].symbol
+                const originalDecimals = res[tokens[i]].decimals
+                const newTokenData = currentTokenData.destChains[destinationChain][Object.keys(currentTokenData.destChains[destinationChain])[0]]
+                newTokenData.srcAddress = srcAddress
+                newTokenData.logoUrl = logoUrl;
+                newTokenData.isNative = isNative
+                newTokenData.originalDecimals = originalDecimals
+                newTokenData.originalSymbol = originalSymbol
+                data[tokens[i]] = newTokenData;
+                setTokens(data)
+            }
+        }
     }
 
     useEffect(() => {
         getBridgeParams()
         formatBridgeData()
-    },[network.data])
+    },[network.data, destinationChain])
 
 
     // async function getData() {
@@ -179,6 +197,7 @@ export const BridgeAssetPanelHeader = ({ bridgedTo, chainId, tokens, setTokens, 
 
     return (
         <>
+        {console.log(tokens, destinationChain)}
             <div className="flex flex-row-reverse items-end justify-between float-right gap-2">
                 {account == null || chainId.toString() == bridgedTo ?
                     <ButtonSmall

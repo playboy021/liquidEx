@@ -38,25 +38,25 @@ export default function Navbar() {
               <>
                <ActiveLink href="/" >
                <a
-                 className="font-medium mr-8 text-white hover:text-gray-900 p-4">
+                 className="font-medium mr-8 text-white hover:shadow-lg p-4 rounded-lg">
                     Home
                   </a>
                 </ActiveLink>
                 <ActiveLink href="/marketplace" >
                   <a
-                    className="font-medium mr-8 text-white hover:text-gray-900 p-4">
+                    className="font-medium mr-8 text-white hover:shadow-lg p-4 rounded-lg">
                     Marketplace
                   </a>
                 </ActiveLink>
                 <ActiveLink href="/bridge" >
                   <a
-                    className="font-medium mr-8 text-white hover:text-gray-900 p-4">
+                    className="font-medium mr-8 text-white hover:shadow-lg p-4 rounded-lg">
                     Bridge
                   </a>
                 </ActiveLink>
                 <ActiveLink href="/swap" >
                   <a
-                    className="font-medium mr-8 text-white hover:text-gray-900 p-4">
+                    className="font-medium mr-8 text-white hover:shadow-lg p-4 rounded-lg">
                     Swap
                   </a>
                 </ActiveLink>

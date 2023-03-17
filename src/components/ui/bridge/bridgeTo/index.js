@@ -287,7 +287,7 @@ export const SUPPORTED_NETWORKS = {
       }
 ]
 
-function BridgeToSelect({ onChange }) {
+function BridgeToSelect({ destinationChain, setDestinationChain }) {
 
     const { network, account } = useWalletInfo()
 
@@ -306,34 +306,13 @@ function BridgeToSelect({ onChange }) {
                 <Select
                     isSearchable={false}
                     onChange={async (e) => {
-                        let key = e.value
-                        console.debug(`Switching to chain ${key}`, SUPPORTED_NETWORKS[key])
-                        const params = SUPPORTED_NETWORKS[key]
-                        try {
-                            await ethereum.request({
-                                method: 'wallet_switchEthereumChain',
-                                params: [{ chainId: `0x${key.toString(16)}` }],
-                              });
-                        } catch (switchError) {
-                          // This error code indicates that the chain has not been added to MetaMask.
-                          // @ts-ignore TYPE NEEDS FIXING
-                          // if (switchError.code === 4902) {
-                          try {
-                            await ethereum.request('wallet_addEthereumChain', [params, account])
-                          } catch (addError) {
-                            // handle "add" error
-                            console.error(`Add chain error ${addError}`)
-                          }
-                          // }
-                          console.error(`Switch chain error ${switchError}`)
-                          // handle other "switch" errors
-                        }
+                        setDestinationChain((e.value).toString())
                       }}
                     options={options}
                     className="crncy_select"
                     placeholder="Client"
                     classNamePrefix="crncy_select_brdg"
-                    value={options.filter(e => e.value == network.data)[0]}
+                    value={options.filter(e => e.value == destinationChain)[0]}
                     //value={options[5]}
                 />
             </div>

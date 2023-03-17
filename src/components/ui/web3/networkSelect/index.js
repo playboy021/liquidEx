@@ -296,7 +296,7 @@ function ChainSelect({ onChange }) {
 
     return (
         <div
-            className="flex items-center rounded cursor-pointer pointer-events-auto select-none bg-[#131928] hover:bg-dark-900 whitespace-nowrap z-20"
+            className="flex items-center rounded cursor-pointer pointer-events-auto select-none whitespace-nowrap z-20"
         // onClick={() => toggleNetworkModal()}
         >
             <div className="grid items-center justify-center grid-flow-col text-sm rounded pointer-events-auto bg-[#131928] auto-cols-max text-secondary crncy_select_prnt opacity-100">
