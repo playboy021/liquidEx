@@ -113,13 +113,13 @@ export const InputPanel = ({value, placeholder, className = defaultClassName }) 
                         maxLength={79}
                         spellCheck="false"
                         className=
-                        'relative font-bold outline-none border-none flex-auto overflow-hidden overflow-ellipsis placeholder-low-emphesis focus:placeholder-primary bridgeInputTransparent text-indigo-600 text-3xl bg-opacity-50 pt-2'
+                        'relative font-bold outline-none border-none flex-auto overflow-hidden overflow-ellipsis placeholder-low-emphesis focus:placeholder-primary bridgeInputTransparent text-indigo-600 text-3xl bg-opacity-50 pt-2 placeholder-gray-400'
                         style={{ top: '4px'}}
                     />
                 </>
                 <div className='text-sm leading-5 absolute mt-8 text-secondary top-margin' style={{ top: '20px' }}>
                         <div className='pt-2'>
-                            <span>Balance:&nbsp;</span><span className='text-indigo-600'>0.00</span>
+                            <span className='text-gray-400 fontTurrentRoad font-bold'>Balance:&nbsp;</span><span className='text-indigo-600'>0.00</span>
                         </div>
                 </div>
             </div>

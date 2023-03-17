@@ -30,6 +30,7 @@ export default function Navbar() {
               <Button className={`fontTurrentRoad font-bold text-xl flex flex-col p-0 border-transparent navLogo ${openNav == true ? `bg-opacity-0 text-indigo-600 hover:text-white hover:bg-indigo-600` : `hover:bg-opacity-0 hover:text-indigo-600 bg-indigo-600 text-white`}`} onClick={() => setOpenNav(!openNav)}
                 //data-hover={openNav == true ? `'>Close'` : `'>Open'`} 
                 //data-active={openNav == true ? `'>Close'` : `'>Open'`}
+                hoverable={false}
               >
                 <span>'&gt;Liquid_EX'</span>
               </Button>
@@ -82,6 +83,7 @@ export default function Navbar() {
                 <Button
                   className="cursor-default button1 border-indigo-600 
                   h-14"
+                  hoverable={false}
                   data-hover={account.isAdmin ? 'Admin Privileges' : 'User Privileges'}
                   data-active={account.isAdmin ? 'You Awesome' : 'You Meh'}
                 >

@@ -1,3 +1,4 @@
+
 import { useWalletInfo } from '@/components/hooks/web3'
 import Image from 'next/image'
 import React from 'react'
@@ -244,14 +245,14 @@ const options = [
         ),
         value: 137,
       },
-    //   {
-    //     label: (
-    //       <div className="crnc_options cursor-pointer">
-    //         <Image src="/img/bsc_ic.svg" alt="" height={28} width={28} /> <p className='fontTurrentRoad pl-1'>BNB Smart Chain</p>
-    //       </div>
-    //     ),
-    //     value: 56,
-    //   },
+      {
+        label: (
+          <div className="crnc_options cursor-pointer">
+            <Image src="/img/bsc_ic.svg" alt="" height={28} width={28} /> <p className='fontTurrentRoad pl-1'>BNB Smart Chain</p>
+          </div>
+        ),
+        value: 56,
+      },
       {
         label: (
           <div className="crnc_options cursor-pointer">
@@ -260,14 +261,14 @@ const options = [
         ),
         value: 250,
       },
-    //   {
-    //     label: (
-    //       <div className="crnc_options cursor-pointer">
-    //         <Image src="/img/ethereum.svg" alt="" height={28} width={28} /> <p className='fontTurrentRoad pl-1'>Ethereum</p>
-    //       </div>
-    //     ),
-    //     value: 1,
-    //   },
+      {
+        label: (
+          <div className="crnc_options cursor-pointer">
+            <Image src="/img/ethereum.svg" alt="" height={28} width={28} /> <p className='fontTurrentRoad pl-1'>Ethereum</p>
+          </div>
+        ),
+        value: 1,
+      },
       {
         label: (
           <div className="crnc_options cursor-pointer">
@@ -276,17 +277,17 @@ const options = [
         ),
         value: 42161
       },
-    //   {
-    //     label: (
-    //       <div className="crnc_options cursor-pointer">
-    //         <Image src="/img/optimism.svg" alt="" height={28} width={28} /> <p className='fontTurrentRoad pl-1'>Optimism</p>
-    //       </div>
-    //     ),
-    //     value: 10,
-    //   }
+      {
+        label: (
+          <div className="crnc_options cursor-pointer">
+            <Image src="/img/optimism.svg" alt="" height={28} width={28} /> <p className='fontTurrentRoad pl-1'>Optimism</p>
+          </div>
+        ),
+        value: 10,
+      }
 ]
 
-function ChainSelect({ onChange }) {
+function BridgeFromSelect({ onChange }) {
 
     const { network, account } = useWalletInfo()
 
@@ -296,10 +297,10 @@ function ChainSelect({ onChange }) {
 
     return (
         <div
-            className="flex items-center rounded cursor-pointer pointer-events-auto select-none bg-[#131928] hover:bg-dark-900 whitespace-nowrap z-20"
+            className="flex items-center rounded cursor-pointer pointer-events-auto select-none lightBlueGlassMinimumBlur hover:bg-dark-900 whitespace-nowrap z-20 pl-3 pr-3 pt-1 pb-1"
         // onClick={() => toggleNetworkModal()}
         >
-            <div className="grid items-center justify-center grid-flow-col text-sm rounded pointer-events-auto bg-[#131928] auto-cols-max text-secondary crncy_select_prnt opacity-100">
+            <div className="grid items-center justify-center grid-flow-col text-sm rounded pointer-events-auto auto-cols-max text-secondary crncy_select_prnt opacity-100">
                 {/*@ts-ignore TYPE NEEDS FIXING*/}
                 {/* <Image src={NETWORK_ICON[chainId]} alt="Switch Network" className="rounded-md" width="22px" height="22px" /> */}
                 <Select
@@ -340,4 +341,5 @@ function ChainSelect({ onChange }) {
     )
 }
 
-export default ChainSelect
+export default BridgeFromSelect
+
