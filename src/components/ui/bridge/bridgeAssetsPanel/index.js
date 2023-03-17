@@ -1,26 +1,20 @@
 import { ChevronDownIcon } from '@heroicons/react/solid'
-import NumericalInput from '../../common'
-import Typography from '../../common'
 import React, { useEffect, useRef, useState } from 'react'
 import axios from 'axios'
 //import BridgeModal from 'app/modals/BridgeModal/BridgeModal'
 import { Button } from '../../common'
 import { LoaderSmall } from '../../common/loader'
-import { escapeRegExp } from '../../common/container'
+import { ButtonSmall } from '../../common/button'
 
 const BridgeAssetPanel = (
     {
-    error,
     header,
     walletToggle,
     currency,
     value,
     onChange,
-    selected,
     onSelect,
     spendFromWallet,
-    priceImpact,
-    priceImpactCss,
     disabled,
     currencies,
     inputType,
@@ -31,7 +25,7 @@ const BridgeAssetPanel = (
 ) => {
     // console.log('###################', currency);
     return (
-        <div className="rounded-[14px] bg-[#1D2231] p-2 pl-3 pr-3 pt-3 flex flex-col gap-4 swap_prnt">
+        <div className="rounded-lg bg-white bg-opacity-60 p-2 flex flex-col">
             {/* original className="rounded-[14px] bg-[#1D2231] p-3 flex flex-col gap-4 swap_prnt" */}
             {header(
                 {
@@ -49,7 +43,7 @@ const BridgeAssetPanel = (
                 priceRate
             }
             )}
-            <div className="flex gap-1 justify-between px-1.5 float-right flex-row-reverse pb-2 items-start">
+            <div className="flex gap-1 justify-between px-1.5 float-right flex-row-reverse items-start">
 
             </div>
         </div>
@@ -60,22 +54,11 @@ const inputRegex = RegExp(`^\\d*(?:\\\\[.])?\\d*$`) // match escaped "." charact
 
 const defaultClassName = 'w-0 p-0 text-2xl bg-transparent'
 
-export const InputPanel = ({ currency,
-    value,
-    onUserInput,
-    placeholder,
-    className = defaultClassName,
-    ...rest
-  }) => {
+export const InputPanel = ({value, placeholder, className = defaultClassName }) => {
     //const usdcValue = useUSDCValue(tryParseAmount(value || '1', currency))
     const span = useRef(null)
     const [width, setWidth] = useState(0)
 
-    const enforcer = (nextUserInput) => {
-        if (nextUserInput === '' || inputRegex.test(escapeRegExp(nextUserInput))) {
-          onUserInput(nextUserInput)
-        }
-      }
 
 
 
@@ -114,29 +97,30 @@ export const InputPanel = ({ currency,
             </Typography > */}
             <div className='text-2xl leading-7 tracking-[-0.01em] relative flex items-baseline flex-grow gap-3 font-bold'>
                 <>
-                <input
-                    value={value}
-                    onChange={(event) => {
-                    // replace commas with periods, because uniswap exclusively uses period as the decimal separator
-                    enforcer(event.target.value.replace(/,/g, '.'))
-                    }}
-                    // universal input options
-                    inputMode="decimal"
-                    title="Token Amount"
-                    autoComplete="off"
-                    autoCorrect="off"
-                    // text-specific options
-                    type="text"
-                    pattern="^[0-9]*[.,]?[0-9]*$"
-                    placeholder='Add logo to navbar'
-                    min={0}
-                    minLength={1}
-                    maxLength={79}
-                    spellCheck="false"
-                    className=
-                    'relative font-bold outline-none border-none flex-auto overflow-hidden overflow-ellipsis placeholder-low-emphesis focus:placeholder-primary'
-                />
+                    <input
+                        //value={value}
+                        // universal input options
+                        inputMode="decimal"
+                        title="Token Amount"
+                        autoComplete="off"
+                        autoCorrect="off"
+                        // text-specific options
+                        type="number"
+                        pattern="^[0-9]*[.,]?[0-9]*$"
+                        placeholder='0.00'
+                        min={0}
+                        minLength={1}
+                        maxLength={79}
+                        spellCheck="false"
+                        className=
+                        'relative font-bold outline-none border-none flex-auto overflow-hidden overflow-ellipsis placeholder-low-emphesis focus:placeholder-primary bridgeInputTransparent mt-1 text-indigo-600 text-3xl bg-opacity-50'
+                    />
                 </>
+                <div className='text-sm leading-5 absolute mt-8 text-secondary top-margin'>
+                        <div className='pt-2'>
+                            <span>Balance:&nbsp;</span><span className='text-indigo-600'>0.00</span>
+                        </div>
+                </div>
             </div>
         </>
     )
@@ -248,20 +232,17 @@ export const BridgeAssetPanelHeader = ({ bridgedTo, chainId, tokens, setTokens, 
         <>
             <div className="flex flex-row-reverse items-end justify-between float-right gap-2">
                 {account == null || chainId.toString() == bridgedTo ?
-                    <Button
-                        color="blue"
-                        variant="filled"
-                        size="sm"
-                        className="bannerSwapCurrency flex items-center gap-2 px-2 py-1 shadow-md cursor-pointer text-high-emphesis bg-[#292D3C] hover:bg-dark-700 pb-1 mt-1"
+                    <ButtonSmall
+                        className="flex items-center gap-2 shadow-md cursor-pointer text-high-emphesis hover:bg-dark-700 p-0 m-0 relative"
                         // original className="bannerSwapCurrency flex items-center gap-2 px-2 py-1 shadow-md cursor-pointer text-high-emphesis bg-[#292D3C] hover:bg-dark-700 pb-1"
-                        style={{ zIndex: '1' }}
+                        style={{ zIndex: '1' , bottom: '48px'}}
                         disabled
                         type='button'
                     >
                         <img src='https://assets.coingecko.com/coins/images/11939/large/SHIBLOGO.png' width='24px' height='24px' alt='' />
                         <span>SHIB</span>
                         <ChevronDownIcon width={18} />
-                    </Button> :
+                    </ButtonSmall> :
                     selectedToken == '' || tokens[selectedToken] == undefined ?
                         <Button
                             color="blue"

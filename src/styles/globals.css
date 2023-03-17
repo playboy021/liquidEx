@@ -20,6 +20,12 @@
 	border-radius: 15px;
 }
 
+input::-webkit-outer-spin-button,
+input::-webkit-inner-spin-button {
+  -webkit-appearance: none;
+  margin: 0;
+}
+
 .next-image-wrapper > div {
     height: 100%;
 }
@@ -38,14 +44,12 @@
 }
 
 .lightBlueGlass {
-  /* From https://css.glass */
   backdrop-filter: blur(5px);
   background-color: rgba(79, 70, 229, 0.4);
   border: 1px solid rgba(79, 70, 229, 0.5);
 }
 
 .lightBlueGlassLessBlur {
-  /* From https://css.glass */
   backdrop-filter: blur(2px);
   background-color: rgba(79, 70, 229, 0.4);
   border: 1px solid rgba(79, 70, 229, 0.5);
@@ -54,6 +58,10 @@
 .navLogo {
   //-webkit-text-stroke: 0.5px black;
   letter-spacing: 2px;
+  background: transparent;
+}
+
+.bridgeInputTransparent{
   background: transparent;
 }
 

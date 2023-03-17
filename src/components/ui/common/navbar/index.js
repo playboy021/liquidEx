@@ -27,10 +27,13 @@ export default function Navbar() {
               
               
               <div className="lightBlueGlassLessBlur rounded-lg flex text-center">
-              <Button className="fontTurrentRoad font-bold text-xl flex flex-col p-0 border-transparent navLogo text-indigo-600 hover:text-white button" onClick={() => setOpenNav(!openNav)}
-                data-hover={openNav == true ? `'>Close'` : `'>Open'`} data-active={openNav == true ? `'>Close'` : `'>Open'`}
+              <Button className="fontTurrentRoad font-bold text-xl flex flex-col p-0 border-transparent navLogo text-indigo-600 hover:text-white 
+                
+                " onClick={() => setOpenNav(!openNav)}
+                //data-hover={openNav == true ? `'>Close'` : `'>Open'`} 
+                //data-active={openNav == true ? `'>Close'` : `'>Open'`}
               >
-                <span className="pt-2">'&gt;Liquid_EX'</span>
+                <span>'&gt;Liquid_EX'</span>
               </Button>
               { openNav == true ? 
               <>

@@ -9,7 +9,7 @@ export default function Bridge() {
             <div className="flex justify-center">
                 <div className="lightBlueGlassLessBlur mt-28 rounded-lg container">
                     <div className="w-full p-6 pb-2">
-                        <div className="bg-white p-6 rounded-md h-full">
+                        <div className="rounded-md h-full">
                         <BridgeAssetPanel
                             //spendFromWallet={true}
                             header={(props) => (
@@ -51,7 +51,7 @@ export default function Bridge() {
                         </div>
                     </div>
                     <div className="w-full p-6 pt-0 pb-2">
-                        <div className="bg-white p-6 rounded-md h-full">
+                        <div className="bg-indigo-200 p-6 rounded-lg h-full">
                             <h1 className="text-4xl text-center">Bridge</h1>
                         </div>
                     </div>
