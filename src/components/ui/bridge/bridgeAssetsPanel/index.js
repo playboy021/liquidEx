@@ -128,7 +128,7 @@ export const InputPanel = ({ currency,
                     // text-specific options
                     type="text"
                     pattern="^[0-9]*[.,]?[0-9]*$"
-                    placeholder='0.0'
+                    placeholder='Add logo to navbar'
                     min={0}
                     minLength={1}
                     maxLength={79}

@@ -4,41 +4,63 @@ import { useAccount } from '@components/hooks/web3'
 import ActiveLink from "../link"
 import Loader, { LoaderSmall } from "../loader"
 import { NetworkSelector } from "../../web3"
+import { useEffect, useState } from "react"
 
 export default function Navbar() {
   const { connect, isLoading, web3 } = useWeb3()
   const { account } = useAccount()
+  const [openNav, setOpenNav] = useState(false)
+
+  useEffect(() => {
+    if (typeof window !== 'undefined') {
+      if (window.location.pathname !== '/') {
+        setOpenNav(true)
+      }
+    }
+  }, [])
 
   return (
     <section>
       <div className="relative pt-6 fontTurrentRoad">
         <nav className="relative" aria-label="Global">
           <div className="flex flex-col xs:flex-row justify-between items-center">
-            <div className="lightBlueGlassLessBlur rounded-lg p-4 flex text-center">
-              <ActiveLink href="/" >
-                <a
-                  className="font-medium ml-8 mr-8 text-white hover:text-gray-900">
-                  Home
-                </a>
-              </ActiveLink>
-              <ActiveLink href="/marketplace" >
-                <a
-                  className="font-medium mr-8 text-white hover:text-gray-900">
-                  Marketplace
-                </a>
-              </ActiveLink>
-              <ActiveLink href="/bridge" >
-                <a
-                  className="font-medium mr-8 text-white hover:text-gray-900">
-                  Bridge
-                </a>
-              </ActiveLink>
-              <ActiveLink href="/swap" >
-                <a
-                  className="font-medium mr-8 text-white hover:text-gray-900">
-                  Swap
-                </a>
-              </ActiveLink>
+              
+              
+              <div className="lightBlueGlassLessBlur rounded-lg flex text-center">
+              <Button className="fontTurrentRoad font-bold text-xl flex flex-col p-0 border-transparent navLogo text-indigo-600 hover:text-white button" onClick={() => setOpenNav(!openNav)}
+                data-hover={openNav == true ? `'>Close'` : `'>Open'`} data-active={openNav == true ? `'>Close'` : `'>Open'`}
+              >
+                <span className="pt-2">'&gt;Liquid_EX'</span>
+              </Button>
+              { openNav == true ? 
+              <>
+               <ActiveLink href="/" >
+               <a
+                 className="font-medium mr-8 text-white hover:text-gray-900 p-4">
+                    Home
+                  </a>
+                </ActiveLink>
+                <ActiveLink href="/marketplace" >
+                  <a
+                    className="font-medium mr-8 text-white hover:text-gray-900 p-4">
+                    Marketplace
+                  </a>
+                </ActiveLink>
+                <ActiveLink href="/bridge" >
+                  <a
+                    className="font-medium mr-8 text-white hover:text-gray-900 p-4">
+                    Bridge
+                  </a>
+                </ActiveLink>
+                <ActiveLink href="/swap" >
+                  <a
+                    className="font-medium mr-8 text-white hover:text-gray-900 p-4">
+                    Swap
+                  </a>
+                </ActiveLink>
+                </> : null
+              }
+                
             </div>
             <div className="text-center lightBlueGlassLessBlur rounded-lg flex items-center z-20">
               <div className="p-1">
@@ -66,13 +88,13 @@ export default function Navbar() {
                 </Button> :
               <Button
                 onClick={connect}
-                className='border-indigo-600'
+                className='border-indigo-600 h-14'
               >
                 Connect Wallet
               </Button> :
                 <Button
                   onClick={() => window.open('https://metamask.io/download.html', '_blank')}
-                  className='border-indigo-600'
+                  className='border-indigo-600 h-14'
                 >
                   Install Metamask
                 </Button>
