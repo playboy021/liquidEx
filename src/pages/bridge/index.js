@@ -51,7 +51,7 @@ export default function Bridge() {
                         </div>
                     </div>
                     <div className="w-full p-6 pt-0 pb-2">
-                        <div className="bg-indigo-200 p-6 rounded-lg h-full">
+                        <div className="bg-white bg-opacity-60 p-6 rounded-lg h-full">
                             <h1 className="text-4xl text-center">Bridge</h1>
                         </div>
                     </div>
