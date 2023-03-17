@@ -8,7 +8,8 @@ import { useState } from "react"
 
 export default function Bridge() {
     const [destinationChain, setDestinationChain] = useState('137')
-    const [tokens, setTokens] = useState({})
+    const [tokens, setTokens] = useState([])
+    const [selectedToken, setSelectedToken] = useState('')
 
     return(
         <>
@@ -26,6 +27,8 @@ export default function Bridge() {
                                         destinationChain={destinationChain}
                                         setTokens={setTokens}
                                         tokens={tokens}
+                                        selectedToken={selectedToken}
+                                        setSelectedToken={setSelectedToken}
                                     />
                                 </>
                             )}

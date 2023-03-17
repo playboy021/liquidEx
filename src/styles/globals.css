@@ -79,7 +79,7 @@ input::-webkit-inner-spin-button {
 }
 
 .bridgeInputTransparentModal{
-  background: transparent;
+  background: rgba(79, 70, 229, 0.4);
 }
 .bridgeInputTransparentModal:focus{
   border: 1px solid #4338CA;
