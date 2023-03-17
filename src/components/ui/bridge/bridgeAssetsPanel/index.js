@@ -5,42 +5,21 @@ import axios from 'axios'
 import { Button } from '../../common'
 import { LoaderSmall } from '../../common/loader'
 import { ButtonSmall } from '../../common/button'
+import { useWalletInfo } from '@/components/hooks/web3'
 
 const BridgeAssetPanel = (
     {
     header,
-    walletToggle,
-    currency,
-    value,
-    onChange,
-    onSelect,
-    spendFromWallet,
     disabled,
-    currencies,
-    inputType,
-    amountToParaswap,
-    isParaswap,
-    priceRate,
 }
 ) => {
     // console.log('###################', currency);
     return (
-        <div className="rounded-lg bg-white bg-opacity-60 p-2 pt-0 pb-0 flex flex-col">
+        <div className="rounded-lg bg-white bg-opacity-60 p-3 pt-0 pb-0 flex flex-col">
             {/* original className="rounded-[14px] bg-[#1D2231] p-3 flex flex-col gap-4 swap_prnt" */}
             {header(
                 {
                 disabled,
-                onChange,
-                value,
-                currency,
-                currencies,
-                onSelect,
-                walletToggle,
-                spendFromWallet,
-                inputType,
-                amountToParaswap,
-                isParaswap,
-                priceRate
             }
             )}
             <div className="flex gap-1 justify-between px-1.5 float-right flex-row-reverse items-start">
@@ -50,11 +29,7 @@ const BridgeAssetPanel = (
     )
 }
 
-const inputRegex = RegExp(`^\\d*(?:\\\\[.])?\\d*$`) // match escaped "." characters via in a non-capturing group
-
-const defaultClassName = 'w-0 p-0 text-2xl bg-transparent'
-
-export const InputPanel = ({value, placeholder, className = defaultClassName }) => {
+export const InputPanel = () => {
     //const usdcValue = useUSDCValue(tryParseAmount(value || '1', currency))
     const span = useRef(null)
     const [width, setWidth] = useState(0)
@@ -64,37 +39,6 @@ export const InputPanel = ({value, placeholder, className = defaultClassName }) 
 
     return (
         <>
-            {/* <Typography weight={700} variant="h3" className="relative flex items-baseline flex-grow gap-3">
-                    <>
-                        <NumericalInput
-                            disabled={disabled}
-                            value={amount || ''}
-                            onUserInput={onChange}
-                            placeholder="0.00"
-                            className="leading-[36px] bannerBridgeInput focus:placeholder:text-low-emphesis flex-grow w-full text-left bg-transparent text-inherit disabled:cursor-not-allowed"
-                        />
-                    </>
-                <Typography
-                    variant="sm"
-                    className="absolute mt-8 text-secondary top-margin" // original className="absolute mt-8 text-secondary top-1"
-                    component="span"
-                    style={{ left: width }}
-                >
-                    <div className='pt-1'>
-                        {/* // ^ original className='mt-1' */}
-                        {/* <span onClick={() => { setAmount(selectedTokenBalance) }} className='balance_brdg'>Balance:&nbsp;
-                            {selectedTokenBalance != '' ?
-                                parseFloat(selectedTokenBalance).toFixed(4)
-                                :
-                                < div className='relative bottom-4 ml-14' >
-                                    <LoaderSmall size='12px' stroke='#7F7F7F' />
-                                </div>
-                            }
-
-                        </span> */}
-                   {/*  </div>
-                </Typography >
-            </Typography > */}
             <div className='text-2xl leading-7 tracking-[-0.01em] relative flex items-baseline flex-grow gap-3 font-bold'>
                 <>
                     <input
@@ -130,7 +74,8 @@ export const InputPanel = ({value, placeholder, className = defaultClassName }) 
 export const BridgeAssetPanelHeader = ({ bridgedTo, chainId, tokens, setTokens, selectedToken, setSelectedToken, account, anyToken, setAnyToken, underlyingToken, setUnderlyingToken, routerContract, setRouterContract, chainTo, chainFrom, amount, setAmount }) => {
 
     let [isOpen, setIsOpen] = useState(false)
-    const [pops, setPops] = useState('')
+
+    const { network } = useWalletInfo()
 
     function closeModal() {
         setIsOpen(false)
@@ -140,34 +85,37 @@ export const BridgeAssetPanelHeader = ({ bridgedTo, chainId, tokens, setTokens, 
         setIsOpen(true)
     }
 
-    const bridgeURL = `https://bridgeapi.anyswap.exchange/v4/tokenlistv4/${chainId}`
+    const bridgeURL = `https://bridgeapi.anyswap.exchange/v4/tokenlistv4/${network.data}`
 
-    // async function getBridge() {
-    //     try {
-    //         const { data, status } = await axios.get<GetBridgeResponse>(
-    //             bridgeURL,
-    //             {
-    //                 headers: {
-    //                     Accept: 'application/json',
-    //                 }
-    //             },
-    //         )
+    async function getBridgeParams() {
+        try {
+            const { data, status } = await axios.get(bridgeURL, {
+                headers: {
+                    Accept: 'application/json',
+                }
+            })
+            return data
+        } catch (error) {
+            if (axios.isAxiosError(error)) {
+                return error.message
+            } else {
+                return 'An unexpected error occurred'
+            }
+        }
+    }
 
-    //         //console.log(JSON.stringify(data, null, 4))
+    async function formatBridgeData() {
+        const res = await getBridgeParams()
+        const data = {}
+        const tokens = Object.keys(res);
+        console.log(tokens)
+    }
 
-    //         //console.log('response staus is: ', status)
+    useEffect(() => {
+        getBridgeParams()
+        formatBridgeData()
+    },[network.data])
 
-    //         return data
-    //     } catch (error) {
-    //         if (axios.isAxiosError(error)) {
-    //             //console.log('error message: ', error.message)
-    //             return error.message
-    //         } else {
-    //             //console.log('unexpected error: ', error)
-    //             return 'An unexpected error occurred'
-    //         }
-    //     }
-    // }
 
     // async function getData() {
     //     const res = await getBridge()

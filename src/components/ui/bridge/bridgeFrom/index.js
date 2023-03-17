@@ -297,7 +297,7 @@ function BridgeFromSelect({ onChange }) {
 
     return (
         <div
-            className="flex items-center rounded cursor-pointer pointer-events-auto select-none lightBlueGlassMinimumBlur hover:bg-dark-900 whitespace-nowrap z-20 pl-3 pr-3 pt-1 pb-1"
+            className="flex items-center rounded-lg cursor-pointer pointer-events-auto select-none lightBlueGlassMinimumBlur hover:bg-dark-900 whitespace-nowrap z-20 pl-3 pr-3 pt-1 pb-1"
         // onClick={() => toggleNetworkModal()}
         >
             <div className="grid items-center justify-center grid-flow-col text-sm rounded pointer-events-auto auto-cols-max text-secondary crncy_select_prnt opacity-100">
