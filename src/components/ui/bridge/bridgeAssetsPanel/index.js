@@ -54,7 +54,7 @@ export const InputPanel = ({amount, setAmount}) => {
                         minLength={1}
                         maxLength={79}
                         spellCheck="false"
-                        onChange={(e) => {setAmount(e.target.value)}}
+                        onChange={e => setAmount(e.target.value)}
                         className=
                         'relative font-bold outline-none border-none flex-auto overflow-hidden overflow-ellipsis placeholder-low-emphesis focus:placeholder-primary bridgeInputTransparent text-indigo-600 text-3xl bg-opacity-50 pt-2 placeholder-gray-400'
                         style={{ top: '4px'}}
@@ -140,7 +140,7 @@ export const BridgeAssetPanelHeader = ({  selectedToken, setSelectedToken, desti
     useEffect(() => {
         getBridgeParams()
         formatBridgeData()
-    },[network.data, destinationChain, amount])
+    },[network.data, destinationChain])
 
 
     // async function getData() {
@@ -191,10 +191,9 @@ export const BridgeAssetPanelHeader = ({  selectedToken, setSelectedToken, desti
     //     }
     // }, [bridgedTo, chainId, tokens[selectedToken]])
 
-    // useEffect(() => {
-    //     setPops('')
-    //     setSelectedToken('')
-    // }, [chainId])
+    useEffect(() => {
+        setSelectedToken('')
+    }, [network.data])
 
     // useEffect(() => {
     //     getBridge()
@@ -205,6 +204,7 @@ export const BridgeAssetPanelHeader = ({  selectedToken, setSelectedToken, desti
 
     return (
         <>
+        {console.log(selectedToken)}
             <div className="flex flex-row-reverse items-end justify-between float-right gap-2">
                 {account?.data == undefined || (network.data)?.toString() == destinationChain ?
                     <ButtonSmall
@@ -225,9 +225,12 @@ export const BridgeAssetPanelHeader = ({  selectedToken, setSelectedToken, desti
                             // original className="bannerSwapCurrency flex items-center gap-2 px-2 py-1 shadow-md cursor-pointer text-high-emphesis bg-[#292D3C] hover:bg-dark-700 pb-1"
                             style={{ zIndex: '1' , bottom: '22px'}}
                             onClick={openModal}
+                            variant='light'
                             type='button'
                         >
-                            <LoaderSmall />
+                            <div className='flex items-center text-gray-400'>
+                                Select Token
+                            </div>
                             <ChevronDownIcon width={18} />
                         </ButtonSmall> :
                         <ButtonSmall

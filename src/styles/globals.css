@@ -90,8 +90,8 @@ input::-webkit-inner-spin-button {
 .bridgeTokenSearchGlow{
   box-shadow: 5px 5px 40px 0 rgba(65,103,255,0.5),
   -19px -5px 50px 0 rgba(198,65,198,0.5);
-  -webkit-transition:0.7s;
-  transition:0.7s;
+  -webkit-transition:0.4s;
+  transition:0.4s;
 }
 
 /* 

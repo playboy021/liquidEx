@@ -1,18 +1,37 @@
 import { Dialog, Transition } from '@headlessui/react'
-import { Fragment, useState } from 'react'
-import { ButtonBridgeAssetsModal } from '../../common/button';
+import { Fragment, useEffect, useState } from 'react'
+import { ButtonBridgeAssetsModal, ButtonSmall } from '../../common/button';
 import { XIcon } from '@heroicons/react/solid';
+import { maxWidth } from 'tailwindcss/defaultTheme';
 
 export default function BridgeAssetsModal({ closeModal, open, tokens, setOpen, setSelectedToken }) {
 
-    const [search, setSearch] = useState('');
+    const [search, setSearch] = useState('')
+    const [topTokens, setTopTokens] = useState([])
 
     const searchFilter = (tokenName) => {
         return tokens[tokenName].originalSymbol.toLowerCase().includes(search.toLowerCase());
     }
 
+    useEffect(() => {
+
+        function getTopTokens() {
+            let data = []
+            for (let i = 0; i < Object.keys(tokens).length; i++) {
+                const key = Object.keys(tokens)[i]
+                if(tokens[key]?.originalSymbol == 'USDC' || tokens[key]?.originalSymbol == 'DAI' || tokens[key]?.originalSymbol == 'USDT' || tokens[key]?.originalSymbol == 'WBTC' || tokens[key]?.originalSymbol == 'WETH' || tokens[key]?.tokenType == 'NATIVE' || tokens[key]?.originalSymbol == 'fUSDT'){
+                    data.push(tokens[key])
+                    setTopTokens(data)
+                }
+            }
+        }
+        
+        getTopTokens()
+    }, [open])
+
     return (
         <>
+        {console.log(topTokens)}
             <Transition appear show={open} as={Fragment}>
                 <Dialog as="div" className="fixed inset-0 z-30" onClose={() => { closeModal(), setSearch('') }}>
                     <div className="fixed inset-0 bg-black/30 blur" aria-hidden="true" />
@@ -65,7 +84,21 @@ export default function BridgeAssetsModal({ closeModal, open, tokens, setOpen, s
                                         </div>
                                     </Dialog.Title>
                                     <input type='text' className='w-full p-3 pl-3 pr-3 rounded-lg mb-2 bridgeInputTransparentModal border-indigo-600 border text-white focus:border-indigo-600' placeholder='Input token name' onChange={(e) => setSearch(e.target.value)} />
-                                    <div className='w-full p-3 pl-3 pr-3 rounded-lg mb-2 bridgeInputTransparentModal border-indigo-600 border text-white focus:border-indigo-600 text-center'>Popular tokens</div>
+                                    <div className='w-full py-2 rounded-lg mb-2 bridgeInputTransparentModal border-indigo-600 border text-white focus:border-indigo-600 text-center'>
+                                        
+                                        {Object.keys(topTokens).map(function (token) {
+                                            return (
+                                                <div key={token} className='inline-flex px-1'>
+                                                    <ButtonSmall onClick={() => { setSelectedToken(topTokens[token]); setOpen(false);; setSearch('') }} className='w-full h-10 bg-opacity-0 border-indigo-600 text-white p-1' style={{width:'70px', height:'40px'}} >
+                                                            {topTokens[token].originalSymbol}
+                                                    </ButtonSmall>
+                                                </div>
+                                            )
+                                        })
+
+                                        }
+
+                                    </div>
                                     <div className="rounded-lg overflow-y-auto mb-4" style={{maxHeight: '300px'}}>
                                         <div className='rounded-lg bg-white bg-opacity-50 p-1 border_brdg'>
 
