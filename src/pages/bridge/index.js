@@ -1,13 +1,17 @@
 import BridgeAssetPanel from "@/components/ui/bridge/bridgeAssetsPanel"
 import BridgeFromSelect from "@/components/ui/bridge/bridgeFrom"
 import BridgeToSelect from "@/components/ui/bridge/bridgeTo"
-import { Button } from "@/components/ui/common"
+import { Button, Loader } from "@/components/ui/common"
 import { BridgeLayout } from "@/components/ui/layout"
 import Image from "next/image"
 import { useState } from "react"
 import { ChevronDownIcon } from "@heroicons/react/solid"
+import { useWalletInfo } from "@/components/hooks/web3"
+import { LoaderSmall } from "@/components/ui/common/loader"
 
 export default function Bridge() {
+    const { network } = useWalletInfo()
+
     const [destinationChain, setDestinationChain] = useState('137')
     const [tokens, setTokens] = useState([])
     const [selectedToken, setSelectedToken] = useState('')
@@ -62,19 +66,27 @@ export default function Bridge() {
                             </div>
                         </div>
                     </div>
+                    
                     { amount == '' ?
-                     <></> :
+                     <></> : selectedToken == '' || (network.data).toString() == destinationChain ?
+                     <div className="w-full p-6 pt-0 pb-2">
+                        <div className="bg-white bg-opacity-60 p-4 pb-2 rounded-lg h-full flex items-center cursor-pointer justify-center" onClick={() => {setOpenInfoTab(!openInfoTab)}}>
+                                <div className="">
+                                    <LoaderSmall/>
+                                </div>
+                        </div> 
+                    </div> 
+                    :
                      <div className="w-full p-6 pt-0 pb-2">
                         <div className="bg-white bg-opacity-60 p-3 rounded-lg h-full flex justify-between items-center cursor-pointer" onClick={() => {setOpenInfoTab(!openInfoTab)}}>
-                                <span className="text-indigo-600 font-bold">Important:</span>
-                                <ChevronDownIcon width={18} />
-                                {   openInfoTab == true ?
-                                    <div>Tab Open</div> : <></>
-
-                                }
+                                <div className="flex justify-between">
+                                    <span className="text-indigo-600 font-bold">Important:</span>
+                                    <ChevronDownIcon width={18} />
+                                </div>
                         </div>
-                    </div>
+                    </div> 
                     }
+                    
                     
                     <div className="w-full p-6 pt-0">
                         <Button className='w-full border-indigo-600 text-lg fontTurrentRoad font-bold'>'&gt; Bridge_Funds'</Button>
