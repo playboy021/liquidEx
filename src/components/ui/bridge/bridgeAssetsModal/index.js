@@ -31,7 +31,6 @@ export default function BridgeAssetsModal({ closeModal, open, tokens, setOpen, s
 
     return (
         <>
-        {console.log('topTokens', topTokens)}
             <Transition appear show={open} as={Fragment}>
                 <Dialog as="div" className="fixed inset-0 z-30" onClose={() => { closeModal(), setSearch('') }}>
                     <div className="fixed inset-0 bg-black/30 blur" aria-hidden="true" />
@@ -89,9 +88,9 @@ export default function BridgeAssetsModal({ closeModal, open, tokens, setOpen, s
                                         {Object.values(topTokens).map(function (token) {
                                             return (
                                                 <div key={token} className='inline-flex px-1'>
-                                                    <ButtonXSmall onClick={() => { setSelectedToken(token); setOpen(false);; setSearch('') }} className='w-full bg-opacity-0 border-indigo-600 text-white' style={{width:'70px', height:'40px' }} >
+                                                    <ButtonXSmall onClick={() => { setSelectedToken(token); setOpen(false);; setSearch('') }} className='w-full bg-opacity-0 border-indigo-600 text-white' style={{width:'74px', height:'35px' }} >
                                                         <div className='inline-flex p-1'>
-                                                            <img src={tokens[token]?.logoUrl} width='23px' height='23px' alt='' />&nbsp;<span className='text-xs pt-1'>{tokens[token]?.originalSymbol}</span>
+                                                            <img src={tokens[token]?.logoUrl} width='23px' height='23px' alt='' />&nbsp;<span className='text-xs pt-1 pr-1'>{tokens[token]?.originalSymbol}</span>
                                                         </div>
                                                     </ButtonXSmall>
                                                 </div>

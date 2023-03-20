@@ -1,9 +1,6 @@
 import { ChevronDownIcon } from '@heroicons/react/solid'
 import React, { useEffect, useRef, useState } from 'react'
 import axios from 'axios'
-//import BridgeModal from 'app/modals/BridgeModal/BridgeModal'
-import { Button } from '../../common'
-import { LoaderSmall } from '../../common/loader'
 import { ButtonSmall } from '../../common/button'
 import { useWalletInfo } from '@/components/hooks/web3'
 import BridgeAssetsModal from '../bridgeAssetsModal'
@@ -204,7 +201,6 @@ export const BridgeAssetPanelHeader = ({  selectedToken, setSelectedToken, desti
 
     return (
         <>
-        {console.log('selectedToken', selectedToken)}
             <div className="flex flex-row-reverse items-end justify-between float-right gap-2">
                 {account?.data == undefined || (network.data)?.toString() == destinationChain ?
                     <ButtonSmall

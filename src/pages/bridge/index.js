@@ -60,6 +60,15 @@ export default function Bridge() {
                             </div>
                         </div>
                     </div>
+                    { amount == '' ?
+                     <></> :
+                     <div className="w-full p-6 pt-0 pb-2">
+                        <div className="bg-white bg-opacity-60 p-2 rounded-lg h-full flex justify-between items-center">
+                                Important:
+                        </div>
+                    </div>
+                    }
+                    
                     <div className="w-full p-6 pt-0">
                         <Button className='w-full border-indigo-600 text-lg fontTurrentRoad font-bold'>'&gt; Bridge_Funds'</Button>
                     </div>
