@@ -10,6 +10,7 @@ export default function Bridge() {
     const [destinationChain, setDestinationChain] = useState('137')
     const [tokens, setTokens] = useState([])
     const [selectedToken, setSelectedToken] = useState('')
+    const [amount, setAmount] = useState('')
 
     return(
         <>
@@ -22,6 +23,8 @@ export default function Bridge() {
                             header={(props) => (
                                 <>
                                     <BridgeAssetPanel.Panel {...props}
+                                    amount={amount}
+                                    setAmount={setAmount}
                                     />
                                     <BridgeAssetPanel.Header
                                         destinationChain={destinationChain}
@@ -29,6 +32,7 @@ export default function Bridge() {
                                         tokens={tokens}
                                         selectedToken={selectedToken}
                                         setSelectedToken={setSelectedToken}
+                                        amount={amount}
                                     />
                                 </>
                             )}

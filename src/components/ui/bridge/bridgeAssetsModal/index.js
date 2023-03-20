@@ -1,10 +1,11 @@
 import { Dialog, Transition } from '@headlessui/react'
 import { Fragment, useState } from 'react'
 import { ButtonBridgeAssetsModal } from '../../common/button';
+import { XIcon } from '@heroicons/react/solid';
 
 export default function BridgeAssetsModal({ closeModal, open, tokens, setOpen, setSelectedToken }) {
 
-    const [search, setSearch] = useState("");
+    const [search, setSearch] = useState('');
 
     const searchFilter = (tokenName) => {
         return tokens[tokenName].originalSymbol.toLowerCase().includes(search.toLowerCase());
@@ -13,7 +14,7 @@ export default function BridgeAssetsModal({ closeModal, open, tokens, setOpen, s
     return (
         <>
             <Transition appear show={open} as={Fragment}>
-                <Dialog as="div" className="fixed inset-0 z-30" onClose={() => { closeModal() }}>
+                <Dialog as="div" className="fixed inset-0 z-30" onClose={() => { closeModal(), setSearch('') }}>
                     <div className="fixed inset-0 bg-black/30 blur" aria-hidden="true" />
 
                     <Transition.Child
@@ -43,7 +44,7 @@ export default function BridgeAssetsModal({ closeModal, open, tokens, setOpen, s
                                 leaveTo="opacity-0 scale-95"
                             >
 
-                                <Dialog.Panel className="w-full max-w-md  p-5 mb-8 ml-1 mr-1 overflow-hidden text-left align-middle transition-all transform rounded-2xl lightBlueGlass" style={{
+                                <Dialog.Panel className="w-full max-w-md  p-5 mb-8 ml-1 mr-1 overflow-hidden text-left align-middle transition-all transform rounded-2xl lightBlueGlass bridgeTokenSearchGlow" style={{
                                     minWidth: '380px',
                                     height: "505px",
                                     width: "380px",
@@ -56,9 +57,12 @@ export default function BridgeAssetsModal({ closeModal, open, tokens, setOpen, s
 
                                     <Dialog.Title
                                         as="h1"
-                                        className="mt-1 mb-4 text-xl font-bold text-white"
+                                        className="mt-1 mb-4 text-xl font-bold text-white flex justify-between"
                                     >
                                         Select a Token
+                                        <div className='flex cursor-pointer hover:opacity-50 items-center' onClick={() => {closeModal(), setSearch('')}}>
+                                            <XIcon width='25px' height='25px'/>
+                                        </div>
                                     </Dialog.Title>
                                     <input type='text' className='w-full p-3 pl-3 pr-3 rounded-lg mb-2 bridgeInputTransparentModal border-indigo-600 border text-white focus:border-indigo-600' placeholder='Input token name' onChange={(e) => setSearch(e.target.value)} />
                                     <div className='w-full p-3 pl-3 pr-3 rounded-lg mb-2 bridgeInputTransparentModal border-indigo-600 border text-white focus:border-indigo-600 text-center'>Popular tokens</div>
