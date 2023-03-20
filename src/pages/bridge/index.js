@@ -130,6 +130,9 @@ export default function Bridge() {
                 <BridgeConfirmationModal 
                     openConformationModal={openConformationModal}
                     setOpenConformationModal={setOpenConformationModal}
+                    amount={amount}
+                    tokens={tokens}
+                    selectedToken={selectedToken}
                 />
             </div>
         </>

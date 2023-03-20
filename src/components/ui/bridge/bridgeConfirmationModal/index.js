@@ -3,10 +3,12 @@ import Image from 'next/dist/client/image';
 import { Fragment, useState, useEffect } from 'react'
 import { Button } from '../../common';
 
-export default function BridgeConfirmationModal({openConformationModal, setOpenConformationModal}) {
+
+export default function BridgeConfirmationModal({openConformationModal, setOpenConformationModal, amount, tokens, selectedToken}) {
     const [transactionMode, setTransactionMode] = useState(false)
 
     function closeModal() {
+        setTransactionMode(false)
         setOpenConformationModal(false)
     }
 
@@ -57,46 +59,43 @@ export default function BridgeConfirmationModal({openConformationModal, setOpenC
 
                                     <Dialog.Title
                                         as="h1"
-                                        className="mt-1 mb-4 text-xl font-bold text-center text-white"
+                                        className="mt-1 mb-2 text-xl font-bold text-center text-white"
                                     >
                                         {transactionMode == true ?
                                             <>Transaction Details</>
                                             : <>Bridging Information</>}
                                     </Dialog.Title>
                                     {transactionMode == true ?
-                                        <div className='bg-[#1d2231] rounded-[12px] text-center pt-1 pb-1'>Transaction in Progress</div>
+                                        <div className='bg-white bg-opacity-50 border-indigo-600 border text-indigo-800 rounded-lg text-center pt-1 pb-1'>Transaction in Progress</div>
                                         :
-                                        <div className='bg-[#1d2231] rounded-[12px] text-center pt-1 pb-1 text-red-400'>Please review and confirm the details</div>}
-                                    <div className='rounded-[12px] borderBrdgConfirm mt-4 mb-4'>
+                                        <div className='bg-white bg-opacity-50 border-indigo-600 border rounded-lg text-center pt-1 pb-1 text-red-600'>Please review and confirm the details</div>}
+                                    <div className='rounded-lg bg-white bg-opacity-50 text-indigo-800 border-indigo-600 border mt-4 mb-4'>
                                         <h2 style={{ fontSize: '20px', fontWeight: 'bold' }} className='mt-2 ml-2'>From</h2>
-                                        {/* <div className='flex justify-between mt-4 ml-2 mr-2' style={{ fontSize: '15px' }}>
-                                            <div className='flex justify-start'><img src={chainInfo[chainId]?.logoUrl} width='24px' height='24px' alt='' />&nbsp;<span className='mt-1'>{chainInfo[chainId]?.name}</span></div>
-                                            <div className='mt-1'>- {amount} {tokens[selectedToken]?.originalSymbol}</div>
+                                        <div className='flex justify-between mt-4 ml-2 mr-2' style={{ fontSize: '15px' }}>
+                                            {/* <div className='flex justify-start'><img src={chainInfo[chainId]?.logoUrl} width='24px' height='24px' alt='' />&nbsp;<span className='mt-1'>{chainInfo[chainId]?.name}</span></div>
+                                            <div className='mt-1'>- {amount} {tokens[selectedToken]?.originalSymbol}</div> */}
                                         </div>
                                         {transactionMode == true ?
                                             <div className='flex justify-between mt-2 mb-2 ml-2 mr-2' style={{ fontSize: '15px' }}>
                                                 <div>Tx Hash:</div>
-                                                <div><a href={`${chainInfo[chainId]?.explorer.tx}${transactionHash}`} target='_blank' rel="noreferrer"><b>{transactionHash.slice(0, 6) + '...' + transactionHash.slice(60, 66)}</b></a></div>
-                                            </div> :
+                                                {/* <div><a href={`${chainInfo[chainId]?.explorer.tx}${transactionHash}`} target='_blank' rel="noreferrer"><b>{transactionHash.slice(0, 6) + '...' + transactionHash.slice(60, 66)}</b></a></div> */}
+                                            </div> 
+                                            :
                                             null
                                         }
                                         <div className='flex justify-between mt-2 mb-2 ml-2 mr-2' style={{ fontSize: '15px' }}>
                                             {transactionMode == true ?
                                                 <div>From:</div> : <div>Address:</div>}
-                                            <div><a href={`${chainInfo[chainId]?.explorer.address}${account}`} target='_blank' rel="noreferrer"><b>{account?.slice(0, 6) + '...' + account?.slice(38, 42)}</b></a></div>
-                                        </div> */}
+                                            {/* <div><a href={`${chainInfo[chainId]?.explorer.address}${account}`} target='_blank' rel="noreferrer"><b>{account?.slice(0, 6) + '...' + account?.slice(38, 42)}</b></a></div> */}
+                                        </div>
 
                                     </div>
-                                    <div className='flex justify-center mb-4'>
-                                        <Image
-                                            src="/images/swapIcon.svg"
-                                            alt="swapicon"
-                                            width="18"
-                                            height="18"
-                                            className='flex justify-center rotate'
-                                        />
+                                    <div className='flex justify-center mb-4 fill-white '>
+                                        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="white" className="w-8 h-8 border-indigo-600 border rounded-lg p-1">
+                                        <path strokeLinecap="round" strokeLinejoin="round" d="M3 7.5L7.5 3m0 0L12 7.5M7.5 3v13.5m13.5 0L16.5 21m0 0L12 16.5m4.5 4.5V7.5" />
+                                        </svg>
                                     </div>
-                                    <div className='rounded-[12px] borderBrdgConfirm'>
+                                    <div className='rounded-lg bg-white bg-opacity-50 text-indigo-800 border-indigo-600 border'>
                                         <h2 style={{ fontSize: '20px', fontWeight: 'bold' }} className='mt-2 ml-2'>To</h2>
                                         <div className='flex justify-between mt-4 ml-2 mr-2' style={{ fontSize: '15px' }}>
                                             {/* <div className='flex justify-start'><img src={chainInfo[bridgedTo]?.logoUrl} width='24px' height='24px' alt='' />&nbsp;<span className='mt-1'>{chainInfo[bridgedTo]?.name}</span></div>
@@ -123,7 +122,7 @@ export default function BridgeConfirmationModal({openConformationModal, setOpenC
                                     </div>
                                     {transactionMode == true ?
                                         null :
-                                        <><div className='flex justify-between mt-2 ml-2 mr-2' style={{ fontSize: '15px' }}>
+                                        <><div className='flex justify-between mt-2 ml-2 mr-2 text-indigo-800' style={{ fontSize: '15px' }}>
                                             <div>
                                                 Crosschain Fee:
                                             </div>
@@ -133,7 +132,7 @@ export default function BridgeConfirmationModal({openConformationModal, setOpenC
                                                 ({tokens[selectedToken]?.SwapFeeRatePerMillion}%) */}
                                             </div>
                                         </div>
-                                            <div className='flex justify-between mt-1 mb-2 ml-2 mr-2' style={{ fontSize: '15px' }}>
+                                            <div className='flex justify-between mt-1 mb-2 ml-2 mr-2 text-indigo-800' style={{ fontSize: '15px' }}>
                                                 <div>
                                                     Estimated time of arrival:
                                                 </div>
@@ -142,30 +141,30 @@ export default function BridgeConfirmationModal({openConformationModal, setOpenC
                                                 </div>
                                             </div>
                                         </>}
-                                    {transactionMode == true && bridgingFailed == true ?
-                                        < div className='mt-5 mr-3 bg-[#1d2231] rounded-[12px] text-center text-red-400 pt-1 pb-1'>
+                                    {/* {transactionMode == true && bridgingFailed == true ?
+                                        < div className='mt-5 mr-3 bg-white bg-opacity-50 rounded-lg text-center text-red-400 pt-1 pb-1'>
                                             <h2>Bridging Failed</h2>
-                                        </div> : null}
+                                        </div> : null} */}
                                     {transactionMode == true && Number(amount) > Number(tokens[selectedToken]?.BigValueThreshold) ?
-                                        < div className='mt-5 mr-3 bg-[#1d2231] rounded-[12px] text-center pt-1 pb-1'>
+                                        < div className='mt-5 mr-3 bg-white bg-opacity-50 rounded-lg text-center pt-1 pb-1'>
                                             <h2>Bridging this Amount will take up to 24h</h2>
                                         </div> : null}
                                     {transactionMode == true ?
                                         < div className='mt-5 mr-2'>
 
-                                            < Stepper alternativeLabel activeStep={step} connector={<QontoConnector />}>
+                                            {/* < Stepper alternativeLabel activeStep={step} connector={<QontoConnector />}>
                                                 {steps.map((label) => (
                                                     <Step key={label}>
                                                         <StepLabel StepIconComponent={QontoStepIcon}>{label}</StepLabel>
                                                     </Step>
                                                 ))}
-                                            </Stepper>
+                                            </Stepper> */}
                                         </div>
                                         :
                                         <Button
                                             fullWidth
                                             className="mt-4 rounded-2xl md:rounded w-full fontTurrentRoad border-indigo-600"
-                                            onClick={() => { bridgeHandler(); setTransactionMode(true); setStep(0); setAPIStatus({}); setBridgingFailed(false) }}
+                                            onClick={() => { setTransactionMode(true); }}
                                             // disabled={
                                             //     chainId.toString() == bridgedTo
                                             //         || amount == ''
