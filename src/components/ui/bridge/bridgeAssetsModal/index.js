@@ -1,6 +1,6 @@
 import { Dialog, Transition } from '@headlessui/react'
 import { Fragment, useEffect, useState } from 'react'
-import { ButtonBridgeAssetsModal, ButtonSmall } from '../../common/button';
+import { ButtonBridgeAssetsModal, ButtonXSmall } from '../../common/button';
 import { XIcon } from '@heroicons/react/solid';
 import { maxWidth } from 'tailwindcss/defaultTheme';
 
@@ -20,7 +20,7 @@ export default function BridgeAssetsModal({ closeModal, open, tokens, setOpen, s
             for (let i = 0; i < Object.keys(tokens).length; i++) {
                 const key = Object.keys(tokens)[i]
                 if(tokens[key]?.originalSymbol == 'USDC' || tokens[key]?.originalSymbol == 'DAI' || tokens[key]?.originalSymbol == 'USDT' || tokens[key]?.originalSymbol == 'WBTC' || tokens[key]?.originalSymbol == 'WETH' || tokens[key]?.tokenType == 'NATIVE' || tokens[key]?.originalSymbol == 'fUSDT'){
-                    data.push(tokens[key])
+                    data.push(key)
                     setTopTokens(data)
                 }
             }
@@ -31,7 +31,7 @@ export default function BridgeAssetsModal({ closeModal, open, tokens, setOpen, s
 
     return (
         <>
-        {console.log(topTokens)}
+        {console.log('topTokens', topTokens)}
             <Transition appear show={open} as={Fragment}>
                 <Dialog as="div" className="fixed inset-0 z-30" onClose={() => { closeModal(), setSearch('') }}>
                     <div className="fixed inset-0 bg-black/30 blur" aria-hidden="true" />
@@ -86,12 +86,14 @@ export default function BridgeAssetsModal({ closeModal, open, tokens, setOpen, s
                                     <input type='text' className='w-full p-3 pl-3 pr-3 rounded-lg mb-2 bridgeInputTransparentModal border-indigo-600 border text-white focus:border-indigo-600' placeholder='Input token name' onChange={(e) => setSearch(e.target.value)} />
                                     <div className='w-full py-2 rounded-lg mb-2 bridgeInputTransparentModal border-indigo-600 border text-white focus:border-indigo-600 text-center'>
                                         
-                                        {Object.keys(topTokens).map(function (token) {
+                                        {Object.values(topTokens).map(function (token) {
                                             return (
                                                 <div key={token} className='inline-flex px-1'>
-                                                    <ButtonSmall onClick={() => { setSelectedToken(topTokens[token]); setOpen(false);; setSearch('') }} className='w-full h-10 bg-opacity-0 border-indigo-600 text-white p-1' style={{width:'70px', height:'40px'}} >
-                                                            {topTokens[token].originalSymbol}
-                                                    </ButtonSmall>
+                                                    <ButtonXSmall onClick={() => { setSelectedToken(token); setOpen(false);; setSearch('') }} className='w-full bg-opacity-0 border-indigo-600 text-white' style={{width:'70px', height:'40px' }} >
+                                                        <div className='inline-flex p-1'>
+                                                            <img src={tokens[token]?.logoUrl} width='23px' height='23px' alt='' />&nbsp;<span className='text-xs pt-1'>{tokens[token]?.originalSymbol}</span>
+                                                        </div>
+                                                    </ButtonXSmall>
                                                 </div>
                                             )
                                         })
@@ -99,7 +101,7 @@ export default function BridgeAssetsModal({ closeModal, open, tokens, setOpen, s
                                         }
 
                                     </div>
-                                    <div className="rounded-lg overflow-y-auto mb-4" style={{maxHeight: '300px'}}>
+                                    <div className="rounded-lg overflow-y-auto mb-4" style={{maxHeight: '290px'}}>
                                         <div className='rounded-lg bg-white bg-opacity-50 p-1 border_brdg'>
 
                                             <div className='rounded-lg'>

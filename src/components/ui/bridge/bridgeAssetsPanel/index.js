@@ -204,7 +204,7 @@ export const BridgeAssetPanelHeader = ({  selectedToken, setSelectedToken, desti
 
     return (
         <>
-        {console.log(selectedToken)}
+        {console.log('selectedToken', selectedToken)}
             <div className="flex flex-row-reverse items-end justify-between float-right gap-2">
                 {account?.data == undefined || (network.data)?.toString() == destinationChain ?
                     <ButtonSmall
