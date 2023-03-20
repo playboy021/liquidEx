@@ -133,6 +133,7 @@ export default function Bridge() {
                     amount={amount}
                     tokens={tokens}
                     selectedToken={selectedToken}
+                    destinationChain={destinationChain}
                 />
             </div>
         </>
