@@ -5,12 +5,14 @@ import { Button } from "@/components/ui/common"
 import { BridgeLayout } from "@/components/ui/layout"
 import Image from "next/image"
 import { useState } from "react"
+import { ChevronDownIcon } from "@heroicons/react/solid"
 
 export default function Bridge() {
     const [destinationChain, setDestinationChain] = useState('137')
     const [tokens, setTokens] = useState([])
     const [selectedToken, setSelectedToken] = useState('')
     const [amount, setAmount] = useState('')
+    const [openInfoTab, setOpenInfoTab] = useState(false)
 
     return(
         <>
@@ -63,8 +65,13 @@ export default function Bridge() {
                     { amount == '' ?
                      <></> :
                      <div className="w-full p-6 pt-0 pb-2">
-                        <div className="bg-white bg-opacity-60 p-2 rounded-lg h-full flex justify-between items-center">
-                                Important:
+                        <div className="bg-white bg-opacity-60 p-3 rounded-lg h-full flex justify-between items-center cursor-pointer" onClick={() => {setOpenInfoTab(!openInfoTab)}}>
+                                <span className="text-indigo-600 font-bold">Important:</span>
+                                <ChevronDownIcon width={18} />
+                                {   openInfoTab == true ?
+                                    <div>Tab Open</div> : <></>
+
+                                }
                         </div>
                     </div>
                     }

@@ -140,42 +140,6 @@ export const BridgeAssetPanelHeader = ({  selectedToken, setSelectedToken, desti
     },[network.data, destinationChain])
 
 
-    // async function getData() {
-    //     const res = await getBridge()
-    //     const data = {}
-    //     const tokens = Object.keys(res);
-    //     for (let i = 0; i < tokens.length; i++) {
-    //         const currTokenData = res[tokens[i]];
-    //         const currDestChains = Object.keys(currTokenData.destChains);
-
-    //         if (currDestChains.includes(bridgedTo)) {
-    //             const logoUrl = res[tokens[i]].logoUrl
-    //             const isNative = res[tokens[i]].tokenType
-    //             const srcAddress = res[tokens[i]].address
-    //             const originalSymbol = res[tokens[i]].symbol
-    //             const originalDecimals = res[tokens[i]].decimals
-    //             const newTokenData = currTokenData.destChains[bridgedTo][Object.keys(currTokenData.destChains[bridgedTo])[0]];
-    //             newTokenData.srcAddress = srcAddress
-    //             newTokenData.logoUrl = logoUrl;
-    //             newTokenData.isNative = isNative
-    //             newTokenData.originalDecimals = originalDecimals
-    //             newTokenData.originalSymbol = originalSymbol
-    //             data[tokens[i]] = newTokenData;
-    //             if (selectedToken == '' && pops == '') {
-    //                 if (res[tokens[i]].symbol == 'POPS') {
-    //                     setSelectedToken(tokens[i])
-    //                     setPops(tokens[i])
-    //                 }
-    //             } else if (selectedToken != '') {
-    //                 if (res[tokens[i]].symbol == tokens[selectedToken]?.symbol) {
-    //                     setSelectedToken(selectedToken)
-    //                 }
-    //             }
-    //         }
-    //     }
-    //     setTokens(data)
-    // }
-
     // useEffect(() => {
     //     setAnyToken(tokens[selectedToken]?.fromanytoken.address)
     //     setUnderlyingToken(tokens[selectedToken]?.underlying.address)
