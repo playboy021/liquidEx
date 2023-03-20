@@ -120,15 +120,11 @@ export const BridgeAssetPanelHeader = ({  selectedToken, setSelectedToken, desti
                 newTokenData.originalDecimals = originalDecimals
                 newTokenData.originalSymbol = originalSymbol
                 data[tokens[i]] = newTokenData;
-                if (selectedToken == '') {
-                    if (res[tokens[i]].symbol == 'USDT') {
-                        setSelectedToken(tokens[i])
-                    }
-                } else if (selectedToken != '') {
-                    if (res[tokens[i]].symbol == tokens[selectedToken]?.symbol) {
-                        setSelectedToken(selectedToken)
-                    }
+
+                if (data[tokens[i]]?.symbol == 'USDC') {
+                    setSelectedToken(tokens[i])
                 }
+                    
                 setTokens(data)
             }
         }
@@ -138,6 +134,10 @@ export const BridgeAssetPanelHeader = ({  selectedToken, setSelectedToken, desti
         getBridgeParams()
         formatBridgeData()
     },[network.data, destinationChain])
+
+    useEffect(() => {
+        setSelectedToken('')
+    }, [destinationChain, network.data])
 
 
     // useEffect(() => {
@@ -151,10 +151,6 @@ export const BridgeAssetPanelHeader = ({  selectedToken, setSelectedToken, desti
     //         setSelectedToken(pops)
     //     }
     // }, [bridgedTo, chainId, tokens[selectedToken]])
-
-    useEffect(() => {
-        setSelectedToken('')
-    }, [network.data])
 
     // useEffect(() => {
     //     getBridge()
