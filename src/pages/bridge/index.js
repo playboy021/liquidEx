@@ -8,6 +8,7 @@ import { useState } from "react"
 import { ChevronDownIcon } from "@heroicons/react/solid"
 import { useWalletInfo } from "@/components/hooks/web3"
 import { LoaderSmall } from "@/components/ui/common/loader"
+import BridgeConfirmationModal from "@/components/ui/bridge/bridgeConfirmationModal"
 
 export default function Bridge() {
     const { network } = useWalletInfo()
@@ -17,6 +18,7 @@ export default function Bridge() {
     const [selectedToken, setSelectedToken] = useState('')
     const [amount, setAmount] = useState('')
     const [openInfoTab, setOpenInfoTab] = useState(false)
+    const [openConformationModal, setOpenConformationModal] = useState(false)
 
     return(
         <>
@@ -120,9 +122,15 @@ export default function Bridge() {
                     
                     
                     <div className="w-full p-6 pt-0">
-                        <Button className='w-full border-indigo-600 text-lg fontTurrentRoad font-bold'>'&gt; Bridge_Funds'</Button>
+                        <Button className='w-full border-indigo-600 text-lg fontTurrentRoad font-bold' onClick={() => {
+                            setOpenConformationModal(true)
+                        }}>'&gt; Bridge_Funds'</Button>
                     </div>
                 </div>
+                <BridgeConfirmationModal 
+                    openConformationModal={openConformationModal}
+                    setOpenConformationModal={setOpenConformationModal}
+                />
             </div>
         </>
     )

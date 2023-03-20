@@ -2,7 +2,6 @@ import { Dialog, Transition } from '@headlessui/react'
 import { Fragment, useEffect, useState } from 'react'
 import { ButtonBridgeAssetsModal, ButtonXSmall } from '../../common/button';
 import { XIcon } from '@heroicons/react/solid';
-import { maxWidth } from 'tailwindcss/defaultTheme';
 
 export default function BridgeAssetsModal({ closeModal, open, tokens, setOpen, setSelectedToken }) {
 
