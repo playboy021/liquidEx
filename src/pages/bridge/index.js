@@ -220,15 +220,17 @@ export default function Bridge() {
                             >
                                 <LoaderXS />&nbsp;'&gt; Approving_Tokens'
                             </Button> 
-                        </div> : tokens[selectedToken]?.routerABI == 'sendTransaction' ?
-                        <div className="w-full p-6 pt-0">
-                            <Button
-                                className='w-full border-indigo-600 text-lg fontTurrentRoad font-bold'
-                                disabled={true}
-                            >
-                               Deprecated method (Needs to be fixed)
-                            </Button>
-                        </div> : Number(amount) > Number(selectedTokenAllowance) ?
+                        </div> 
+                        // : tokens[selectedToken]?.routerABI == 'sendTransaction' ?
+                        // <div className="w-full p-6 pt-0">
+                        //     <Button
+                        //         className='w-full border-indigo-600 text-lg fontTurrentRoad font-bold'
+                        //         disabled={true}
+                        //     >
+                        //        Deprecated method (Needs to be fixed)
+                        //     </Button>
+                        // </div> 
+                        : Number(amount) > Number(selectedTokenAllowance) ?
                         <div className="w-full p-6 pt-0">
                             <Button
                                 className='w-full border-indigo-600 text-lg fontTurrentRoad font-bold'
@@ -275,6 +277,7 @@ export default function Bridge() {
                     routerContract={routerContract}
                     anyToken={anyToken}
                     underlyingToken={underlyingToken}
+                    setAmount={setAmount}
                 />
             </div>
         </>

@@ -14,7 +14,7 @@ import { ethers } from 'ethers';
 
 const steps = ['Sent', 'Confirming', 'Routing', 'Success'];
 
-export default function BridgeConfirmationModal({openConformationModal, setOpenConformationModal, amount, tokens, selectedToken, destinationChain, routerContract, anyToken, underlyingToken}) {
+export default function BridgeConfirmationModal({openConformationModal, setOpenConformationModal, amount, tokens, selectedToken, destinationChain, routerContract, anyToken, setAmount}) {
     const [transactionMode, setTransactionMode] = useState(false)
     const [step, setStep] = useState(2)
     const [balanceAfterFee, setBalanceAfterFee] = useState('')
@@ -60,7 +60,7 @@ export default function BridgeConfirmationModal({openConformationModal, setOpenC
 
         console.log(tokens[selectedToken]?.routerABI)
 
-        if (tokens[selectedToken]?.routerABI == 'transfer(toAddress,amount)') {
+        if (tokens[selectedToken]?.routerABI == 'transfer(toAddress,amount)') { // Wokrs ! 
             try {
                 Token.transfer(toAddress, amountToTransfer, { gasLimit: 200000 }).then((transfer) => {
                     //console.dir(transfer)
@@ -79,7 +79,7 @@ export default function BridgeConfirmationModal({openConformationModal, setOpenC
                 console.log(error)
             }
 
-        } else if (tokens[selectedToken]?.routerABI == 'sendTransaction') {
+        } else if (tokens[selectedToken]?.routerABI == 'sendTransaction') { // Works !
             try {
                 fromAddress.sendTransaction({ from: destAddress, to: toAddress, value: amountToTransfer, gasLimit: 200000 }).then((transfer) => {
                     //console.dir(transfer)
@@ -89,7 +89,7 @@ export default function BridgeConfirmationModal({openConformationModal, setOpenC
                 console.log(error)
             }
 
-        } else if (tokens[selectedToken]?.routerABI == 'anySwapOutUnderlying(fromanytoken,toAddress,amount,toChainID)') {
+        } else if (tokens[selectedToken]?.routerABI == 'anySwapOutUnderlying(fromanytoken,toAddress,amount,toChainID)') { // Works !
             try {
                 console.log(tokens[selectedToken]?.name)
                 Router.anySwapOutUnderlying(anyToken, destAddress, amountToTransfer, Number(destinationChain), { gasLimit: 200000 }).then((transfer) => {
@@ -112,7 +112,7 @@ export default function BridgeConfirmationModal({openConformationModal, setOpenC
             // setTransactionHash(transaction.hash)
             // await transaction.wait()
 
-        } else if (tokens[selectedToken]?.routerABI == 'anySwapOut(anytoken,toAddress,amount,toChainID)') {
+        } else if (tokens[selectedToken]?.routerABI == 'anySwapOut(fromanytoken,toAddress,amount,toChainID)') { // Works !
             try {
                 Router.anySwapOut(anyToken, destAddress, amountToTransfer, Number(destinationChain), { gasLimit: 200000 }).then((transfer) => {
                     //console.dir(transfer)
@@ -135,7 +135,7 @@ export default function BridgeConfirmationModal({openConformationModal, setOpenC
             // await transaction.wait()
 
         }
-        else if (tokens[selectedToken]?.routerABI == 'Swapout(amount,toAddress)') {
+        else if (tokens[selectedToken]?.routerABI == 'Swapout(amount,toAddress)') { // Works !
             try {
                 //Router.Swapout(amountToTransfer, destAddress, { gasLimit: 200000 })
                 Swapout.Swapout(amountToTransfer, destAddress, { gasLimit: 200000 }).then((transfer) => {
@@ -157,7 +157,7 @@ export default function BridgeConfirmationModal({openConformationModal, setOpenC
             }
 
         }
-        else if (tokens[selectedToken]?.routerABI == 'anySwapOutNative(anytoken,toAddress,toChainID,{value: amount})') {
+        else if (tokens[selectedToken]?.routerABI == 'anySwapOutNative(fromanytoken,toAddress,toChainID,{value: amount})') { // Works !
             try {
                 Router.anySwapOutNative(anyToken, destAddress, Number(destinationChain), { value: amountToTransfer, gasLimit: 200000 }).then((transfer) => {
                     //console.dir(transfer)
@@ -294,7 +294,7 @@ export default function BridgeConfirmationModal({openConformationModal, setOpenC
     return (
         <>
             <Transition appear show={openConformationModal} as={Fragment}>
-                <Dialog as="div" className="relative z-30" onClose={() => { closeModal(); }} >
+                <Dialog as="div" className="relative z-30" onClose={() => { closeModal(); setAmount('')}} >
                     <div className="fixed inset-0 bg-black/30 blur" aria-hidden="true" />
 
                     <Transition.Child
