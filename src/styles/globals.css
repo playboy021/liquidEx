@@ -94,6 +94,19 @@ input::-webkit-inner-spin-button {
   transition:0.4s;
 }
 
+
+.MuiStepLabel-label.Mui-completed {
+  color: #4f46e5 !important;
+}
+
+.MuiStepLabel-label.Mui-active {
+  color: #4f46e5 !important;
+}
+
+.MuiStepLabel-label.Mui-disabled {
+  color: #eaeaf0 !important;
+}
+
 /* 
   BACKGROUND START
 */
@@ -424,23 +437,6 @@ body {
   border-color: black black transparent transparent;
   animation: rotation 1.5s linear infinite;
 }
-    
-@keyframes rotation {
-  0% {
-    transform: rotate(0deg);
-  }
-  100% {
-    transform: rotate(360deg);
-  }
-} 
-@keyframes rotationBack {
-  0% {
-    transform: rotate(0deg);
-  }
-  100% {
-    transform: rotate(-360deg);
-  }
-}
 
 .loaderSmall {
   width: 21px;
@@ -478,22 +474,42 @@ body {
   border-color: black black transparent transparent;
   animation: rotation 1.5s linear infinite;
 }
-    
-@keyframes rotation {
-  0% {
-    transform: rotate(0deg);
-  }
-  100% {
-    transform: rotate(360deg);
-  }
-} 
-@keyframes rotationBack {
-  0% {
-    transform: rotate(0deg);
-  }
-  100% {
-    transform: rotate(-360deg);
-  }
+
+.loaderXS {
+  width: 18px;
+  height: 18px;
+  border-radius: 50%;
+  display: inline-block;
+  position: relative;
+  border: 3px solid;
+  border-color: black black transparent transparent;
+  box-sizing: border-box;
+  animation: rotation 1s linear infinite;
+}
+.loaderXS::after,
+.loaderXS::before {
+  content: '';  
+  box-sizing: border-box;
+  position: absolute;
+  left: 0;
+  right: 0;
+  top: 0;
+  bottom: 0;
+  margin: auto;
+  border: 3px solid;
+  border-color: transparent transparent #4338CA #4338CA;
+  width: 10px;
+  height: 10px;
+  border-radius: 50%;
+  box-sizing: border-box;
+  animation: rotationBack 0.5s linear infinite;
+  transform-origin: center center;
+}
+.loaderXS::before {
+  width: 2px;
+  height: 2px;
+  border-color: black black transparent transparent;
+  animation: rotation 1.5s linear infinite;
 }
 
 .loaderBig {
@@ -523,17 +539,17 @@ body {
   height: 52px;
   border-radius: 50%;
   box-sizing: border-box;
-  animation: rotationBackBig 0.5s linear infinite;
+  animation: rotationBack 0.5s linear infinite;
   transform-origin: center center;
 }
 .loaderBig::before {
   width: 44px;
   height: 44px;
   border-color: #4338CA #4338CA transparent transparent;
-  animation: rotationBig 1.5s linear infinite;
+  animation: rotation 1.5s linear infinite;
 }
     
-@keyframes rotationBig {
+@keyframes rotation {
   0% {
     transform: rotate(0deg);
   }
@@ -541,7 +557,7 @@ body {
     transform: rotate(360deg);
   }
 } 
-@keyframes rotationBackBig {
+@keyframes rotationBack {
   0% {
     transform: rotate(0deg);
   }

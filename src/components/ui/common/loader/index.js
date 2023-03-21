@@ -21,6 +21,17 @@ export function LoaderSmall() {
     )
 }
 
+export function LoaderXS() {
+
+    return (
+        <>
+            <div className="inline-flex">
+                <span className="loaderXS"></span>
+            </div>
+        </>
+    )
+}
+
 export function LoaderBig() {
 
     return (

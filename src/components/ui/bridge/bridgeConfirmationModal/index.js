@@ -9,14 +9,13 @@ import Step from '@mui/material/Step';
 import StepLabel from '@mui/material/StepLabel';
 import Check from '@mui/icons-material/Check';
 import StepConnector, { stepConnectorClasses } from '@mui/material/StepConnector';
-import { StepIconProps } from '@mui/material/StepIcon';
-import { LoaderSmall } from '../../common/loader';
+import { LoaderXS } from '../../common/loader';
 
 const steps = ['Sent', 'Confirming', 'Routing', 'Success'];
 
 export default function BridgeConfirmationModal({openConformationModal, setOpenConformationModal, amount, tokens, selectedToken, destinationChain}) {
     const [transactionMode, setTransactionMode] = useState(false)
-    const [step, setStep] = useState(0)
+    const [step, setStep] = useState(2)
     const [balanceAfterFee, setBalanceAfterFee] = useState('')
     const [chainInfo, setChainInfo] = useState([])
     const [APIstatus, setAPIStatus] = useState([])
@@ -84,7 +83,7 @@ export default function BridgeConfirmationModal({openConformationModal, setOpenC
                 {completed ? (
                     <Check className="QontoStepIcon-completedIcon" />
                 ) : active ? (
-                    <LoaderSmall/>
+                    <LoaderXS/>
                 ) :
                     (
                         <div className="QontoStepIcon-circle" />
