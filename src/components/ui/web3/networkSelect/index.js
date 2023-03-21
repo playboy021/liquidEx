@@ -26,31 +26,31 @@ export const SUPPORTED_NETWORKS = {
     //   rpcUrls: ['https://rpcapi.fantom.network'],
     //   blockExplorerUrls: ['https://ftmscan.com'],
     // },
-    // [ChainId.BSC]: {
-    //   chainId: '0x38',
-    //   chainName: 'Binance Smart Chain Mainnet',
-    //   nativeCurrency: {
-    //     name: 'Binance Coin',
-    //     symbol: 'BNB',
-    //     decimals: 18,
-    //   },
-    //   rpcUrls: [
-    //     "https://bsc-dataseed1.binance.org",
-    //     "https://bsc-dataseed2.binance.org",
-    //     "https://bsc-dataseed3.binance.org",
-    //     "https://bsc-dataseed4.binance.org",
-    //     "https://bsc-dataseed1.defibit.io",
-    //     "https://bsc-dataseed2.defibit.io",
-    //     "https://bsc-dataseed3.defibit.io",
-    //     "https://bsc-dataseed4.defibit.io",
-    //     "https://bsc-dataseed1.ninicoin.io",
-    //     "https://bsc-dataseed2.ninicoin.io",
-    //     "https://bsc-dataseed3.ninicoin.io",
-    //     "https://bsc-dataseed4.ninicoin.io",
-    //     "wss://bsc-ws-node.nariox.org"
-    //   ],
-    //   blockExplorerUrls: ['https://bscscan.com'],
-    // },
+    56 : {
+      chainId: '0x38',
+      chainName: 'Binance Smart Chain Mainnet',
+      nativeCurrency: {
+        name: 'Binance Coin',
+        symbol: 'BNB',
+        decimals: 18,
+      },
+      rpcUrls: [
+        "https://bsc-dataseed1.binance.org",
+        "https://bsc-dataseed2.binance.org",
+        "https://bsc-dataseed3.binance.org",
+        "https://bsc-dataseed4.binance.org",
+        "https://bsc-dataseed1.defibit.io",
+        "https://bsc-dataseed2.defibit.io",
+        "https://bsc-dataseed3.defibit.io",
+        "https://bsc-dataseed4.defibit.io",
+        "https://bsc-dataseed1.ninicoin.io",
+        "https://bsc-dataseed2.ninicoin.io",
+        "https://bsc-dataseed3.ninicoin.io",
+        "https://bsc-dataseed4.ninicoin.io",
+        "wss://bsc-ws-node.nariox.org"
+      ],
+      blockExplorerUrls: ['https://bscscan.com'],
+    },
     // [ChainId.MATIC]: {
     //   chainId: '0x89',
     //   chainName: 'Matic',
@@ -220,70 +220,70 @@ export const SUPPORTED_NETWORKS = {
   }
 
 const options = [
-    {
-        label: (
-            <div className="crnc_options cursor-pointer">
-                <Image src="/img/ethereum.svg" alt="" height={28} width={28} /> <p className='fontTurrentRoad pl-1'>Goerli</p>
-            </div>
-        ),
-        value: 5,
-    },
-    {
-        label: (
+  {
+      label: (
           <div className="crnc_options cursor-pointer">
-            <Image src="/img/avx_ic.svg" alt="" height={28} width={28} /> <p className='fontTurrentRoad pl-1'>Avalanche</p>
+              <Image src="/img/ethereum.svg" alt="" height={28} width={28} /> <p className='fontTurrentRoad pl-1'>Goerli</p>
           </div>
-        ),
-        value: 43114,
-      },
-      {
-        label: (
-          <div className="crnc_options cursor-pointer">
-            <Image src="/img/matic.svg" alt="" height={28} width={28} /> <p className='fontTurrentRoad pl-1'>Polygon</p>
-          </div>
-        ),
-        value: 137,
-      },
-    //   {
-    //     label: (
-    //       <div className="crnc_options cursor-pointer">
-    //         <Image src="/img/bsc_ic.svg" alt="" height={28} width={28} /> <p className='fontTurrentRoad pl-1'>BNB Smart Chain</p>
-    //       </div>
-    //     ),
-    //     value: 56,
-    //   },
-      {
-        label: (
-          <div className="crnc_options cursor-pointer">
-            <Image src="/img/fantom.svg" alt="" height={28} width={28} /> <p className='fontTurrentRoad pl-1'>Fantom</p>
-          </div>
-        ),
-        value: 250,
-      },
-    //   {
-    //     label: (
-    //       <div className="crnc_options cursor-pointer">
-    //         <Image src="/img/ethereum.svg" alt="" height={28} width={28} /> <p className='fontTurrentRoad pl-1'>Ethereum</p>
-    //       </div>
-    //     ),
-    //     value: 1,
-    //   },
-      {
-        label: (
-          <div className="crnc_options cursor-pointer">
-            <Image src="/img/arbitrum.svg" alt="" height={28} width={28} /> <p className='fontTurrentRoad pl-1'>Arbitrum</p>
-          </div>
-        ),
-        value: 42161
-      },
-    //   {
-    //     label: (
-    //       <div className="crnc_options cursor-pointer">
-    //         <Image src="/img/optimism.svg" alt="" height={28} width={28} /> <p className='fontTurrentRoad pl-1'>Optimism</p>
-    //       </div>
-    //     ),
-    //     value: 10,
-    //   }
+      ),
+      value: 5,
+  },
+  {
+    label: (
+      <div className="crnc_options cursor-pointer">
+        <Image src="/img/avx_ic.svg" alt="" height={28} width={28} /> <p className='fontTurrentRoad pl-1'>Avalanche</p>
+      </div>
+    ),
+    value: 43114,
+  },
+  {
+    label: (
+      <div className="crnc_options cursor-pointer">
+        <Image src="/img/matic.svg" alt="" height={28} width={28} /> <p className='fontTurrentRoad pl-1'>Polygon</p>
+      </div>
+    ),
+    value: 137,
+  },
+  {
+    label: (
+      <div className="crnc_options cursor-pointer">
+        <Image src="/img/bsc_ic.svg" alt="" height={28} width={28} /> <p className='fontTurrentRoad pl-1'>BNB Smart Chain</p>
+      </div>
+    ),
+    value: 56,
+  },
+  {
+    label: (
+      <div className="crnc_options cursor-pointer">
+        <Image src="/img/fantom.svg" alt="" height={28} width={28} /> <p className='fontTurrentRoad pl-1'>Fantom</p>
+      </div>
+    ),
+    value: 250,
+  },
+  {
+    label: (
+      <div className="crnc_options cursor-pointer">
+        <Image src="/img/ethereum.svg" alt="" height={28} width={28} /> <p className='fontTurrentRoad pl-1'>Ethereum</p>
+      </div>
+    ),
+    value: 1,
+  },
+  {
+    label: (
+      <div className="crnc_options cursor-pointer">
+        <Image src="/img/arbitrum.svg" alt="" height={28} width={28} /> <p className='fontTurrentRoad pl-1'>Arbitrum</p>
+      </div>
+    ),
+    value: 42161
+  },
+  {
+    label: (
+      <div className="crnc_options cursor-pointer">
+        <Image src="/img/optimism.svg" alt="" height={28} width={28} /> <p className='fontTurrentRoad pl-1'>Optimism</p>
+      </div>
+    ),
+    value: 10,
+  }
 ]
 
 function ChainSelect({ onChange }) {
@@ -308,6 +308,7 @@ function ChainSelect({ onChange }) {
                         let key = e.value
                         console.debug(`Switching to chain ${key}`, SUPPORTED_NETWORKS[key])
                         const params = SUPPORTED_NETWORKS[key]
+                        console.log(params, key)
                         try {
                             await ethereum.request({
                                 method: 'wallet_switchEthereumChain',
@@ -316,9 +317,40 @@ function ChainSelect({ onChange }) {
                         } catch (switchError) {
                           // This error code indicates that the chain has not been added to MetaMask.
                           // @ts-ignore TYPE NEEDS FIXING
-                          // if (switchError.code === 4902) {
-                          try {
-                            await ethereum.request('wallet_addEthereumChain', [params, account])
+                          // if (switchError.code === 4902 || switchError.code === -32603) {
+                            try {
+                              // TODO fix this stupid hack
+                              await ethereum.request({
+                                method: 'wallet_addEthereumChain',
+                                params: [
+                                  {
+                                    chainId: '0x38',
+                                    chainName: 'Binance Smart Chain Mainnet',
+                                    nativeCurrency: {
+                                      name: 'Binance Coin',
+                                      symbol: 'BNB',
+                                      decimals: 18,
+                                    },
+                                    rpcUrls: [
+                                      "https://bsc-dataseed1.binance.org",
+                                      "https://bsc-dataseed2.binance.org",
+                                      "https://bsc-dataseed3.binance.org",
+                                      "https://bsc-dataseed4.binance.org",
+                                      "https://bsc-dataseed1.defibit.io",
+                                      "https://bsc-dataseed2.defibit.io",
+                                      "https://bsc-dataseed3.defibit.io",
+                                      "https://bsc-dataseed4.defibit.io",
+                                      "https://bsc-dataseed1.ninicoin.io",
+                                      "https://bsc-dataseed2.ninicoin.io",
+                                      "https://bsc-dataseed3.ninicoin.io",
+                                      "https://bsc-dataseed4.ninicoin.io",
+                                      "wss://bsc-ws-node.nariox.org"
+                                    ],
+                                    blockExplorerUrls: ['https://bscscan.com'],
+                                  },
+                                ],
+                              });
+                        
                           } catch (addError) {
                             // handle "add" error
                             console.error(`Add chain error ${addError}`)
@@ -326,8 +358,9 @@ function ChainSelect({ onChange }) {
                           // }
                           console.error(`Switch chain error ${switchError}`)
                           // handle other "switch" errors
-                        }
-                      }}
+                        }}
+                      }
+                    //}
                     options={options}
                     className="crncy_select"
                     placeholder="Client"

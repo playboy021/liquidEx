@@ -2,11 +2,14 @@ import { Dialog, Transition } from '@headlessui/react'
 import { Fragment, useEffect, useState } from 'react'
 import { ButtonBridgeAssetsModal, ButtonXSmall } from '../../common/button';
 import { XIcon } from '@heroicons/react/solid';
+import { useWalletInfo } from '@/components/hooks/web3';
 
 export default function BridgeAssetsModal({ closeModal, open, tokens, setOpen, setSelectedToken }) {
 
     const [search, setSearch] = useState('')
     const [topTokens, setTopTokens] = useState([])
+
+    const { network } = useWalletInfo()
 
     const searchFilter = (tokenName) => {
         return tokens[tokenName].originalSymbol.toLowerCase().includes(search.toLowerCase());
@@ -99,7 +102,7 @@ export default function BridgeAssetsModal({ closeModal, open, tokens, setOpen, s
                                         }
 
                                     </div>
-                                    <div className="rounded-lg overflow-y-auto mb-4" style={{maxHeight: '290px'}}>
+                                    <div className="rounded-lg overflow-y-auto mb-4" style={network.data == '1' ? { maxHeight: '257px'} : {maxHeight: '290px'}}>
                                         <div className='rounded-lg bg-white bg-opacity-50 p-1 border_brdg'>
 
                                             <div className='rounded-lg'>

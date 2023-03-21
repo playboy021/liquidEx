@@ -194,15 +194,15 @@ export default function BridgeConfirmationModal({openConformationModal, setOpenC
                                             </div>
                                         </>}
                                     {/* {transactionMode == true && bridgingFailed == true ?
-                                        < div className='mt-5 mr-3 bg-white bg-opacity-60 rounded-lg text-center text-red-400 pt-1 pb-1'>
+                                        < div className='mt-4 mr-3 bg-white bg-opacity-60 rounded-lg text-center text-red-400 pt-1 pb-1'>
                                             <h2>Bridging Failed</h2>
                                         </div> : null} */}
                                     {transactionMode == true && Number(amount) > Number(tokens[selectedToken]?.BigValueThreshold) ?
-                                        < div className='mt-5 mr-3 bg-white bg-opacity-60 rounded-lg text-center pt-1 pb-1'>
+                                        < div className='mt-4 bg-white bg-opacity-60 rounded-lg text-center pt-1 pb-1 text-indigo-800 border border-indigo-600'>
                                             <h2>Bridging this Amount will take up to 24h</h2>
                                         </div> : null}
                                     {transactionMode == true ?
-                                        < div className='mt-5 mr-2'>
+                                        < div className='mt-4 mr-2'>
 
                                             {/* < Stepper alternativeLabel activeStep={step} connector={<QontoConnector />}>
                                                 {steps.map((label) => (
@@ -215,7 +215,7 @@ export default function BridgeConfirmationModal({openConformationModal, setOpenC
                                         :
                                         <Button
                                             fullWidth
-                                            className="mt-4 rounded-2xl md:rounded w-full fontTurrentRoad border-indigo-600"
+                                            className="mt-3 font-bold w-full fontTurrentRoad border-indigo-600"
                                             onClick={() => { setTransactionMode(true); }}
                                             // disabled={
                                             //     chainId.toString() == bridgedTo
@@ -226,7 +226,7 @@ export default function BridgeConfirmationModal({openConformationModal, setOpenC
                                             //         || chainId.toString() == bridgedTo
                                             //         || amount <= '0.0000000000000000000000' ? true : false}
                                         >
-                                            Confirm Swap
+                                            '&gt; Confirm_Swap'
                                         </Button>}
 
                                 </Dialog.Panel>
