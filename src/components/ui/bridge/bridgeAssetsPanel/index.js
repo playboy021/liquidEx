@@ -4,6 +4,7 @@ import axios from 'axios'
 import { ButtonSmall } from '../../common/button'
 import { useWalletInfo } from '@/components/hooks/web3'
 import BridgeAssetsModal from '../bridgeAssetsModal'
+import { ethers } from 'ethers'
 
 const BridgeAssetPanel = (
     {
@@ -27,10 +28,47 @@ const BridgeAssetPanel = (
     )
 }
 
-export const InputPanel = ({amount, setAmount}) => {
+export const InputPanel = ({amount, setAmount, selectedToken, tokens, destinationChain}) => {
 
+    const [selectedTokenBalance, setSelectedTokenBalance] = useState('')
 
+    const { account, network } = useWalletInfo()
 
+    useEffect(() => {
+        async function getBalance() {
+            const ERC20ABI = require('./abi/Token.json')
+            const provider = new ethers.providers.Web3Provider(window.ethereum)
+            const fromAddress = await provider.getSigner()
+            if (account != null && (network.data).toString() != destinationChain) {
+                const signerAddress = await fromAddress?.getAddress()
+                if (selectedToken != '' && tokens[selectedToken]?.isNative !=
+                    "NATIVE") {
+                    try {
+                        let Token = new ethers.Contract(tokens[selectedToken]?.srcAddress, ERC20ABI, fromAddress)
+                        const result = await Token.connect(fromAddress).balanceOf(signerAddress)
+                        const balance = ethers.utils.formatUnits(result, tokens[selectedToken]?.originalDecimals)
+
+                        setSelectedTokenBalance(balance)
+                    } catch (error) {
+                        console.log(error)
+                    }
+
+                } else if (tokens[selectedToken]?.isNative ==
+                    "NATIVE") {
+                    const getBalance = async (address) => {
+                        const provider = new ethers.providers.Web3Provider(window.ethereum);
+                        const balance = await provider.getBalance(address);
+                        const balanceInEth = ethers.utils.formatEther(balance);
+                        setSelectedTokenBalance(balanceInEth)
+                    }
+                    getBalance(signerAddress)
+                }
+            }
+        }
+
+        getBalance()
+
+    }, [selectedToken, tokens, network.data, account.data, amount])
 
     return (
         <>
@@ -57,9 +95,9 @@ export const InputPanel = ({amount, setAmount}) => {
                         style={{ top: '4px'}}
                     />
                 </>
-                <div className='text-sm leading-5 absolute mt-8 text-secondary top-margin' style={{ top: '20px' }}>
-                        <div className='pt-2'>
-                            <span className='text-gray-400 fontTurrentRoad font-bold'>Balance:&nbsp;</span><span className='text-indigo-600'>0.00</span>
+                <div className='text-sm leading-5 absolute mt-8 text-secondary top-margin hover:shadow-md rounded-lg px-1' style={{ top: '20px' }}>
+                        <div className='pt-2 cursor-pointer' onClick={() => {setAmount(selectedTokenBalance)}}>
+                            <span className='text-gray-400 fontTurrentRoad font-bold'>Balance:&nbsp;</span><span className='text-indigo-600'>{selectedTokenBalance}</span>
                         </div>
                 </div>
             </div>

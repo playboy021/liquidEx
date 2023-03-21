@@ -1,10 +1,10 @@
 import BridgeAssetPanel from "@/components/ui/bridge/bridgeAssetsPanel"
 import BridgeFromSelect from "@/components/ui/bridge/bridgeFrom"
 import BridgeToSelect from "@/components/ui/bridge/bridgeTo"
-import { Button, Loader } from "@/components/ui/common"
+import { Button } from "@/components/ui/common"
 import { BridgeLayout } from "@/components/ui/layout"
 import Image from "next/image"
-import { useState } from "react"
+import { useEffect, useState } from "react"
 import { ChevronDownIcon } from "@heroicons/react/solid"
 import { useWalletInfo } from "@/components/hooks/web3"
 import { LoaderSmall } from "@/components/ui/common/loader"
@@ -33,6 +33,9 @@ export default function Bridge() {
                                     <BridgeAssetPanel.Panel {...props}
                                     amount={amount}
                                     setAmount={setAmount}
+                                    selectedToken={selectedToken}
+                                    tokens={tokens}
+                                    destinationChain={destinationChain}
                                     />
                                     <BridgeAssetPanel.Header
                                         destinationChain={destinationChain}
@@ -72,14 +75,14 @@ export default function Bridge() {
                     { amount == '' ?
                      <></> : selectedToken == '' || (network.data).toString() == destinationChain ?
                      <div className="w-full p-6 pt-0 pb-2">
-                        <div className="bg-white bg-opacity-60 p-4 pb-2 rounded-lg h-full flex items-center cursor-pointer justify-center" onClick={() => {setOpenInfoTab(!openInfoTab)}}>
+                        <div className="hover:shadow-md bg-white bg-opacity-60 p-4 pb-2 rounded-lg h-full flex items-center cursor-pointer justify-center" onClick={() => {setOpenInfoTab(!openInfoTab)}}>
                                 <div className="">
                                     <LoaderSmall/>
                                 </div>
                         </div> 
                     </div> : openInfoTab == true ?
                     <div className="w-full p-6 pt-0 pb-2">
-                        <div className="bg-white bg-opacity-60 p-3 rounded-lg cursor-pointer" onClick={() => {setOpenInfoTab(!openInfoTab)}}>
+                        <div className="hover:shadow-md bg-white bg-opacity-60 p-3 rounded-lg cursor-pointer" onClick={() => {setOpenInfoTab(!openInfoTab)}}>
                             <div>
                                 <div className='flex justify-between'>
                                     <h4 className="text-indigo-600 font-bold">Important: </h4>
@@ -104,7 +107,7 @@ export default function Bridge() {
                         </div>
                     </div> :
                     <div className="w-full p-6 pt-0 pb-2">
-                        <div className="bg-white bg-opacity-60 p-3 rounded-lg h-full flex justify-between items-center cursor-pointer" onClick={() => {setOpenInfoTab(!openInfoTab)}}>
+                        <div className="hover:shadow-md bg-white bg-opacity-60 p-3 rounded-lg h-full flex justify-between items-center cursor-pointer" onClick={() => {setOpenInfoTab(!openInfoTab)}}>
                             <div style={{ fontSize: '14px' }}>
                                 {/* {amount <= tokens[selectedToken]?.MinimumSwap ?
                                 <>Minimum Crosschain Amount is <b>{tokens[selectedToken]?.MinimumSwap <= '1' ?
