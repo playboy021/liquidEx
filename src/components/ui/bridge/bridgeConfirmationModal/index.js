@@ -3,6 +3,13 @@ import { Fragment, useState, useEffect } from 'react'
 import { Button } from '../../common';
 import { useWalletInfo } from '@/components/hooks/web3';
 import axios from 'axios';
+import { styled } from '@mui/material/styles';
+import Stepper from '@mui/material/Stepper';
+import Step from '@mui/material/Step';
+import StepLabel from '@mui/material/StepLabel';
+import Check from '@mui/icons-material/Check';
+import StepConnector, { stepConnectorClasses } from '@mui/material/StepConnector';
+import { StepIconProps } from '@mui/material/StepIcon';
 
 
 export default function BridgeConfirmationModal({openConformationModal, setOpenConformationModal, amount, tokens, selectedToken, destinationChain}) {

@@ -91,7 +91,7 @@ export const InputPanel = ({amount, setAmount, selectedToken, tokens, destinatio
                         spellCheck="false"
                         onChange={e => setAmount(e.target.value)}
                         className=
-                        'relative font-bold outline-none border-none flex-auto overflow-hidden overflow-ellipsis placeholder-low-emphesis focus:placeholder-primary bridgeInputTransparent text-indigo-600 text-3xl bg-opacity-50 pt-2 placeholder-gray-400'
+                        'relative font-bold outline-none border-none flex-auto overflow-hidden overflow-ellipsis placeholder-low-emphesis focus:placeholder-primary bridgeInputTransparent text-indigo-600 text-3xl bg-opacity-50 pt-2 placeholder-gray-400 px-1'
                         style={{ top: '4px'}}
                     />
                 </>
@@ -204,7 +204,7 @@ export const BridgeAssetPanelHeader = ({  selectedToken, setSelectedToken, desti
                     <ButtonSmall
                         className="flex items-center gap-2 shadow-md cursor-pointer text-high-emphesis hover:bg-dark-700 p-0 m-0 relative border-indigo-600"
                         // original className="bannerSwapCurrency flex items-center gap-2 px-2 py-1 shadow-md cursor-pointer text-high-emphesis bg-[#292D3C] hover:bg-dark-700 pb-1"
-                        style={{ zIndex: '1' , bottom: '22px'}}
+                        style={{ zIndex: '1' , bottom: '22px', left: '-4px'}}
                         onClick={openModal}
                         type='button'
                         disabled={true}
@@ -217,7 +217,7 @@ export const BridgeAssetPanelHeader = ({  selectedToken, setSelectedToken, desti
                         <ButtonSmall
                             className="flex items-center gap-2 shadow-md cursor-pointer text-high-emphesis hover:bg-dark-700 p-0 m-0 relative border-indigo-600 bg-opacity-0 hover:shadow-lg"
                             // original className="bannerSwapCurrency flex items-center gap-2 px-2 py-1 shadow-md cursor-pointer text-high-emphesis bg-[#292D3C] hover:bg-dark-700 pb-1"
-                            style={{ zIndex: '1' , bottom: '22px'}}
+                            style={{ zIndex: '1' , bottom: '22px', left: '-4px'}}
                             onClick={openModal}
                             variant='light'
                             type='button'
@@ -230,7 +230,7 @@ export const BridgeAssetPanelHeader = ({  selectedToken, setSelectedToken, desti
                         <ButtonSmall
                             className="flex items-center gap-2 shadow-md cursor-pointer text-high-emphesis hover:bg-dark-700 p-0 m-0 relative border-indigo-600 hover:shadow-lg"
                             // original className="bannerSwapCurrency flex items-center gap-2 px-2 py-1 shadow-md cursor-pointer text-high-emphesis bg-[#292D3C] hover:bg-dark-700 pb-1"
-                            style={{ zIndex: '1' , bottom: '22px'}}
+                            style={{ zIndex: '1' , bottom: '22px', left: '-4px'}}
                             onClick={openModal}
                             type='button'
                         >

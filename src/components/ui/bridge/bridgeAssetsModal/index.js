@@ -8,6 +8,7 @@ export default function BridgeAssetsModal({ closeModal, open, tokens, setOpen, s
 
     const [search, setSearch] = useState('')
     const [topTokens, setTopTokens] = useState([])
+    const [maxHeight, setMaxHeight] = useState(false)
 
     const { network } = useWalletInfo()
 
@@ -24,6 +25,11 @@ export default function BridgeAssetsModal({ closeModal, open, tokens, setOpen, s
                 if(tokens[key]?.originalSymbol == 'USDC' || tokens[key]?.originalSymbol == 'DAI' || tokens[key]?.originalSymbol == 'USDT' || tokens[key]?.originalSymbol == 'WBTC' || tokens[key]?.originalSymbol == 'WETH' || tokens[key]?.tokenType == 'NATIVE' || tokens[key]?.originalSymbol == 'fUSDT'){
                     data.push(key)
                     setTopTokens(data)
+                    if (data.length > 4) {
+                        setMaxHeight(true)
+                    } else {
+                        setMaxHeight(false)
+                    }
                 }
             }
         }
@@ -89,7 +95,7 @@ export default function BridgeAssetsModal({ closeModal, open, tokens, setOpen, s
                                         
                                         {Object.values(topTokens).map(function (token) {
                                             return (
-                                                <div key={token} className='inline-flex px-1'>
+                                                <div key={token} className='inline-flex px-1 py-1'>
                                                     <ButtonXSmall onClick={() => { setSelectedToken(token); setOpen(false);; setSearch('') }} className='w-full bg-opacity-0 border-indigo-600 text-white' style={{width:'74px', height:'35px' }} >
                                                         <div className='inline-flex p-1'>
                                                             <img src={tokens[token]?.logoUrl} width='23px' height='23px' alt='' />&nbsp;<span className='text-xs pt-1 pr-1'>{tokens[token]?.originalSymbol}</span>
@@ -102,7 +108,7 @@ export default function BridgeAssetsModal({ closeModal, open, tokens, setOpen, s
                                         }
 
                                     </div>
-                                    <div className="rounded-lg overflow-y-auto mb-4" style={network.data == '1' ? { maxHeight: '257px'} : {maxHeight: '290px'}}>
+                                    <div className="rounded-lg overflow-y-auto mb-4" style={maxHeight == true ? { maxHeight: '257px'} : {maxHeight: '290px'}}>
                                         <div className='rounded-lg bg-white bg-opacity-50 p-1 border_brdg'>
 
                                             <div className='rounded-lg'>
