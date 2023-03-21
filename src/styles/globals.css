@@ -93,7 +93,13 @@ input::-webkit-inner-spin-button {
   -webkit-transition:0.4s;
   transition:0.4s;
 }
+.transition {
+    transition: all .2s ease-out!important;
+}
 
+/* 
+  MUI START
+*/
 
 .MuiStepLabel-label.Mui-completed {
   color: #4f46e5 !important;
@@ -106,6 +112,10 @@ input::-webkit-inner-spin-button {
 .MuiStepLabel-label.Mui-disabled {
   color: #eaeaf0 !important;
 }
+
+/* 
+  MUI END
+*/
 
 /* 
   BACKGROUND START

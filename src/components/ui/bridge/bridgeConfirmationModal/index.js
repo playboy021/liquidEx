@@ -27,6 +27,8 @@ export default function BridgeConfirmationModal({openConformationModal, setOpenC
         setOpenConformationModal(false)
     }
 
+    
+
     /// MUI Stepper
 
     const QontoConnector = styled(StepConnector)(({ theme }) => ({

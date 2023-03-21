@@ -190,12 +190,6 @@ export const BridgeAssetPanelHeader = ({  selectedToken, setSelectedToken, desti
     //     }
     // }, [bridgedTo, chainId, tokens[selectedToken]])
 
-    // useEffect(() => {
-    //     getBridge()
-    //     getData()
-
-    // }, [bridgedTo, chainId, amount, pops])
-
 
     return (
         <>

@@ -7,18 +7,57 @@ import Image from "next/image"
 import { useEffect, useState } from "react"
 import { ChevronDownIcon } from "@heroicons/react/solid"
 import { useWalletInfo } from "@/components/hooks/web3"
-import { LoaderSmall } from "@/components/ui/common/loader"
+import Loader, { LoaderSmall, LoaderXS } from "@/components/ui/common/loader"
 import BridgeConfirmationModal from "@/components/ui/bridge/bridgeConfirmationModal"
+import { ethers } from "ethers"
 
 export default function Bridge() {
-    const { network } = useWalletInfo()
+    const { network, account } = useWalletInfo()
 
     const [destinationChain, setDestinationChain] = useState('137')
     const [tokens, setTokens] = useState([])
     const [selectedToken, setSelectedToken] = useState('')
     const [amount, setAmount] = useState('')
+    const [anyToken, setAnyToken] = useState('')
+    const [underlyingToken, setUnderlyingToken] = useState('')
+    const [routerContract, setRouterContract] = useState('')
     const [openInfoTab, setOpenInfoTab] = useState(false)
     const [openConformationModal, setOpenConformationModal] = useState(false)
+    const [approvalInProgress, setApprovalInProgress] = useState(false)
+    const [approvalDone, setApprovalDone] = useState(false)
+
+    async function approvalHandler(e) {
+        setApprovalInProgress(true)
+        e.preventDefault()
+        const ERC20ABI = require('./../../components/ui/bridge//bridgeAssetsPanel/abi/Token.json');
+        const provider = new ethers.providers.Web3Provider(window.ethereum)
+        const fromAddress = await provider.getSigner()
+
+        const amountToTransfer = ethers.utils.parseUnits(amount, tokens[selectedToken].decimals)
+        const toAddress = tokens[selectedToken].DepositAddress
+        const Token = new ethers.Contract(tokens[selectedToken].srcAddress, ERC20ABI, fromAddress)
+        let transaction
+        try {
+            transaction = await Token.connect(fromAddress).approve(routerContract, amountToTransfer)
+            await transaction.wait()
+            setApprovalDone(true)
+        } catch (error) {
+            console.log(error)
+            setApprovalInProgress(false)
+            setApprovalDone(false)
+        }
+        setApprovalInProgress(false)
+    }
+
+    useEffect(() => {
+        setAnyToken(tokens[selectedToken]?.fromanytoken.address)
+        setUnderlyingToken(tokens[selectedToken]?.underlying.address)
+        setRouterContract(tokens[selectedToken]?.router)
+    }, [selectedToken, tokens])
+
+    useEffect(() => {
+        setAmount('')
+    }, [selectedToken, destinationChain, network.data])
 
     return(
         <>
@@ -124,11 +163,90 @@ export default function Bridge() {
                     }
                     
                     
-                    <div className="w-full p-6 pt-0">
+                    {/* <div className="w-full p-6 pt-0">
                         <Button className='w-full border-indigo-600 text-lg fontTurrentRoad font-bold' onClick={() => {
                             setOpenConformationModal(true)
                         }}>'&gt; Bridge_Funds'</Button>
-                    </div>
+                    </div> */}
+
+                    {account.data == undefined ?
+                        <div className="w-full p-6 pt-0">
+                            <Button
+                                className='w-full border-indigo-600 text-lg fontTurrentRoad font-bold'
+                                disabled={true}
+                            >
+                                Connect to Metamask
+                            </Button>
+                        </div> 
+
+                        // : chainSwitch == true ?
+                        // <div className="w-full p-6 pt-0">
+                        //     <Button
+                        //         className='w-full border-indigo-600 text-lg fontTurrentRoad font-bold'
+                        //         disabled={true}
+                        //     >
+                        //         <LoaderSmall />&nbsp;Switching Chains
+                        //     </Button>
+                        // </div> : tooMuchDecimals == true ?
+                        // <div className="w-full p-6 pt-0">
+                        //     <Button
+                        //         className='w-full border-indigo-600 text-lg fontTurrentRoad font-bold'
+                        //         disabled={true}
+                        //     >
+                        //         Too many Decimal places
+                        //     </Button> 
+                        // </div> 
+
+                        : approvalInProgress == true ?
+                        <div className="w-full p-6 pt-0">
+                            <Button
+                                className='w-full border-indigo-600 text-lg fontTurrentRoad font-bold inline-flex justify-center items-center'
+                                disabled={true}
+                            >
+                                <LoaderXS />&nbsp;'&gt; Approving_Tokens'
+                            </Button> 
+                        </div> : tokens[selectedToken]?.routerABI == 'sendTransaction' ?
+                        <div className="w-full p-6 pt-0">
+                            <Button
+                                className='w-full border-indigo-600 text-lg fontTurrentRoad font-bold'
+                                disabled={true}
+                            >
+                                Bridging this Token using Multichain is deprecated
+                            </Button>
+                        </div> : approvalDone == false ?
+                        <div className="w-full p-6 pt-0">
+                            <Button
+                                className='w-full border-indigo-600 text-lg fontTurrentRoad font-bold'
+                                onClick={approvalHandler}
+                                // disabled={
+                                //     chainId.toString() == bridgedTo
+                                //         || amount == ''
+                                //         || Number(amount) < Number(tokens[selectedToken]?.MinimumSwap)
+                                //         || Number(amount) > Number(tokens[selectedToken]?.MaximumSwap)
+                                //         || Number(selectedTokenBalance) < Number(amount)
+                                //         || chainId.toString() == bridgedTo
+                                //         || amount <= '0.0000000000000000000000' ? true : false}
+                            >
+                                Approve Tokens
+                            </Button>
+                        </div> :
+                        <div className="w-full p-6 pt-0">
+                            <Button
+                                className='w-full border-indigo-600 text-lg fontTurrentRoad font-bold'
+                                onClick={openStatusModal}
+                                // disabled={
+                                //     chainId.toString() == bridgedTo
+                                //         || amount == ''
+                                //         || Number(amount) < Number(tokens[selectedToken]?.MinimumSwap)
+                                //         || Number(amount) > Number(tokens[selectedToken]?.MaximumSwap)
+                                //         || Number(selectedTokenBalance) < Number(amount)
+                                //         || chainId.toString() == bridgedTo
+                                //         || amount <= '0.0000000000000000000000' ? true : false}
+                            >
+                                Bridge Tokens
+                            </Button>
+                        </div>
+                    }
                 </div>
                 <BridgeConfirmationModal 
                     openConformationModal={openConformationModal}
