@@ -173,7 +173,7 @@ export default function BridgeConfirmationModal({openConformationModal, setOpenC
                                 leaveTo="opacity-0 scale-95"
                             >
 
-                                <Dialog.Panel className="w-full max-w-md  p-5 mb-8 ml-1 mr-1 overflow-hidden text-left align-middle transition-all transform rounded-2xl lightBlueGlass bridgeTokenSearchGlow" style={{
+                                <Dialog.Panel className="w-full max-w-md  p-5 mb-8 ml-1 mr-1 overflow-hidden text-left align-middle transition-all transform rounded-2xl lightBlueGlassMoreBlur bridgeTokenSearchGlow" style={{
                                     minHeight: '474px',
                                     minWidth: '379px',
                                     maxHeight: "568px",
@@ -292,7 +292,6 @@ export default function BridgeConfirmationModal({openConformationModal, setOpenC
                                         </div>
                                         :
                                         <Button
-                                            fullWidth
                                             className="mt-3 font-bold w-full fontTurrentRoad border-indigo-600"
                                             onClick={() => { setTransactionMode(true); }}
                                             // disabled={

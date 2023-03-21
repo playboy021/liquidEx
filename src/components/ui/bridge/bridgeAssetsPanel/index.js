@@ -40,28 +40,32 @@ export const InputPanel = ({amount, setAmount, selectedToken, tokens, destinatio
             const provider = new ethers.providers.Web3Provider(window.ethereum)
             const fromAddress = await provider.getSigner()
             if (account != null && (network.data)?.toString() != destinationChain) {
-                const signerAddress = await fromAddress?.getAddress()
-                if (selectedToken != '' && tokens[selectedToken]?.isNative !=
-                    "NATIVE") {
-                    try {
-                        let Token = new ethers.Contract(tokens[selectedToken]?.srcAddress, ERC20ABI, fromAddress)
-                        const result = await Token.connect(fromAddress).balanceOf(signerAddress)
-                        const balance = ethers.utils.formatUnits(result, tokens[selectedToken]?.originalDecimals)
+                try {
+                    const signerAddress = await fromAddress?.getAddress()
+                    if (selectedToken != '' && tokens[selectedToken]?.isNative !=
+                        "NATIVE") {
+                        try {
+                            let Token = new ethers.Contract(tokens[selectedToken]?.srcAddress, ERC20ABI, fromAddress)
+                            const result = await Token.connect(fromAddress).balanceOf(signerAddress)
+                            const balance = ethers.utils.formatUnits(result, tokens[selectedToken]?.originalDecimals)
 
-                        setSelectedTokenBalance(balance)
-                    } catch (error) {
-                        console.log(error)
-                    }
+                            setSelectedTokenBalance(balance)
+                        } catch (error) {
+                            console.log(error)
+                        }
 
-                } else if (tokens[selectedToken]?.isNative ==
-                    "NATIVE") {
-                    const getBalance = async (address) => {
-                        const provider = new ethers.providers.Web3Provider(window.ethereum);
-                        const balance = await provider.getBalance(address);
-                        const balanceInEth = ethers.utils.formatEther(balance);
-                        setSelectedTokenBalance(balanceInEth)
+                    } else if (tokens[selectedToken]?.isNative ==
+                        "NATIVE") {
+                        const getBalance = async (address) => {
+                            const provider = new ethers.providers.Web3Provider(window.ethereum);
+                            const balance = await provider.getBalance(address);
+                            const balanceInEth = ethers.utils.formatEther(balance);
+                            setSelectedTokenBalance(balanceInEth)
+                        }
+                        getBalance(signerAddress)
                     }
-                    getBalance(signerAddress)
+                } catch (error) {
+                    console.log(error)
                 }
             }
         }

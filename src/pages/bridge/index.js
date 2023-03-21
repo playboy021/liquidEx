@@ -17,6 +17,7 @@ export default function Bridge() {
     const [destinationChain, setDestinationChain] = useState('137')
     const [tokens, setTokens] = useState([])
     const [selectedToken, setSelectedToken] = useState('')
+    const [selectedTokenAllowance, setSelectedTokenAllowance] = useState('')
     const [amount, setAmount] = useState('')
     const [anyToken, setAnyToken] = useState('')
     const [underlyingToken, setUnderlyingToken] = useState('')
@@ -33,19 +34,18 @@ export default function Bridge() {
         const provider = new ethers.providers.Web3Provider(window.ethereum)
         const fromAddress = await provider.getSigner()
 
-        const amountToTransfer = ethers.utils.parseUnits(amount, tokens[selectedToken].decimals)
-        const toAddress = tokens[selectedToken].DepositAddress
-        const Token = new ethers.Contract(tokens[selectedToken].srcAddress, ERC20ABI, fromAddress)
+        const amountToTransfer = ethers.utils.parseUnits(amount, tokens[selectedToken]?.decimals)
+        const toAddress = tokens[selectedToken]?.DepositAddress
+        const Token = new ethers.Contract(tokens[selectedToken]?.srcAddress, ERC20ABI, fromAddress)
         let transaction
         try {
             transaction = await Token.connect(fromAddress).approve(routerContract, amountToTransfer)
             await transaction.wait()
-            setApprovalDone(true)
         } catch (error) {
             console.log(error)
             setApprovalInProgress(false)
-            setApprovalDone(false)
         }
+        setSelectedTokenAllowance(amount)
         setApprovalInProgress(false)
     }
 
@@ -58,6 +58,28 @@ export default function Bridge() {
     useEffect(() => {
         setAmount('')
     }, [selectedToken, destinationChain, network.data])
+
+    useEffect(() => {
+        async function checkAllowance() {
+            try {
+                if (selectedToken != '' && account.data != undefined && routerContract != '' && tokens != []) {
+                    const ERC20ABI = require('./../../components/ui/bridge//bridgeAssetsPanel/abi/Token.json');
+                    const provider = new ethers.providers.Web3Provider(window.ethereum)
+                    const fromAddress = await provider.getSigner()
+                    const Token = new ethers.Contract(tokens[selectedToken]?.srcAddress, ERC20ABI, fromAddress)
+
+                    const res = await Token.connect(fromAddress).allowance(account.data, routerContract) 
+                    const formattedRes = ethers.utils.formatUnits(res, tokens[selectedToken]?.decimals)
+                    setSelectedTokenAllowance(formattedRes)                    
+                }
+            } catch (error) {
+                console.log(error)
+            }
+        }
+
+        checkAllowance()
+
+    }, [selectedToken, account.data, routerContract, tokens, destinationChain, network.data])
 
     return(
         <>
@@ -115,7 +137,7 @@ export default function Bridge() {
                      <></> : selectedToken == '' || (network.data).toString() == destinationChain ?
                      <div className="w-full p-6 pt-0 pb-2">
                         <div className="hover:shadow-md bg-white bg-opacity-60 p-4 pb-2 rounded-lg h-full flex items-center cursor-pointer justify-center" onClick={() => {setOpenInfoTab(!openInfoTab)}}>
-                                <div className="">
+                                <div>
                                     <LoaderSmall/>
                                 </div>
                         </div> 
@@ -162,12 +184,6 @@ export default function Bridge() {
                     </div> 
                     }
                     
-                    
-                    {/* <div className="w-full p-6 pt-0">
-                        <Button className='w-full border-indigo-600 text-lg fontTurrentRoad font-bold' onClick={() => {
-                            setOpenConformationModal(true)
-                        }}>'&gt; Bridge_Funds'</Button>
-                    </div> */}
 
                     {account.data == undefined ?
                         <div className="w-full p-6 pt-0">
@@ -211,9 +227,9 @@ export default function Bridge() {
                                 className='w-full border-indigo-600 text-lg fontTurrentRoad font-bold'
                                 disabled={true}
                             >
-                                Bridging this Token using Multichain is deprecated
+                               Deprecated method (Needs to be fixed)
                             </Button>
-                        </div> : approvalDone == false ?
+                        </div> : Number(amount) > Number(selectedTokenAllowance) ?
                         <div className="w-full p-6 pt-0">
                             <Button
                                 className='w-full border-indigo-600 text-lg fontTurrentRoad font-bold'
@@ -227,13 +243,15 @@ export default function Bridge() {
                                 //         || chainId.toString() == bridgedTo
                                 //         || amount <= '0.0000000000000000000000' ? true : false}
                             >
-                                Approve Tokens
+                                '&gt; Approve_Tokens'
                             </Button>
                         </div> :
                         <div className="w-full p-6 pt-0">
                             <Button
                                 className='w-full border-indigo-600 text-lg fontTurrentRoad font-bold'
-                                onClick={openStatusModal}
+                                onClick={() => {
+                                    setOpenConformationModal(true)
+                                }}
                                 // disabled={
                                 //     chainId.toString() == bridgedTo
                                 //         || amount == ''
@@ -243,7 +261,7 @@ export default function Bridge() {
                                 //         || chainId.toString() == bridgedTo
                                 //         || amount <= '0.0000000000000000000000' ? true : false}
                             >
-                                Bridge Tokens
+                                '&gt; Bridge_Funds'
                             </Button>
                         </div>
                     }

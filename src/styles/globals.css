@@ -56,6 +56,12 @@ input::-webkit-inner-spin-button {
   border: 1px solid rgba(79, 70, 229, 0.5);
 }
 
+.lightBlueGlassMoreBlur {
+  backdrop-filter: blur(10px);
+  background-color: rgba(79, 70, 229, 0.4);
+  border: 0.5px solid rgba(79, 70, 229, 0.5);
+}
+
 .lightBlueGlassLessBlur {
   backdrop-filter: blur(2px);
   background-color: rgba(79, 70, 229, 0.4);

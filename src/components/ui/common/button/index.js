@@ -22,7 +22,7 @@ export default function Button({
         <>
             <button
                 {...rest}
-                className={`disabled:opacity-50 disabled:cursor-not-allowed px-8 py-3 border rounded-md text-base font-medium ${className} ${variants[variant]}`}
+                className={`disabled:opacity-70 disabled:cursor-not-allowed px-8 py-3 border rounded-md text-base font-medium ${className} ${variants[variant]}`}
             >
                 {children}
             </button>

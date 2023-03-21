@@ -70,7 +70,7 @@ export default function BridgeAssetsModal({ closeModal, open, tokens, setOpen, s
                                 leaveTo="opacity-0 scale-95"
                             >
 
-                                <Dialog.Panel className="w-full max-w-md  p-5 mb-8 ml-1 mr-1 overflow-hidden text-left align-middle transition-all transform rounded-2xl lightBlueGlass bridgeTokenSearchGlow" style={{
+                                <Dialog.Panel className="w-full max-w-md  p-5 mb-8 ml-1 mr-1 overflow-hidden text-left align-middle transition-all transform rounded-2xl lightBlueGlassMoreBlur bridgeTokenSearchGlow" style={{
                                     minWidth: '380px',
                                     height: "505px",
                                     width: "380px",
