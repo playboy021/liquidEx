@@ -39,7 +39,7 @@ export const InputPanel = ({amount, setAmount, selectedToken, tokens, destinatio
             const ERC20ABI = require('./abi/Token.json')
             const provider = new ethers.providers.Web3Provider(window.ethereum)
             const fromAddress = await provider.getSigner()
-            if (account != null && (network.data).toString() != destinationChain) {
+            if (account != null && (network.data)?.toString() != destinationChain) {
                 const signerAddress = await fromAddress?.getAddress()
                 if (selectedToken != '' && tokens[selectedToken]?.isNative !=
                     "NATIVE") {
