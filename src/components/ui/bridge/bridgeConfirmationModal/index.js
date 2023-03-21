@@ -10,14 +10,16 @@ import StepLabel from '@mui/material/StepLabel';
 import Check from '@mui/icons-material/Check';
 import StepConnector, { stepConnectorClasses } from '@mui/material/StepConnector';
 import { LoaderXS } from '../../common/loader';
+import { ethers } from 'ethers';
 
 const steps = ['Sent', 'Confirming', 'Routing', 'Success'];
 
-export default function BridgeConfirmationModal({openConformationModal, setOpenConformationModal, amount, tokens, selectedToken, destinationChain}) {
+export default function BridgeConfirmationModal({openConformationModal, setOpenConformationModal, amount, tokens, selectedToken, destinationChain, routerContract, anyToken, underlyingToken}) {
     const [transactionMode, setTransactionMode] = useState(false)
     const [step, setStep] = useState(2)
     const [balanceAfterFee, setBalanceAfterFee] = useState('')
     const [chainInfo, setChainInfo] = useState([])
+    const [transactionHash, setTransactionHash] = useState('')
     const [APIstatus, setAPIStatus] = useState([])
 
     const { network, account } = useWalletInfo()
@@ -27,7 +29,155 @@ export default function BridgeConfirmationModal({openConformationModal, setOpenC
         setOpenConformationModal(false)
     }
 
-    
+    async function bridgeHandler() {
+        const ERC20ABI = require('./abi/Token.json');
+        const RouterABI = require('./abi/Router.json')
+        const SwapoutABI = require('./abi/Swapout.json')
+        const provider = new ethers.providers.Web3Provider(window.ethereum)
+        const fromAddress = await provider.getSigner()
+        const destAddress = await fromAddress.getAddress()
+
+        const amountToTransfer = ethers.utils.parseUnits(amount, tokens[selectedToken]?.decimals)
+        const toAddress = tokens[selectedToken]?.DepositAddress
+
+        let Token = new ethers.Contract(
+            tokens[selectedToken]?.srcAddress,
+            ERC20ABI,
+            fromAddress
+        )
+
+        let Router = new ethers.Contract(
+            routerContract,
+            RouterABI,
+            fromAddress
+        )
+
+        let Swapout = new ethers.Contract(
+            routerContract,
+            SwapoutABI,
+            fromAddress
+        )
+
+        console.log(tokens[selectedToken]?.routerABI)
+
+        if (tokens[selectedToken]?.routerABI == 'transfer(toAddress,amount)') {
+            try {
+                Token.transfer(toAddress, amountToTransfer, { gasLimit: 200000 }).then((transfer) => {
+                    //console.dir(transfer)
+                    setTransactionHash(transfer.hash)
+                    transfer.wait().then((transferResult) => {
+                        //console.log(transferResult.hash)
+                    })
+                        .catch((error) => {
+                            console.log(error)
+                        })
+                })
+                    .catch((error) => {
+                        console.log(error)
+                    })
+            } catch (error) {
+                console.log(error)
+            }
+
+        } else if (tokens[selectedToken]?.routerABI == 'sendTransaction') {
+            try {
+                fromAddress.sendTransaction({ from: destAddress, to: toAddress, value: amountToTransfer, gasLimit: 200000 }).then((transfer) => {
+                    //console.dir(transfer)
+                    setTransactionHash(transfer.hash)
+                })
+            } catch (error) {
+                console.log(error)
+            }
+
+        } else if (tokens[selectedToken]?.routerABI == 'anySwapOutUnderlying(fromanytoken,toAddress,amount,toChainID)') {
+            try {
+                console.log(tokens[selectedToken]?.name)
+                Router.anySwapOutUnderlying(anyToken, destAddress, amountToTransfer, Number(destinationChain), { gasLimit: 200000 }).then((transfer) => {
+                    //console.dir(transfer)
+                    setTransactionHash(transfer.hash)
+                    transfer.wait().then((transferResult) => {
+                        //console.log(transferResult.hash)
+                    })
+                        .catch((error) => {
+                            console.log(error)
+                        })
+                })
+                    .catch((error) => {
+                        console.log(error)
+                    })
+            } catch (error) {
+                console.log(error)
+            }
+            // transaction = await Router.connect(fromAddress).anySwapOutUnderlying(anyToken, destAddress, amountToTransfer, Number(bridgedTo), { gasLimit: 200000 })
+            // setTransactionHash(transaction.hash)
+            // await transaction.wait()
+
+        } else if (tokens[selectedToken]?.routerABI == 'anySwapOut(anytoken,toAddress,amount,toChainID)') {
+            try {
+                Router.anySwapOut(anyToken, destAddress, amountToTransfer, Number(destinationChain), { gasLimit: 200000 }).then((transfer) => {
+                    //console.dir(transfer)
+                    setTransactionHash(transfer.hash)
+                    transfer.wait().then((transferResult) => {
+                        //console.log(transferResult.hash)
+                    })
+                        .catch((error) => {
+                            console.log(error)
+                        })
+                })
+                    .catch((error) => {
+                        console.log(error)
+                    })
+            } catch (error) {
+                console.log(error)
+            }
+            // transaction = await Router.connect(fromAddress).anySwapOut(anyToken, destAddress, amountToTransfer, Number(bridgedTo), { gasLimit: 200000 })
+            // setTransactionHash(transaction.hash)
+            // await transaction.wait()
+
+        }
+        else if (tokens[selectedToken]?.routerABI == 'Swapout(amount,toAddress)') {
+            try {
+                //Router.Swapout(amountToTransfer, destAddress, { gasLimit: 200000 })
+                Swapout.Swapout(amountToTransfer, destAddress, { gasLimit: 200000 }).then((transfer) => {
+                    //console.dir(transfer)
+                    setTransactionHash(transfer.hash)
+                    transfer.wait().then((transferResult) => {
+                        //console.log(transferResult.hash)
+                    })
+                        .catch((error) => {
+                            console.log(error)
+                        })
+                })
+                    .catch((error) => {
+                        console.log(error)
+                    })
+            } catch (error) {
+                console.log(error)
+
+            }
+
+        }
+        else if (tokens[selectedToken]?.routerABI == 'anySwapOutNative(anytoken,toAddress,toChainID,{value: amount})') {
+            try {
+                Router.anySwapOutNative(anyToken, destAddress, Number(destinationChain), { value: amountToTransfer, gasLimit: 200000 }).then((transfer) => {
+                    //console.dir(transfer)
+                    setTransactionHash(transfer.hash)
+                    transfer.wait().then((transferResult) => {
+                        //console.log(transferResult.hash)
+                    })
+                        .catch((error) => {
+                            console.log(error)
+                        })
+                })
+                    .catch((error) => {
+                        console.log(error)
+                    })
+            } catch (error) {
+                console.log(error)
+            }
+        }
+
+    }
 
     /// MUI Stepper
 
@@ -207,8 +357,7 @@ export default function BridgeConfirmationModal({openConformationModal, setOpenC
                                         {transactionMode == true ?
                                             <div className='flex justify-between mt-2 mb-2 ml-2 mr-2' style={{ fontSize: '15px' }}>
                                                 <div>Tx Hash:</div>
-                                                {/* <div><a href={`${chainInfo[network.data]?.explorer.tx}${transactionHash}`} target='_blank' rel="noreferrer"><b>{transactionHash.slice(0, 6) + '...' + transactionHash.slice(60, 66)}</b></a></div> */}
-                                                <div>...</div>
+                                                <div><a href={`${chainInfo[network.data]?.explorer.tx}${transactionHash}`} target='_blank' rel="noreferrer"><b>{transactionHash.slice(0, 6) + '...' + transactionHash.slice(60, 66)}</b></a></div>
                                             </div> 
                                             :
                                             null
@@ -293,14 +442,14 @@ export default function BridgeConfirmationModal({openConformationModal, setOpenC
                                         :
                                         <Button
                                             className="mt-3 font-bold w-full fontTurrentRoad border-indigo-600"
-                                            onClick={() => { setTransactionMode(true); }}
+                                            onClick={() => { bridgeHandler(); setTransactionMode(true) }}
                                             // disabled={
-                                            //     chainId.toString() == bridgedTo
+                                            //     chainId.toString() == destinationChain
                                             //         || amount == ''
                                             //         || Number(amount) < Number(tokens[selectedToken]?.MinimumSwap)
                                             //         || Number(amount) > Number(tokens[selectedToken]?.MaximumSwap)
                                             //         || Number(selectedTokenBalance) < Number(amount)
-                                            //         || chainId.toString() == bridgedTo
+                                            //         || chainId.toString() == destinationChain
                                             //         || amount <= '0.0000000000000000000000' ? true : false}
                                         >
                                             '&gt; Confirm_Swap'

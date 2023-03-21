@@ -35,7 +35,6 @@ export default function Bridge() {
         const fromAddress = await provider.getSigner()
 
         const amountToTransfer = ethers.utils.parseUnits(amount, tokens[selectedToken]?.decimals)
-        const toAddress = tokens[selectedToken]?.DepositAddress
         const Token = new ethers.Contract(tokens[selectedToken]?.srcAddress, ERC20ABI, fromAddress)
         let transaction
         try {
@@ -48,7 +47,7 @@ export default function Bridge() {
         setSelectedTokenAllowance(amount)
         setApprovalInProgress(false)
     }
-
+    
     useEffect(() => {
         setAnyToken(tokens[selectedToken]?.fromanytoken.address)
         setUnderlyingToken(tokens[selectedToken]?.underlying.address)
@@ -273,6 +272,9 @@ export default function Bridge() {
                     tokens={tokens}
                     selectedToken={selectedToken}
                     destinationChain={destinationChain}
+                    routerContract={routerContract}
+                    anyToken={anyToken}
+                    underlyingToken={underlyingToken}
                 />
             </div>
         </>
