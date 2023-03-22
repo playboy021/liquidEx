@@ -1,89 +1,86 @@
-import useParaswapSwap from "@/components/providers/web3/hooks/useParaswapSwap"
+import { useWalletInfo } from "@/components/hooks/web3";
+import useParaswapSwap, { getSwapTransaction } from "@/components/providers/web3/hooks/useParaswapSwap"
 import useParaswapTokens from "@/components/providers/web3/hooks/useParaswapTokens"
 import { BridgeLayout } from "@/components/ui/layout"
-import { ethers } from "ethers"
 import { useState } from "react";
 
 export default function Swap() {
-    const { tokens, loading, error } = useParaswapTokens();
-    const { swap } = useParaswapSwap();
-  
-    const [srcToken, setSrcToken] = useState('');
-    const [destToken, setDestToken] = useState('');
+    const [srcToken, setSrcToken] = useState('MATIC');
+    const [destToken, setDestToken] = useState('WBTC');
     const [srcAmount, setSrcAmount] = useState('');
-    const [userAddress, setUserAddress] = useState('');
-    const [transactionHash, setTransactionHash] = useState('');
-    const [swapError, setSwapError] = useState(null);
+    const [transactionData, setTransactionData] = useState(null);
+    const [isLoading, setIsLoading] = useState(false);
+    const [error, setError] = useState(null);
 
+    const { tokens } = useParaswapTokens();
+    const { account, network } = useWalletInfo();
+  
     const handleSubmit = async (e) => {
-        e.preventDefault();
-        setTransactionHash('');
-        setSwapError(null);
-    
-        try {
-          // Connect to the user's wallet
-          const provider = new ethers.providers.Web3Provider(window.ethereum);
-          const signer = provider.getSigner();
-          const userAddress = await signer.getAddress();
-          setUserAddress(userAddress);
-    
-          // Perform the swap
-          const tx = await swap(srcToken, destToken, srcAmount, userAddress, provider, signer);
-          setTransactionHash(tx.hash);
-        } catch (error) {
-          console.error('Error during token swap:', error);
-          setSwapError(error);
-        }
-      };
+      e.preventDefault();
+      setIsLoading(true);
+      setError(null);
+  
+      try {
+        const transactionParams = await getSwapTransaction({
+          srcToken,
+          destToken,
+          srcAmount,
+          networkID: network?.data, // Polygon Network
+          userAddress: account?.data,
+        });
+        setTransactionData(transactionParams);
+      } catch (err) {
+        setError(err.message);
+      } finally {
+        setIsLoading(false);
+      }
+    };
 
-    return(
+
+    return (
         <>
         {console.log(tokens)}
             <div className="flex justify-center">
                 <div className="lightBlueGlassLessBlur mt-36 rounded-lg container fade-in-slide-up">
                 <h1>Token Swap</h1>
-                    {loading && <p>Loading tokens...</p>}
-                    {error && <p>Error loading tokens: {error.message}</p>}
-                    {!loading && (
-                        <form onSubmit={handleSubmit}>
-                        <label>
-                            Source Token:
-                            <select value={srcToken} onChange={(e) => setSrcToken(e.target.value)}>
-                            <option value="">Select token</option>
-                            {tokens.map((token) => (
-                                <option key={token.address} value={token.address}>
-                                {token.symbol}
-                                </option>
-                            ))}
-                            </select>
-                        </label>
-                        <br />
-                        <label>
-                            Destination Token:
-                            <select value={destToken} onChange={(e) => setDestToken(e.target.value)}>
-                            <option value="">Select token</option>
-                            {tokens.map((token) => (
-                                <option key={token.address} value={token.address}>
-                                {token.symbol}
-                                </option>
-                            ))}
-                            </select>
-                        </label>
-                        <br />
-                        <label>
-                            Source Amount:
-                            <input
-                            type="text"
-                            value={srcAmount}
-                            onChange={(e) => setSrcAmount(e.target.value)}
-                            />
-                        </label>
-                        <br />
-                        <button type="submit">Swap</button>
-                        </form>
-                    )}
-                    {transactionHash && <p>Transaction Hash: {transactionHash}</p>}
-                    {swapError && <p>Error during token swap: {swapError.message}</p>}
+                <form onSubmit={handleSubmit}>
+                    <div>
+                    <label htmlFor="srcToken">Source Token:</label>
+                    <input
+                        type="text"
+                        id="srcToken"
+                        value={srcToken}
+                        onChange={(e) => setSrcToken(e.target.value)}
+                    />
+                    </div>
+                    <div>
+                    <label htmlFor="destToken">Destination Token:</label>
+                    <input
+                        type="text"
+                        id="destToken"
+                        value={destToken}
+                        onChange={(e) => setDestToken(e.target.value)}
+                    />
+                    </div>
+                    <div>
+                    <label htmlFor="srcAmount">Amount:</label>
+                    <input
+                        type="text"
+                        id="srcAmount"
+                        value={srcAmount}
+                        onChange={(e) => setSrcAmount(e.target.value)}
+                    />
+                    </div>
+                    <button type="submit">Swap</button>
+                </form>
+                {isLoading && <p>Loading...</p>}
+                {transactionData && (
+                    <div>
+                    <h2>Transaction Data</h2>
+                    <pre>{JSON.stringify(transactionData, null, 2)}</pre>
+                    </div>
+                )}
+                {error && <p>Error: {error}</p>}
                 </div>
             </div>
         </>
