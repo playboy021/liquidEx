@@ -323,7 +323,6 @@ export default function BridgeConfirmationModal({openConformationModal, setOpenC
 
     return (
         <>
-        {console.log(data?.info?.status)}
             <Transition appear show={openConformationModal} as={Fragment}>
                 <Dialog as="div" className="relative z-30" onClose={() => { closeModal(); setAmount(''); setStep(0)}} >
                     <div className="fixed inset-0 bg-black/30 blur" aria-hidden="true" />
