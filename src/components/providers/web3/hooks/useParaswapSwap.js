@@ -3,11 +3,11 @@ import axios from 'axios';
 import { ethers } from 'ethers';
 
 const useParaswapSwap = () => {
-  const swap = useCallback(async (srcToken, destToken, srcAmount, userAddress, provider, signer) => {
+  const swap = useCallback(async (srcToken, destToken, srcAmount, userAddress, signer) => {
     try {
       // Get a price quote
       const priceResponse = await axios.get(
-        `https://paraswap.io/api/v5/prices/swap`,
+        `https://api.paraswap.io/v5/prices/swap`,
         {
           params: {
             srcToken,
@@ -18,16 +18,16 @@ const useParaswapSwap = () => {
         },
       );
 
-      const { priceRoute, priceWithSlippage } = priceResponse.data;
+      const { priceRoute } = priceResponse.data;
 
       // Build the transaction
       const swapResponse = await axios.post(
-        `https://paraswap.io/api/v5/transactions/build`,
+        `https://api.paraswap.io/v5/transactions/build`,
         {
           srcToken,
           destToken,
           srcAmount,
-          destAmount: priceWithSlippage,
+          destAmount: priceRoute.destAmount,
           priceRoute,
           userAddress,
           transaction: {
