@@ -35,7 +35,7 @@ export default function Navbar() {
                 <span>'&gt;Liquid_EX'</span>
               </Button>
               { openNav == true ? 
-              <>
+              <div className="inline-flex fade-in-slide-right">
                <ActiveLink href="/" >
                <a
                  className="font-medium mr-8 ml-8 text-white hover:shadow-lg p-4 rounded-lg">
@@ -60,7 +60,7 @@ export default function Navbar() {
                     Swap
                   </a>
                 </ActiveLink>
-                </> : null
+                </div> : null
               }
                 
             </div>

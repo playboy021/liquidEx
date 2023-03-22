@@ -83,7 +83,7 @@ export default function Bridge() {
     return(
         <>
             <div className="flex justify-center">
-                <div className="lightBlueGlassLessBlur mt-36 rounded-lg container">
+                <div className="lightBlueGlassLessBlur mt-36 rounded-lg container fade-in-slide-up">
                     <div className="w-full p-6 pb-2">
                         <div className="rounded-md h-full">
                         <BridgeAssetPanel
