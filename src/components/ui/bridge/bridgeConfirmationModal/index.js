@@ -11,18 +11,20 @@ import Check from '@mui/icons-material/Check';
 import StepConnector, { stepConnectorClasses } from '@mui/material/StepConnector';
 import { LoaderXS } from '../../common/loader';
 import { ethers } from 'ethers';
+import useFetchData from '@/components/providers/web3/hooks/useFetchData';
 
 const steps = ['Sent', 'Confirming', 'Routing', 'Success'];
 
 export default function BridgeConfirmationModal({openConformationModal, setOpenConformationModal, amount, tokens, selectedToken, destinationChain, routerContract, anyToken, setAmount}) {
     const [transactionMode, setTransactionMode] = useState(false)
-    const [step, setStep] = useState(2)
+    const [step, setStep] = useState(0)
     const [balanceAfterFee, setBalanceAfterFee] = useState('')
     const [chainInfo, setChainInfo] = useState([])
-    const [transactionHash, setTransactionHash] = useState('')
-    const [APIstatus, setAPIStatus] = useState([])
+    const [transactionHash, setTransactionHash] = useState(null)
+    // const [APIstatus, setAPIStatus] = useState([])
 
     const { network, account } = useWalletInfo()
+    const { data, loading, error } = useFetchData(transactionHash);
 
     function closeModal() {
         setTransactionMode(false)
@@ -58,8 +60,6 @@ export default function BridgeConfirmationModal({openConformationModal, setOpenC
             fromAddress
         )
 
-        console.log(tokens[selectedToken]?.routerABI)
-
         if (tokens[selectedToken]?.routerABI == 'transfer(toAddress,amount)') { // Wokrs ! 
             try {
                 Token.transfer(toAddress, amountToTransfer, { gasLimit: 200000 }).then((transfer) => {
@@ -91,7 +91,6 @@ export default function BridgeConfirmationModal({openConformationModal, setOpenC
 
         } else if (tokens[selectedToken]?.routerABI == 'anySwapOutUnderlying(fromanytoken,toAddress,amount,toChainID)') { // Works !
             try {
-                console.log(tokens[selectedToken]?.name)
                 Router.anySwapOutUnderlying(anyToken, destAddress, amountToTransfer, Number(destinationChain), { gasLimit: 200000 }).then((transfer) => {
                     //console.dir(transfer)
                     setTransactionHash(transfer.hash)
@@ -282,6 +281,37 @@ export default function BridgeConfirmationModal({openConformationModal, setOpenC
     }, [destinationChain, network.data, openConformationModal])
 
     useEffect(() => {
+        if (transactionMode == true && transactionHash != null) {
+            if (data?.info?.status == '0') {
+                setStep(1)
+            } else if (data?.info?.status == '8') {
+                setStep(2)
+            } else if (data?.info?.status == '9') {
+                setStep(3)
+            } else if (data?.info?.status == '10') { // original status here was 10
+                setStep(4)
+                if (data?.info?.status == undefined) {
+                    setStep(0) //this may work
+                }
+            } else if (data?.info?.status == '3' || data?.info?.status == '14') {
+                // setBridgingFailed(true)
+                setStep(0)
+                if (data?.info?.status == undefined) {
+                    // setBridgingFailed(false)
+                    setStep(0) //this may work
+                }
+            } else if (data?.info?.statusmsg == 'TxNotStable') {
+                setStep(1)
+            } else if (data?.info?.status == undefined) {
+                setStep(0)
+            } else {
+                setStep(0)
+                // setBridgingFailed(false)
+            }
+        }
+    }, [data])
+
+    useEffect(() => {
         function getAmount() {
             const afterFee = amount - tokens[selectedToken]?.MinimumSwapFee
             setBalanceAfterFee(afterFee.toString())
@@ -293,8 +323,9 @@ export default function BridgeConfirmationModal({openConformationModal, setOpenC
 
     return (
         <>
+        {console.log(data?.info?.status)}
             <Transition appear show={openConformationModal} as={Fragment}>
-                <Dialog as="div" className="relative z-30" onClose={() => { closeModal(); setAmount('')}} >
+                <Dialog as="div" className="relative z-30" onClose={() => { closeModal(); setAmount(''); setStep(0)}} >
                     <div className="fixed inset-0 bg-black/30 blur" aria-hidden="true" />
 
                     <Transition.Child
@@ -357,7 +388,7 @@ export default function BridgeConfirmationModal({openConformationModal, setOpenC
                                         {transactionMode == true ?
                                             <div className='flex justify-between mt-2 mb-2 ml-2 mr-2' style={{ fontSize: '15px' }}>
                                                 <div>Tx Hash:</div>
-                                                <div><a href={`${chainInfo[network.data]?.explorer.tx}${transactionHash}`} target='_blank' rel="noreferrer"><b>{transactionHash.slice(0, 6) + '...' + transactionHash.slice(60, 66)}</b></a></div>
+                                                <div><a href={`${chainInfo[network.data]?.explorer.tx}${transactionHash}`} target='_blank' rel="noreferrer"><b>{transactionHash?.slice(0, 6) + '...' + transactionHash?.slice(60, 66)}</b></a></div>
                                             </div> 
                                             :
                                             null
@@ -383,10 +414,11 @@ export default function BridgeConfirmationModal({openConformationModal, setOpenC
                                         {transactionMode == true ?
                                             <div className='flex justify-between mt-2 mb-2 ml-2 mr-2' style={{ fontSize: '15px' }}>
                                                 <div>Tx Hash:</div>
-                                                {APIstatus.info?.swaptx == undefined ?
+                                                { data?.info?.swaptx === undefined ?
                                                     <div><b>...</b></div>
                                                     :
-                                                    <div><a href={`${chainInfo[destinationChain]?.explorer.tx}${APIstatus.info?.swaptx}`} target='_blank' rel="noreferrer"><b>{(APIstatus.info?.swaptx)?.slice(0, 6) + '...' + (APIstatus.info?.swaptx)?.slice(60, 66)}</b></a></div>}
+                                                    <div><a href={`${chainInfo[destinationChain]?.explorer.tx}${data?.info?.swaptx}`} target='_blank' rel="noreferrer"><b>{(data?.info?.swaptx)?.slice(0, 6) + '...' + (data?.info?.swaptx)?.slice(60, 66)}</b></a></div>
+                                                    }
 
                                             </div> 
                                             :
