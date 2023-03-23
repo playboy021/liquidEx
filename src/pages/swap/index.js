@@ -18,8 +18,7 @@ export default function Swap() {
     const { tokens } = useParaswapTokens();
     const { account, network } = useWalletInfo();
   
-    const handleSubmit = async (e) => {
-      e.preventDefault();
+    const handleSubmit = async () => {
       setIsLoading(true);
       setError(null);
   
@@ -44,7 +43,7 @@ export default function Swap() {
       }
     };
 
-    const handleTx = () => {
+    const handleTx = async () => {
       try{
         if(transactionData != null) {
           const provider = new ethers.providers.Web3Provider(window.ethereum);
@@ -81,8 +80,8 @@ export default function Swap() {
     }, [srcToken, destToken])
 
     useEffect(() => {
-      
-    }, [srcToken, destToken, srcAmount, srcDecimals, destDecimals])
+      handleSubmit()
+    }, [srcToken, destToken, account.data, network.data, srcAmount])
 
     return (
         <>
@@ -121,9 +120,9 @@ export default function Swap() {
                       onChange={(e) => setSrcAmount(e.target.value)}
                   />
                   </div>
-                  <button type="submit"
+                  {/* <button type="submit"
                     ///onClick={handleTx}
-                  >Get TX Data</button>
+                  >Get TX Data</button> */}
                   
               </form>
               {isLoading && <p>Loading...</p>}
