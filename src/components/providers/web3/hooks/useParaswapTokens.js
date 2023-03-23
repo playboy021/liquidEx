@@ -14,7 +14,6 @@ const useParaswapTokens = () => {
       setLoading(true);
       try {
         const response = await axios.get(`https://apiv5.paraswap.io/tokens/${network.data}`);
-        console.log(response)
         setTokens(response.data.tokens);
       } catch (error) {
         setError(error);

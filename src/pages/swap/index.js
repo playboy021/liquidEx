@@ -3,6 +3,7 @@ import useParaswapSwap, { getSwapTransaction } from "@/components/providers/web3
 import useParaswapTokens from "@/components/providers/web3/hooks/useParaswapTokens"
 import { BridgeLayout } from "@/components/ui/layout"
 import { useState } from "react";
+import { ethers } from "ethers";
 
 export default function Swap() {
     const [srcToken, setSrcToken] = useState('MATIC');
@@ -36,10 +37,23 @@ export default function Swap() {
       }
     };
 
+    const handleTx = () => {
+      const provider = new ethers.providers.Web3Provider(window.ethereum);
+      const signer = provider.getSigner();
+      const tx = signer.sendTransaction({
+        to: transactionData?.to,
+        data: transactionData?.data,
+        value: transactionData?.value,
+        from: transactionData?.from
+      });
+      tx.then((tx) => {
+        console.log(tx);
+      });
+    }
+
 
     return (
         <>
-        {console.log(tokens)}
             <div className="flex justify-center">
                 <div className="lightBlueGlassLessBlur mt-36 rounded-lg container fade-in-slide-up">
                 <h1>Token Swap</h1>
@@ -71,7 +85,7 @@ export default function Swap() {
                         onChange={(e) => setSrcAmount(e.target.value)}
                     />
                     </div>
-                    <button type="submit">Swap</button>
+                    <button type="submit" onClick={handleTx}>Swap</button>
                 </form>
                 {isLoading && <p>Loading...</p>}
                 {transactionData && (
