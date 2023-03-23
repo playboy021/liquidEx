@@ -8,65 +8,17 @@ const API_URL = "https://apiv5.paraswap.io";
 const PARTNER = "chucknorris";
 const SLIPPAGE = 1; // 1%
 
-const Networks = {
-  MAINNET: 1,
-  POLYGON: 137,
-};
-
-const tokens = {
-  [Networks.MAINNET]: [
-    {
-      decimals: 18,
-      symbol: "ETH",
-      address: "0xEeeeeEeeeEeEeeEeEeEeeEEEeeeeEeeeeeeeEEeE",
-    },
-    {
-      decimals: 6,
-      symbol: "USDC",
-      address: "0xA0b86991c6218b36c1d19D4a2e9Eb0cE3606eB48",
-    },
-    {
-      decimals: 18,
-      symbol: "DAI",
-      address: "0x6B175474E89094C44Da98b954EedeAC495271d0F",
-    },
-  ],
-  [Networks.POLYGON]: [
-    {
-      decimals: 18,
-      symbol: "MATIC",
-      address: "0xEeeeeEeeeEeEeeEeEeEeeEEEeeeeEeeeeeeeEEeE",
-    },
-    {
-      decimals: 8,
-      symbol: "WBTC",
-      address: "0x1bfd67037b42cf73acf2047067bd4f2c47d9bfd6",
-    },
-  ],
-};
-
-function getToken(symbol) {
-  for (let i = 0; i < tokens.length; i++) {
-    if (tokens[i].symbol === symbol) {
-      const token = tokens[i]
-      console.log('token: ', token)
-      if (!token)
-        throw new Error(`Token ${symbol} not available`);
-      return token;
-    }
-  }
-}
-
 function createSwapper(networkID, apiURL) {
-  const getRate = async ({ srcToken, destToken, srcAmount, partner = PARTNER }) => {
+  const getRate = async ({ srcToken, destToken, srcAmount, partner = PARTNER, srcDecimals, destDecimals }) => {
+    console.log('getRate ', srcToken, destToken, srcAmount, partner, srcDecimals, destDecimals)
     const queryParams = {
-      srcToken: srcToken.address,
-      destToken: destToken.address,
-      srcDecimals: srcToken.decimals.toString(),
-      destDecimals: destToken.decimals.toString(),
+      srcToken: srcToken,
+      destToken: destToken,
+      srcDecimals: srcDecimals,
+      destDecimals: destDecimals,
       amount: srcAmount,
       side: "SELL",
-      network: networkID.toString(),
+      network: networkID?.toString(),
       partner,
     };
 
@@ -92,65 +44,66 @@ function createSwapper(networkID, apiURL) {
     receiver,
     partner,
   }) => {
+    console.log('buildSwap ', srcToken, destToken, srcAmount, minAmount, priceRoute, userAddress, receiver, partner)
     const txURL = `${apiURL}/transactions/${networkID}`;
 
     const txConfig = {
       priceRoute,
-      srcToken: srcToken.address,
-      srcDecimals: srcToken.decimals,
-      destToken: destToken.address,
-      destDecimals: destToken.decimals,
+      srcToken,
+      //srcDecimals,
+      destToken,
+      //destDecimals,
       srcAmount,
       destAmount: minAmount,
       userAddress,
       partner,
       receiver,
     };
-
+    
     const { data } = await axios.post(txURL, txConfig);
+
 
     return data;
   };
 
   return { getRate, buildSwap };
+  
 }
 
 export async function getSwapTransaction({
-  srcToken: srcTokenSymbol,
-  destToken: destTokenSymbol,
+  srcToken,
+  destToken,
+  srcDecimals,
+  destDecimals,
   srcAmount: _srcAmount,
   networkID,
   slippage = SLIPPAGE,
   ...rest
 }) {
   try {
-    console.lop('getSwapTransaction 1')
-    console.log(srcTokenSymbol, destTokenSymbol, _srcAmount, networkID, slippage)
-    const srcToken = getToken(srcTokenSymbol);
-    const destToken = getToken(destTokenSymbol);
-    console.log('getSwapTransaction 2')
+    console.log('getSwapTransaction ', srcToken, destToken, srcDecimals, destDecimals, _srcAmount, networkID, slippage)
 
     const srcAmount = new BigNumber(_srcAmount)
-      .times(10 ** srcToken?.decimals)
+      .times(10 ** srcDecimals)
       .toFixed(0);
-    console.log('getSwapTransaction 3')
 
     const ps = createSwapper(networkID, API_URL);
-    console.log('getSwapTransaction 4')
 
     const priceRoute = await ps.getRate({
+      srcDecimals,
+      destDecimals,
       srcToken,
       destToken,
       srcAmount,
     });
-    console.log('getSwapTransaction 5')
 
     const minAmount = new BigNumber(priceRoute?.destAmount)
       .times(1 - slippage / 100)
       .toFixed(0);
 
-    console.log('getSwapTransaction 6')
     const transactionRequest = await ps.buildSwap({
+      srcDecimals,
+      destDecimals,
       srcToken,
       destToken,
       srcAmount,
@@ -158,7 +111,6 @@ export async function getSwapTransaction({
       priceRoute,
       ...rest,
     });
-    console.log('getSwapTransaction 7')
     console.log("TransactionRequest", transactionRequest);
 
     return transactionRequest;
