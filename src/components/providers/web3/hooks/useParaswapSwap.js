@@ -45,12 +45,16 @@ const tokens = {
   ],
 };
 
-function getToken(symbol, networkID = Networks.MAINNET) {
-  const token = tokens[networkID]?.find((t) => t.symbol === symbol);
-
-  if (!token)
-    throw new Error(`Token ${symbol} not available on network ${networkID}`);
-  return token;
+function getToken(symbol) {
+  for (let i = 0; i < tokens.length; i++) {
+    if (tokens[i].symbol === symbol) {
+      const token = tokens[i]
+      console.log('token: ', token)
+      if (!token)
+        throw new Error(`Token ${symbol} not available`);
+      return token;
+    }
+  }
 }
 
 function createSwapper(networkID, apiURL) {
@@ -120,25 +124,32 @@ export async function getSwapTransaction({
   ...rest
 }) {
   try {
-    const srcToken = getToken(srcTokenSymbol, networkID);
-    const destToken = getToken(destTokenSymbol, networkID);
+    console.lop('getSwapTransaction 1')
+    console.log(srcTokenSymbol, destTokenSymbol, _srcAmount, networkID, slippage)
+    const srcToken = getToken(srcTokenSymbol);
+    const destToken = getToken(destTokenSymbol);
+    console.log('getSwapTransaction 2')
 
     const srcAmount = new BigNumber(_srcAmount)
-      .times(10 ** srcToken.decimals)
+      .times(10 ** srcToken?.decimals)
       .toFixed(0);
+    console.log('getSwapTransaction 3')
 
     const ps = createSwapper(networkID, API_URL);
+    console.log('getSwapTransaction 4')
 
     const priceRoute = await ps.getRate({
       srcToken,
       destToken,
       srcAmount,
     });
+    console.log('getSwapTransaction 5')
 
-    const minAmount = new BigNumber(priceRoute.destAmount)
+    const minAmount = new BigNumber(priceRoute?.destAmount)
       .times(1 - slippage / 100)
       .toFixed(0);
 
+    console.log('getSwapTransaction 6')
     const transactionRequest = await ps.buildSwap({
       srcToken,
       destToken,
@@ -147,7 +158,7 @@ export async function getSwapTransaction({
       priceRoute,
       ...rest,
     });
-
+    console.log('getSwapTransaction 7')
     console.log("TransactionRequest", transactionRequest);
 
     return transactionRequest;
@@ -157,12 +168,12 @@ export async function getSwapTransaction({
   }
 }
 
-export const getExampleSwapTransaction = () => 
-  getSwapTransaction({
-    srcAmount: "1",
-    srcToken: "MATIC",
-    destToken: "WBTC",
-    networkID: Networks.POLYGON,
-    userAddress: USER_ADDRESS,
-  });
+// export const getExampleSwapTransaction = () => 
+//   getSwapTransaction({
+//     srcAmount: "1",
+//     srcToken: "MATIC",
+//     destToken: "WBTC",
+//     networkID: Networks.POLYGON,
+//     userAddress: USER_ADDRESS,
+//   });
 
