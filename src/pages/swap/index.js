@@ -5,6 +5,7 @@ import { BridgeLayout } from "@/components/ui/layout"
 import { useEffect, useState } from "react";
 import { ethers } from "ethers";
 import Head from "next/head";
+import { Button } from "@/components/ui/common";
 
 export default function Swap() {
     const [srcToken, setSrcToken] = useState(null);
@@ -87,59 +88,64 @@ export default function Swap() {
     return (
         <>
           <Head><title>Swap</title></Head>
-          <div className="flex justify-center">
+            <div className="flex justify-center">
               <div className="lightBlueGlassLessBlur mt-36 rounded-lg container fade-in-slide-up">
-              <h1>Token Swap</h1>
-              <form onSubmit={handleSubmit}>
-                  <div>
-                  <label htmlFor="srcToken">Source Token:</label>
-                    <select value={srcToken} onChange={(e) => setSrcToken(e.target.value)}>
-                      <option value="">Select token</option>
-                      {tokens.map((token) => (
-                          <option key={token.address} value={token.address}>
-                          {token.symbol}
-                          </option>
-                      ))}
-                    </select>
+                <div className="w-full p-6 pb-2">
+                  <div className="rounded-md h-full">
+                    
+                    <div>
+                      <label htmlFor="srcToken">Source Token:</label>
+                        <select value={srcToken} onChange={(e) => setSrcToken(e.target.value)}>
+                          <option value="">Select token</option>
+                          {tokens.map((token) => (
+                              <option key={token.address} value={token.address}>
+                              {token.symbol}
+                              </option>
+                          ))}
+                        </select>
+                    </div>
+                    <div>
+                      <label htmlFor="destToken">Destination Token:</label>
+                        <select value={destToken} onChange={(e) => setDestToken(e.target.value)}>
+                          <option value="">Select token</option>
+                          {tokens.map((token) => (
+                              <option key={token.address} value={token.address}>
+                              {token.symbol}
+                              </option>
+                          ))}
+                        </select>
+                    </div>
+
+                    <div>
+                      <label htmlFor="srcAmount">Amount:</label>
+                      <input
+                          type="text"
+                          id="srcAmount"
+                          value={srcAmount}
+                          onChange={(e) => setSrcAmount(e.target.value)}
+                      />
+                    </div>
+                    {/* <button type="submit"
+                      ///onClick={handleTx}
+                    >Get TX Data</button> */}
+                        
+                    {isLoading && <p>Loading...</p>}
+                    {transactionData && (
+                        <div>
+                        <h2>Transaction Data</h2>
+                        <pre>{JSON.stringify(transactionData, null, 2)}</pre>
+                        </div>
+                    )}
+                    {error && <p>Error: {error}</p>}
+                    <Button
+                      onClick={handleTx}
+                      className='w-full border-indigo-600 text-lg fontTurrentRoad font-bold'
+                    >Swap Tokens</Button>
+
                   </div>
-                  <div>
-                  <label htmlFor="destToken">Destination Token:</label>
-                    <select value={destToken} onChange={(e) => setDestToken(e.target.value)}>
-                      <option value="">Select token</option>
-                      {tokens.map((token) => (
-                          <option key={token.address} value={token.address}>
-                          {token.symbol}
-                          </option>
-                      ))}
-                    </select>
-                  </div>
-                  <div>
-                  <label htmlFor="srcAmount">Amount:</label>
-                  <input
-                      type="text"
-                      id="srcAmount"
-                      value={srcAmount}
-                      onChange={(e) => setSrcAmount(e.target.value)}
-                  />
-                  </div>
-                  {/* <button type="submit"
-                    ///onClick={handleTx}
-                  >Get TX Data</button> */}
-                  
-              </form>
-              {isLoading && <p>Loading...</p>}
-              {transactionData && (
-                  <div>
-                  <h2>Transaction Data</h2>
-                  <pre>{JSON.stringify(transactionData, null, 2)}</pre>
-                  </div>
-              )}
-              {error && <p>Error: {error}</p>}
-              <button
-                  onClick={handleTx}
-              >Swap</button>
+                </div>
               </div>
-          </div>
+            </div>
         </>
     )
 }
