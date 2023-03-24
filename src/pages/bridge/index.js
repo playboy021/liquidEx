@@ -10,6 +10,7 @@ import { useWalletInfo } from "@/components/hooks/web3"
 import Loader, { LoaderSmall, LoaderXS } from "@/components/ui/common/loader"
 import BridgeConfirmationModal from "@/components/ui/bridge/bridgeConfirmationModal"
 import { ethers } from "ethers"
+import Head from "next/head"
 
 export default function Bridge() {
     const { network, account } = useWalletInfo()
@@ -82,6 +83,7 @@ export default function Bridge() {
 
     return(
         <>
+            <Head><title>Bridge</title></Head>
             <div className="flex justify-center">
                 <div className="lightBlueGlassLessBlur mt-36 rounded-lg container fade-in-slide-up">
                     <div className="w-full p-6 pb-2">

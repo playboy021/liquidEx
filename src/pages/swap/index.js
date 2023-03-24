@@ -4,6 +4,7 @@ import useParaswapTokens from "@/components/providers/web3/hooks/useParaswapToke
 import { BridgeLayout } from "@/components/ui/layout"
 import { useEffect, useState } from "react";
 import { ethers } from "ethers";
+import Head from "next/head";
 
 export default function Swap() {
     const [srcToken, setSrcToken] = useState(null);
@@ -85,6 +86,7 @@ export default function Swap() {
 
     return (
         <>
+          <Head><title>Swap</title></Head>
           <div className="flex justify-center">
               <div className="lightBlueGlassLessBlur mt-36 rounded-lg container fade-in-slide-up">
               <h1>Token Swap</h1>

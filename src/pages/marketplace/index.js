@@ -1,6 +1,6 @@
 import { useWalletInfo } from '@components/hooks/web3'
 import { CourseCard, CourseList } from "@components/ui/course"
-import { BaseLayout } from "@components/ui/layout"
+import { BaseLayout, BridgeLayout } from "@components/ui/layout"
 import { getAllCourses } from "@content/courses/fetcher"
 import { Button } from '@/components/ui/common'
 import { OrderModal } from '@/components/ui/order'
@@ -8,6 +8,7 @@ import { useState } from 'react'
 import { MarketHeader } from '@/components/ui/marketplace'
 import { useWeb3 } from '@/components/providers'
 import { ethers } from 'ethers'
+import Head from 'next/head'
 
 export function getStaticProps() {
     const { data } = getAllCourses()
@@ -52,6 +53,7 @@ export default function Marketplace({courses}) {
 
     return (
         <>
+            <Head><title>Marketplace</title></Head>
             <MarketHeader />
 
             <CourseList
@@ -87,4 +89,4 @@ export default function Marketplace({courses}) {
   )
 }
 
-Marketplace.Layout = BaseLayout
+Marketplace.Layout = BridgeLayout

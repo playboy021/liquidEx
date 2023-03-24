@@ -8,6 +8,7 @@ import { useState } from 'react'
 import { MarketHeader } from '@/components/ui/marketplace'
 import { useWeb3 } from '@/components/providers'
 import { ethers } from 'ethers'
+import Head from 'next/head'
 
 export function getStaticProps() {
     const { data } = getAllCourses()
@@ -52,6 +53,7 @@ export default function Marketplace({courses}) {
 
     return (
         <>
+            <Head><title>Marketplace</title></Head>
             <MarketHeader />
 
             <CourseList

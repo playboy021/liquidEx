@@ -6,6 +6,7 @@ import { BaseLayout } from "@/components/ui/layout";
 import { MarketHeader } from "@/components/ui/marketplace";
 import { ethers } from "ethers";
 import { useState } from "react";
+import Head from "next/head";
 
 const VerificationInput = ({onVerify}) => {
     const [email, setEmail] = useState('')
@@ -67,6 +68,7 @@ export default function ManagedCourses() {
 
     return (
         <>
+            <Head><title>Marketplace</title></Head>
             <MarketHeader />
             <CourseFilter />
             

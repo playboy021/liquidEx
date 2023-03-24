@@ -7,6 +7,7 @@ import { MarketHeader } from "@/components/ui/marketplace";
 import { getAllCourses } from "@/content/courses/fetcher";
 import { useRouter } from "next/router";
 import Link from "next/link";
+import Head from "next/head";
 
 export function getStaticProps() {
     const { data } = getAllCourses()
@@ -24,6 +25,7 @@ export default function OwnedCourses({courses}) {
 
     return (
         <>
+            <Head><title>Marketplace</title></Head>
             <MarketHeader />
             <section className='grid grid-cols-1'>
                 { account.isEmpty ? <Message type="INFO">Please connect to Metamask</Message> :

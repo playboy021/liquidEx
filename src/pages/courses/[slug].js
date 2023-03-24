@@ -7,6 +7,7 @@ import {
 } from "@components/ui/course";
 import { BaseLayout } from "@components/ui/layout";
 import { getAllCourses } from "@content/courses/fetcher";
+import Head from "next/head";
 
 const lectures = [
   "How to init App",
@@ -52,6 +53,7 @@ export default function Course({course}) {
 
   return (
     <>
+      <Head><title>{course.title}</title></Head>
       <div className="py-4">
         <CourseHero
           hasOwner={!!ownedCourse.data}
