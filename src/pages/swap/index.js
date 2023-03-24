@@ -150,7 +150,7 @@ export default function Swap() {
                   </div>
                 </div>
                 
-                <div>
+                {/* <div>
                   <label htmlFor="srcToken">Source Token:</label>
                     <select value={srcToken} onChange={(e) => setSrcToken(e.target.value)}>
                       <option value="">Select token</option>
@@ -171,7 +171,7 @@ export default function Swap() {
                           </option>
                       ))}
                     </select>
-                </div>
+                </div> */}
                 {/* <button type="submit"
                   ///onClick={handleTx}
                 >Get TX Data</button> */}

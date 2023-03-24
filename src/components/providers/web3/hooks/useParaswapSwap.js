@@ -9,7 +9,7 @@ const SLIPPAGE = 1; // 1%
 
 function createSwapper(networkID, apiURL) {
   const getRate = async ({ srcToken, destToken, srcAmount, partner = PARTNER, srcDecimals, destDecimals }) => {
-    console.log('getRate ', srcToken, destToken, srcAmount, partner, srcDecimals, destDecimals)
+    //console.log('getRate ', srcToken, destToken, srcAmount, partner, srcDecimals, destDecimals)
     const queryParams = {
       srcToken: srcToken,
       destToken: destToken,
@@ -43,7 +43,7 @@ function createSwapper(networkID, apiURL) {
     receiver,
     partner,
   }) => {
-    console.log('buildSwap ', srcToken, destToken, srcAmount, minAmount, priceRoute, userAddress, receiver, partner)
+    //console.log('buildSwap ', priceRoute)
     const txURL = `${apiURL}/transactions/${networkID}`;
 
     const txConfig = {
@@ -80,7 +80,6 @@ export async function getSwapTransaction({
   ...rest
 }) {
   try {
-    console.log('getSwapTransaction ', srcToken, destToken, srcDecimals, destDecimals, _srcAmount, networkID, slippage)
 
     const srcAmount = new BigNumber(_srcAmount)
       .times(10 ** srcDecimals)
