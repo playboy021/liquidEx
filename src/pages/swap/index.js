@@ -84,7 +84,10 @@ export default function Swap() {
     }, [srcToken, destToken])
 
     useEffect(() => {
-      handleSubmit()
+      if(srcToken !== null && destToken !== null && srcAmount !== '') {
+        handleSubmit()
+      }
+
     }, [srcToken, destToken, account.data, network.data, srcAmount])
 
     return (
@@ -101,8 +104,11 @@ export default function Swap() {
                       header={(props) => (
                           <>
                               <SwapAssetsPanelFrom.Panel {...props}
+                                srcAmount={srcAmount}
+                                setSrcAmount={setSrcAmount}
                               />
                               <SwapAssetsPanelFrom.Header
+                                srcToken={srcToken}
                               />
                           </>
                       )}
@@ -158,16 +164,6 @@ export default function Swap() {
                           </option>
                       ))}
                     </select>
-                </div>
-
-                <div>
-                  <label htmlFor="srcAmount">Amount:</label>
-                  <input
-                      type="text"
-                      id="srcAmount"
-                      value={srcAmount}
-                      onChange={(e) => setSrcAmount(e.target.value)}
-                  />
                 </div>
                 {/* <button type="submit"
                   ///onClick={handleTx}
