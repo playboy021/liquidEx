@@ -6,6 +6,8 @@ import { useEffect, useState } from "react";
 import { ethers } from "ethers";
 import Head from "next/head";
 import { Button } from "@/components/ui/common";
+import SwapAssetsPanelFrom from "@/components/ui/swap/swapAssetsPanelFrom";
+import SwapAssetsPanelTo from "@/components/ui/swap/swapAssetsPanelTo";
 
 export default function Swap() {
     const [srcToken, setSrcToken] = useState(null);
@@ -89,61 +91,96 @@ export default function Swap() {
         <>
           <Head><title>Swap</title></Head>
             <div className="flex justify-center">
-              <div className="lightBlueGlassLessBlur mt-36 rounded-lg container fade-in-slide-up">
-                <div className="w-full p-6 pb-2">
-                  <div className="rounded-md h-full">
-                    
-                    <div>
-                      <label htmlFor="srcToken">Source Token:</label>
-                        <select value={srcToken} onChange={(e) => setSrcToken(e.target.value)}>
-                          <option value="">Select token</option>
-                          {tokens.map((token) => (
-                              <option key={token.address} value={token.address}>
-                              {token.symbol}
-                              </option>
-                          ))}
-                        </select>
-                    </div>
-                    <div>
-                      <label htmlFor="destToken">Destination Token:</label>
-                        <select value={destToken} onChange={(e) => setDestToken(e.target.value)}>
-                          <option value="">Select token</option>
-                          {tokens.map((token) => (
-                              <option key={token.address} value={token.address}>
-                              {token.symbol}
-                              </option>
-                          ))}
-                        </select>
-                    </div>
+              <div className="lightBlueGlassLessBlur mt-36 rounded-lg container fade-in-slide-up" style={{maxWidth: '500px'}}>
 
-                    <div>
-                      <label htmlFor="srcAmount">Amount:</label>
-                      <input
-                          type="text"
-                          id="srcAmount"
-                          value={srcAmount}
-                          onChange={(e) => setSrcAmount(e.target.value)}
-                      />
-                    </div>
-                    {/* <button type="submit"
-                      ///onClick={handleTx}
-                    >Get TX Data</button> */}
-                        
-                    {isLoading && <p>Loading...</p>}
-                    {transactionData && (
-                        <div>
-                        <h2>Transaction Data</h2>
-                        <pre>{JSON.stringify(transactionData, null, 2)}</pre>
-                        </div>
-                    )}
-                    {error && <p>Error: {error}</p>}
-                    <Button
-                      onClick={handleTx}
-                      className='w-full border-indigo-600 text-lg fontTurrentRoad font-bold'
-                    >Swap Tokens</Button>
+                <div className="w-full p-6 pb-0">
+                  <div className="rounded-md h-full">
+
+                    <SwapAssetsPanelFrom
+                      //spendFromWallet={true}
+                      header={(props) => (
+                          <>
+                              <SwapAssetsPanelFrom.Panel {...props}
+                              />
+                              <SwapAssetsPanelFrom.Header
+                              />
+                          </>
+                      )}
+                    />
 
                   </div>
                 </div>
+
+                <div className="w-full p-6 pb-2">
+                  <div className="rounded-md h-full">
+
+                    <SwapAssetsPanelTo
+                      //spendFromWallet={true}
+                      header={(props) => (
+                          <>
+                              <SwapAssetsPanelTo.Panel {...props}
+                              />
+                              <SwapAssetsPanelTo.Header
+                              />
+                          </>
+                      )}
+                    />
+
+                  </div>
+                </div>
+                
+                <div>
+                  <label htmlFor="srcToken">Source Token:</label>
+                    <select value={srcToken} onChange={(e) => setSrcToken(e.target.value)}>
+                      <option value="">Select token</option>
+                      {tokens.map((token) => (
+                          <option key={token.address} value={token.address}>
+                          {token.symbol}
+                          </option>
+                      ))}
+                    </select>
+                </div>
+                <div>
+                  <label htmlFor="destToken">Destination Token:</label>
+                    <select value={destToken} onChange={(e) => setDestToken(e.target.value)}>
+                      <option value="">Select token</option>
+                      {tokens.map((token) => (
+                          <option key={token.address} value={token.address}>
+                          {token.symbol}
+                          </option>
+                      ))}
+                    </select>
+                </div>
+
+                <div>
+                  <label htmlFor="srcAmount">Amount:</label>
+                  <input
+                      type="text"
+                      id="srcAmount"
+                      value={srcAmount}
+                      onChange={(e) => setSrcAmount(e.target.value)}
+                  />
+                </div>
+                {/* <button type="submit"
+                  ///onClick={handleTx}
+                >Get TX Data</button> */}
+                    
+                {isLoading && <p>Loading...</p>}
+                {transactionData && (
+                    <div>
+                    <h2>Transaction Data</h2>
+                    <pre>{JSON.stringify(transactionData, null, 2)}</pre>
+                    </div>
+                )}
+                {error && <p>Error: {error}</p>}
+                <div className="flex justify-center p-6">
+                  <Button
+                    onClick={handleTx}
+                    className='border-indigo-600 text-lg fontTurrentRoad font-bold'
+                    style={{width: '450px'}}
+                  >Swap Tokens</Button>
+                </div>
+
               </div>
             </div>
         </>
