@@ -130,7 +130,7 @@ export const SwapAssetsPanelToHeader = ({tokens, destToken, setDestToken}) => {
         function getDestToken() {
             for (let i = 0; i < Object.keys(tokens).length; i++) {
                 const key = Object.keys(tokens)[i]
-                if(tokens[key]?.symbol == 'DAI'){
+                if(tokens[key]?.symbol == 'fUSDT' || tokens[key]?.symbol == 'USDT'){
                     setDestToken(key)
                 }
             }

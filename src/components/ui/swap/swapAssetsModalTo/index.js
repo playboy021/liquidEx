@@ -99,7 +99,7 @@ export default function SwapAssetsModalTo({ closeModal, open, setOpen, setDestTo
                                                 <div key={token} className='inline-flex px-1 py-1'>
                                                     <ButtonXSmall onClick={() => { setDestToken(token); setOpen(false);; setSearch('') }} className='w-full bg-opacity-0 border-indigo-600 text-white' style={{width:'74px', height:'35px' }} >
                                                         <div className='inline-flex p-1'>
-                                                            <img src={tokens[token]?.img} width='23px' height='23px' alt='' />&nbsp;<span className='text-xs pt-1 pr-1'>{tokens[token]?.symbol}</span>
+                                                            <img src={tokens[token]?.img || tokens[token]?.logoURI} width='23px' height='23px' alt='' />&nbsp;<span className='text-xs pt-1 pr-1'>{tokens[token]?.symbol}</span>
                                                         </div>
                                                     </ButtonXSmall>
                                                 </div>
@@ -120,7 +120,7 @@ export default function SwapAssetsModalTo({ closeModal, open, setOpen, setDestTo
 
                                                             <ButtonBridgeAssetsModal onClick={() => { setDestToken(tokenName); setOpen(false);; setSearch('') }} className='w-full h-10 bg-opacity-0 border-indigo-600 text-indigo-800' >
                                                                 <div className='inline-flex'>
-                                                                    <img src={tokens[tokenName]?.img} width='30px' height='30px' alt='' />&nbsp;<div className='grid-cols-1 text-md pt-1 inline-grid'><span>{tokens[tokenName]?.symbol}</span></div>
+                                                                    <img src={tokens[tokenName]?.img || tokens[tokenName]?.logoURI} width='30px' height='30px' alt='' />&nbsp;<div className='grid-cols-1 text-md pt-1 inline-grid'><span>{tokens[tokenName]?.symbol}</span></div>
                                                                 </div>
 
                                                             </ButtonBridgeAssetsModal>

@@ -106,6 +106,8 @@ export default function Swap() {
                               <SwapAssetsPanelFrom.Panel {...props}
                                 srcAmount={srcAmount}
                                 setSrcAmount={setSrcAmount}
+                                srcToken={srcToken}
+                                tokens={tokens}
                               />
                               <SwapAssetsPanelFrom.Header
                                 srcToken={srcToken}

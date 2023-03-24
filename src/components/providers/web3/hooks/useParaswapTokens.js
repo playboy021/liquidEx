@@ -15,7 +15,16 @@ const useParaswapTokens = () => {
       try {
         if(network.data == 250) {
           const response = await axios.get(`https://raw.githubusercontent.com/SpookySwap/spooky-info/master/src/constants/token/spookyswap.json`);
-          setTokens(response.data.tokens);
+          const response2 = await axios.get(`https://apiv5.paraswap.io/tokens/${network.data}`);
+
+          const data1 = response.data.tokens;
+          const data2 = response2.data.tokens;
+
+          const concatenatedData = data1.concat(data2);
+
+          const uniqueData = [...new Map(concatenatedData.map(item => [item.symbol, item])).values()];
+
+          setTokens(uniqueData);
         } else {
           const response = await axios.get(`https://apiv5.paraswap.io/tokens/${network.data}`);
           setTokens(response.data.tokens);

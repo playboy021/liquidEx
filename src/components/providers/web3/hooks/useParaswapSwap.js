@@ -1,6 +1,5 @@
 import axios from "axios";
 import BigNumber from "bignumber.js";
-import useParaswapTokens from "./useParaswapTokens";
 
 
 const API_URL = "https://apiv5.paraswap.io";
