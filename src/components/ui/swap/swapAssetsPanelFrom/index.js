@@ -111,7 +111,7 @@ export const InputPanel = ({srcAmount, setSrcAmount}) => {
     )
 }
 
-export const SwapAssetsPanelFromHeader = ({srcToken}) => {
+export const SwapAssetsPanelFromHeader = ({srcToken, setSrcToken, tokens}) => {
 
     const [open, setOpen] = useState(false)
 
@@ -125,8 +125,22 @@ export const SwapAssetsPanelFromHeader = ({srcToken}) => {
         setOpen(true)
     }
 
+    useEffect(() => {
+        function getSrcToken() {
+            for (let i = 0; i < Object.keys(tokens).length; i++) {
+                const key = Object.keys(tokens)[i]
+                if(tokens[key]?.symbol == 'USDC'){
+                    setSrcToken(key)
+                }
+            }
+        }
+        
+        getSrcToken()
+    }, [tokens, network.data])
+
     return (
         <>
+            {console.log('srcTokenObject', srcToken)}
             <div className="flex flex-row-reverse items-end justify-between float-right gap-2">
                 {account?.data == undefined ?
                     <ButtonSmall
@@ -162,8 +176,8 @@ export const SwapAssetsPanelFromHeader = ({srcToken}) => {
                             onClick={openModal}
                             type='button'
                         >
-                            <img src={tokens[selectedToken]?.logoUrl} width='24px' height='24px' alt='' />
-                            <span>{tokens[selectedToken]?.originalSymbol}</span>
+                            <img src={tokens[srcToken]?.img} width='24px' height='24px' alt='' />
+                            <span>{tokens[srcToken]?.symbol}</span>
                             <ChevronDownIcon width={18} />
                         </ButtonSmall>
                 } 
@@ -172,6 +186,7 @@ export const SwapAssetsPanelFromHeader = ({srcToken}) => {
                 closeModal={closeModal}
                 open={open}
                 setOpen={setOpen}
+                setSrcToken={setSrcToken}
             />
         </>
     )

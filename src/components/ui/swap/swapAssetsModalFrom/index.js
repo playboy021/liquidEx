@@ -5,13 +5,12 @@ import { XIcon } from '@heroicons/react/solid';
 import { useWalletInfo } from '@/components/hooks/web3';
 import useParaswapTokens from '@/components/providers/web3/hooks/useParaswapTokens';
 
-export default function SwapAssetsModalFrom({ closeModal, open, setOpen, setSelectedToken }) {
+export default function SwapAssetsModalFrom({ closeModal, open, setOpen, setSrcToken }) {
     
     const [search, setSearch] = useState('')
     const [topTokens, setTopTokens] = useState([])
     const [maxHeight, setMaxHeight] = useState(false)
 
-    const { network } = useWalletInfo()
     const { tokens } = useParaswapTokens()
 
     const searchFilter = (tokenName) => {
@@ -41,7 +40,6 @@ export default function SwapAssetsModalFrom({ closeModal, open, setOpen, setSele
 
     return (
         <>
-        {console.log(maxHeight)}
             <Transition appear show={open} as={Fragment}>
                 <Dialog as="div" className="fixed inset-0 z-30" onClose={() => { closeModal(), setSearch('') }}>
                     <div className="fixed inset-0 bg-black/30 blur" aria-hidden="true" />
@@ -99,7 +97,7 @@ export default function SwapAssetsModalFrom({ closeModal, open, setOpen, setSele
                                         {Object.values(topTokens).map(function (token) {
                                             return (
                                                 <div key={token} className='inline-flex px-1 py-1'>
-                                                    <ButtonXSmall onClick={() => { setSelectedToken(token); setOpen(false);; setSearch('') }} className='w-full bg-opacity-0 border-indigo-600 text-white' style={{width:'74px', height:'35px' }} >
+                                                    <ButtonXSmall onClick={() => { setSrcToken(token); setOpen(false);; setSearch('') }} className='w-full bg-opacity-0 border-indigo-600 text-white' style={{width:'74px', height:'35px' }} >
                                                         <div className='inline-flex p-1'>
                                                             <img src={tokens[token]?.img} width='23px' height='23px' alt='' />&nbsp;<span className='text-xs pt-1 pr-1'>{tokens[token]?.symbol}</span>
                                                         </div>
@@ -120,7 +118,7 @@ export default function SwapAssetsModalFrom({ closeModal, open, setOpen, setSele
                                                     return (
                                                         <div key={tokenName} className='flex gap-1 m-1 rounded-lg' >
 
-                                                            <ButtonBridgeAssetsModal onClick={() => { setSelectedToken(tokenName); setOpen(false);; setSearch('') }} className='w-full h-10 bg-opacity-0 border-indigo-600 text-indigo-800' >
+                                                            <ButtonBridgeAssetsModal onClick={() => { setSrcToken(tokenName); setOpen(false);; setSearch('') }} className='w-full h-10 bg-opacity-0 border-indigo-600 text-indigo-800' >
                                                                 <div className='inline-flex'>
                                                                     <img src={tokens[tokenName]?.img} width='30px' height='30px' alt='' />&nbsp;<div className='grid-cols-1 text-md pt-1 inline-grid'><span>{tokens[tokenName]?.symbol}</span></div>
                                                                 </div>
