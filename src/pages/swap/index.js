@@ -91,7 +91,7 @@ export default function Swap() {
         <>
           <Head><title>Swap</title></Head>
             <div className="flex justify-center">
-              <div className="lightBlueGlassLessBlur mt-36 rounded-lg container fade-in-slide-up" style={{maxWidth: '500px'}}>
+              <div className="lightBlueGlassLessBlur mt-36 rounded-2xl container fade-in-slide-up" style={{maxWidth: '500px'}}>
 
                 <div className="w-full p-6 pb-0">
                   <div className="rounded-md h-full">
@@ -111,7 +111,15 @@ export default function Swap() {
                   </div>
                 </div>
 
-                <div className="w-full p-6 pb-2">
+                <div className='flex justify-center fill-white p-2'>
+                  <div className="rotating-div cursor-pointer">
+                    <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="white" className="w-8 h-8 border-indigo-600 border rounded-lg p-1">
+                    <path strokeLinecap="round" strokeLinejoin="round" d="M3 7.5L7.5 3m0 0L12 7.5M7.5 3v13.5m13.5 0L16.5 21m0 0L12 16.5m4.5 4.5V7.5" />
+                    </svg>
+                  </div>
+                </div>
+
+                <div className="w-full p-6 pt-0 pb-3">
                   <div className="rounded-md h-full">
 
                     <SwapAssetsPanelTo
@@ -173,7 +181,7 @@ export default function Swap() {
                     </div>
                 )}
                 {error && <p>Error: {error}</p>}
-                <div className="flex justify-center p-6">
+                <div className="flex justify-center p-6 pt-3 pb-3">
                   <Button
                     onClick={handleTx}
                     className='border-indigo-600 text-lg fontTurrentRoad font-bold'

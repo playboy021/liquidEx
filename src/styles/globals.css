@@ -100,6 +100,15 @@ input::-webkit-inner-spin-button {
   transition:0.4s;
 }
 
+.rotating-div {
+  transition: transform 0.5s ease-in-out;
+}
+
+.rotating-div:hover {
+  transform: rotate(180deg);
+}
+
+
 /* 
   DIV ANIMATIONS START
 */
