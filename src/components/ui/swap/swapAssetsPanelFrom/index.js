@@ -140,7 +140,7 @@ export const SwapAssetsPanelFromHeader = ({srcToken, setSrcToken, tokens}) => {
 
     return (
         <>
-            {console.log('srcTokenObject', srcToken)}
+            {console.log('srcTokenObject', tokens[srcToken])}
             <div className="flex flex-row-reverse items-end justify-between float-right gap-2">
                 {account?.data == undefined ?
                     <ButtonSmall
@@ -176,7 +176,7 @@ export const SwapAssetsPanelFromHeader = ({srcToken, setSrcToken, tokens}) => {
                             onClick={openModal}
                             type='button'
                         >
-                            <img src={tokens[srcToken]?.img} width='24px' height='24px' alt='' />
+                            <img src={tokens[srcToken]?.img || tokens[srcToken]?.logoURI} width='24px' height='24px' alt='' />
                             <span>{tokens[srcToken]?.symbol}</span>
                             <ChevronDownIcon width={18} />
                         </ButtonSmall>

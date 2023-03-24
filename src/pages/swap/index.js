@@ -28,13 +28,13 @@ export default function Swap() {
   
       try {
         const transactionParams = await getSwapTransaction({
-          srcToken,
-          destToken,
+          srcToken: tokens[srcToken]?.address,
+          destToken: tokens[destToken]?.address,
           srcAmount,
           networkID: network?.data, // Polygon Network
           userAddress: account?.data,
-          srcDecimals,
-          destDecimals,
+          srcDecimals: tokens[srcToken]?.decimals,
+          destDecimals: tokens[destToken]?.decimals,
         })
         if(transactionParams !== null) {
           setTransactionData(transactionParams);
@@ -137,6 +137,9 @@ export default function Swap() {
                               <SwapAssetsPanelTo.Panel {...props}
                               />
                               <SwapAssetsPanelTo.Header
+                                destToken={destToken}
+                                setDestToken={setDestToken}
+                                tokens={tokens}
                               />
                           </>
                       )}

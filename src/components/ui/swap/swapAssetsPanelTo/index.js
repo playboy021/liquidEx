@@ -4,6 +4,7 @@ import axios from 'axios'
 import { ButtonSmall } from '../../common/button'
 import { useWalletInfo } from '@/components/hooks/web3'
 import { ethers } from 'ethers'
+import SwapAssetsModalTo from '../swapAssetsModalTo'
 
 const SwapAssetsPanelTo = (
     {
@@ -27,58 +28,58 @@ const SwapAssetsPanelTo = (
     )
 }
 
-export const InputPanel = ({amount, setAmount, selectedToken, tokens, destinationChain}) => {
+export const InputPanel = ({}) => {
 
     const [selectedTokenBalance, setSelectedTokenBalance] = useState('')
 
     const { account, network } = useWalletInfo()
 
-    useEffect(() => {
-        async function getBalance() {
-            const ERC20ABI = require('../../bridge/bridgeAssetsPanel/abi/Token.json')
-            const provider = new ethers.providers.Web3Provider(window.ethereum)
-            const fromAddress = await provider.getSigner()
-            if (account != null && (network.data)?.toString() != destinationChain) {
-                try {
-                    const signerAddress = await fromAddress?.getAddress()
-                    if (selectedToken != '' && tokens[selectedToken]?.isNative !=
-                        "NATIVE") {
-                        try {
-                            let Token = new ethers.Contract(tokens[selectedToken]?.srcAddress, ERC20ABI, fromAddress)
-                            const result = await Token.connect(fromAddress).balanceOf(signerAddress)
-                            const balance = ethers.utils.formatUnits(result, tokens[selectedToken]?.originalDecimals)
+    // useEffect(() => {
+    //     async function getBalance() {
+    //         const ERC20ABI = require('../../bridge/bridgeAssetsPanel/abi/Token.json')
+    //         const provider = new ethers.providers.Web3Provider(window.ethereum)
+    //         const fromAddress = await provider.getSigner()
+    //         if (account != null && (network.data)?.toString() != destinationChain) {
+    //             try {
+    //                 const signerAddress = await fromAddress?.getAddress()
+    //                 if (selectedToken != '' && tokens[selectedToken]?.isNative !=
+    //                     "NATIVE") {
+    //                     try {
+    //                         let Token = new ethers.Contract(tokens[selectedToken]?.srcAddress, ERC20ABI, fromAddress)
+    //                         const result = await Token.connect(fromAddress).balanceOf(signerAddress)
+    //                         const balance = ethers.utils.formatUnits(result, tokens[selectedToken]?.originalDecimals)
 
-                            setSelectedTokenBalance(balance)
-                        } catch (error) {
-                            console.log(error)
-                        }
+    //                         setSelectedTokenBalance(balance)
+    //                     } catch (error) {
+    //                         console.log(error)
+    //                     }
 
-                    } else if (tokens[selectedToken]?.isNative ==
-                        "NATIVE") {
-                        const getBalance = async (address) => {
-                            const provider = new ethers.providers.Web3Provider(window.ethereum);
-                            const balance = await provider.getBalance(address);
-                            const balanceInEth = ethers.utils.formatEther(balance);
-                            setSelectedTokenBalance(balanceInEth)
-                        }
-                        getBalance(signerAddress)
-                    }
-                } catch (error) {
-                    console.log(error)
-                }
-            }
-        }
+    //                 } else if (tokens[selectedToken]?.isNative ==
+    //                     "NATIVE") {
+    //                     const getBalance = async (address) => {
+    //                         const provider = new ethers.providers.Web3Provider(window.ethereum);
+    //                         const balance = await provider.getBalance(address);
+    //                         const balanceInEth = ethers.utils.formatEther(balance);
+    //                         setSelectedTokenBalance(balanceInEth)
+    //                     }
+    //                     getBalance(signerAddress)
+    //                 }
+    //             } catch (error) {
+    //                 console.log(error)
+    //             }
+    //         }
+    //     }
 
-        getBalance()
+    //     getBalance()
 
-    }, [selectedToken, tokens, network.data, account.data, amount])
+    // }, [selectedToken, tokens, network.data, account.data, amount])
 
     return (
         <>
             <div className='text-2xl leading-7 tracking-[-0.01em] relative flex items-baseline flex-grow gap-3 font-bold'>
                 <>
                     <input
-                        value={amount}
+                        //value={amount}
                         // universal input options
                         inputMode="decimal"
                         title="Token Amount"
@@ -111,16 +112,40 @@ export const InputPanel = ({amount, setAmount, selectedToken, tokens, destinatio
     )
 }
 
-export const SwapAssetsPanelToHeader = () => {
+export const SwapAssetsPanelToHeader = ({tokens, destToken, setDestToken}) => {
 
+    const [open, setOpen] = useState(false)
+
+    const { account, network } = useWalletInfo()
+    
+    function closeModal() {
+        setOpen(false)
+    }
+
+    function openModal() {
+        setOpen(true)
+    }
+
+    useEffect(() => {
+        function getDestToken() {
+            for (let i = 0; i < Object.keys(tokens).length; i++) {
+                const key = Object.keys(tokens)[i]
+                if(tokens[key]?.symbol == 'DAI'){
+                    setDestToken(key)
+                }
+            }
+        }
+        
+        getDestToken()
+    }, [tokens, network.data])
 
     return (
         <>
+            {console.log('destTokenObject', tokens[destToken])}
             <div className="flex flex-row-reverse items-end justify-between float-right gap-2">
-                {/* {account?.data == undefined || (network.data)?.toString() == destinationChain ? */}
+                {account?.data == undefined ?
                     <ButtonSmall
                         className="flex items-center gap-2 shadow-md cursor-pointer text-high-emphesis hover:bg-dark-700 p-0 m-0 relative border-indigo-600"
-                        // original className="bannerSwapCurrency flex items-center gap-2 px-2 py-1 shadow-md cursor-pointer text-high-emphesis bg-[#292D3C] hover:bg-dark-700 pb-1"
                         style={{ zIndex: '1' , bottom: '22px', left: '-4px'}}
                         //onClick={openModal}
                         type='button'
@@ -130,8 +155,8 @@ export const SwapAssetsPanelToHeader = () => {
                         <span>SHIB</span>
                         <ChevronDownIcon width={18} />
                     </ButtonSmall> 
-                    {/* : 
-                    selectedToken == '' || tokens[selectedToken] == undefined ?
+                    : 
+                    destToken === null ?
                         <ButtonSmall
                             className="flex items-center gap-2 shadow-md cursor-pointer text-high-emphesis hover:bg-dark-700 p-0 m-0 relative border-indigo-600 bg-opacity-0 hover:shadow-lg"
                             // original className="bannerSwapCurrency flex items-center gap-2 px-2 py-1 shadow-md cursor-pointer text-high-emphesis bg-[#292D3C] hover:bg-dark-700 pb-1"
@@ -152,19 +177,18 @@ export const SwapAssetsPanelToHeader = () => {
                             onClick={openModal}
                             type='button'
                         >
-                            <img src={tokens[selectedToken]?.logoUrl} width='24px' height='24px' alt='' />
-                            <span>{tokens[selectedToken]?.originalSymbol}</span>
+                            <img src={tokens[destToken]?.img || tokens[destToken]?.logoURI} width='24px' height='24px' alt='' />
+                            <span>{tokens[destToken]?.symbol}</span>
                             <ChevronDownIcon width={18} />
                         </ButtonSmall>
-                }  */}
+                } 
             </div>
-            {/* <BridgeAssetsModal
+            <SwapAssetsModalTo
                 closeModal={closeModal}
                 open={open}
-                tokens={tokens}
                 setOpen={setOpen}
-                setSelectedToken={setSelectedToken}
-            /> */}
+                setDestToken={setDestToken}
+            />
         </>
     )
 }

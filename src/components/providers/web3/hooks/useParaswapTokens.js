@@ -13,7 +13,14 @@ const useParaswapTokens = () => {
     const fetchTokens = async () => {
       setLoading(true);
       try {
-        const response = await axios.get(`https://apiv5.paraswap.io/tokens/${network.data}`);
+        if(network.data == 250) {
+          const response = await axios.get(`https://raw.githubusercontent.com/SpookySwap/spooky-info/master/src/constants/token/spookyswap.json`);
+          setTokens(response.data.tokens);
+        } else {
+          const response = await axios.get(`https://apiv5.paraswap.io/tokens/${network.data}`);
+          setTokens(response.data.tokens);
+        }
+        
         setTokens(response.data.tokens);
       } catch (error) {
         setError(error);
