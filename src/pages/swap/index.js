@@ -8,6 +8,7 @@ import Head from "next/head";
 import { Button } from "@/components/ui/common";
 import SwapAssetsPanelFrom from "@/components/ui/swap/swapAssetsPanelFrom";
 import SwapAssetsPanelTo from "@/components/ui/swap/swapAssetsPanelTo";
+import { ChevronDownIcon } from "@heroicons/react/solid";
 
 export default function Swap() {
 
@@ -42,6 +43,9 @@ export default function Swap() {
         if(transactionParams !== null) {
           setTxParams(transactionParams?.priceRoute);
           setTransactionData(transactionParams);
+        } else {
+          setTxParams(null);
+          setTransactionData(null);
         }
         
       } catch (err) {
@@ -221,6 +225,18 @@ export default function Swap() {
                       )}
                     />
 
+                  </div>
+                </div>
+                <div className="w-full p-6 pt-0 pb-2">
+                  <div className="bg-white bg-opacity-60 p-3 rounded-lg h-full items-center">
+                    <div>
+                        <div className='flex justify-between'>
+                            <h4 className="text-indigo-600 font-bold">More info: </h4>
+                            <ChevronDownIcon width={18} //style = {{transform: 'rotate(180deg)' }}
+                            />
+                        </div>
+                    </div>
+                    <hr className="h-px my-2 bg-indigo-600 border-0 dark:bg-indigo-700"/>
                   </div>
                 </div>
                 
