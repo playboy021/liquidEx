@@ -78,7 +78,7 @@ export const InputPanel = ({tokens, destToken, srcAmount, txParams}) => {
 
         getBalance()
 
-    }, [destToken, tokens, network.data, account.data, srcAmount])
+    }, [destToken, tokens, network.data, account.data, srcAmount, txParams])
 
     useEffect(() => {
         if (txParams?.destAmount) {
@@ -91,7 +91,7 @@ export const InputPanel = ({tokens, destToken, srcAmount, txParams}) => {
             <div className='text-2xl leading-7 tracking-[-0.01em] relative flex items-baseline flex-grow gap-3 font-bold'>
                 <>
                     <input
-                        value={txParams?.destAmount ? destAmount : null}
+                        value={srcAmount !== null ? destAmount : null}
                         // universal input options
                         inputMode="decimal"
                         title="Token Amount"

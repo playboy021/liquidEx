@@ -2,7 +2,7 @@ import { useWalletInfo } from "@/components/hooks/web3";
 import useParaswapSwap, { getSwapTransaction } from "@/components/providers/web3/hooks/useParaswapSwap"
 import useParaswapTokens from "@/components/providers/web3/hooks/useParaswapTokens"
 import { BridgeLayout } from "@/components/ui/layout"
-import { useEffect, useState } from "react";
+import { useEffect, useState, useRef } from "react";
 import { ethers } from "ethers";
 import Head from "next/head";
 import { Button } from "@/components/ui/common";
@@ -10,15 +10,17 @@ import SwapAssetsPanelFrom from "@/components/ui/swap/swapAssetsPanelFrom";
 import SwapAssetsPanelTo from "@/components/ui/swap/swapAssetsPanelTo";
 
 export default function Swap() {
-    const [srcToken, setSrcToken] = useState(null);
-    const [destToken, setDestToken] = useState(null);
+
+    const [isLoading, setIsLoading] = useState(false);
     const [srcAmount, setSrcAmount] = useState('');
     const [srcDecimals, setSrcDecimals] = useState(0);
     const [destDecimals, setDestDecimals] = useState(0);
     const [transactionData, setTransactionData] = useState(null);
-    const [isLoading, setIsLoading] = useState(false);
+    const [srcToken, setSrcToken] = useState(null);
+    const [destToken, setDestToken] = useState(null);
     const [error, setError] = useState(null);
     const [txParams, setTxParams] = useState(null);
+    const [approvalAddress, setApprovalAddress] = useState(null);
 
     const { tokens } = useParaswapTokens();
     const { account, network } = useWalletInfo();
@@ -48,6 +50,28 @@ export default function Swap() {
         setIsLoading(false);
       }
     };
+
+    async function approvalHandler(e) {
+      //setApprovalInProgress(true)
+      e.preventDefault()
+      const ERC20ABI = require('./../../components/ui/bridge//bridgeAssetsPanel/abi/Token.json');
+      const provider = new ethers.providers.Web3Provider(window.ethereum)
+      const fromAddress = await provider.getSigner()
+
+      const amountToTransfer = ethers.utils.parseUnits(srcAmount, tokens[srcToken]?.decimals)
+      const Token = new ethers.Contract(tokens[srcToken]?.address, ERC20ABI, fromAddress)
+      let transaction
+      try {
+          transaction = await Token.connect(fromAddress).approve(approvalAddress, amountToTransfer)
+          await transaction.wait()
+      } catch (error) {
+          console.log(error)
+          //setApprovalInProgress(false)
+      }
+      //setSelectedTokenAllowance(amount)
+      //setApprovalInProgress(false)
+      setApprovalAddress(null)
+  }
 
     const handleTx = async () => {
       try{
@@ -80,21 +104,63 @@ export default function Swap() {
       }
     }
 
+    function extractTokenAddress(errorMessage) {
+      const regex = /\(0x[a-fA-F0-9]{40}\)/; // Regular expression to match a token address in the error message
+      const match = errorMessage.match(regex);
+    
+      if (match) {
+        const tokenAddress = match[0].slice(1, -1); // Remove the parentheses from the matched string
+        return tokenAddress;
+      }
+    
+      return null; // If no token address is found, return null
+    }
+
     useEffect(() => {
       setSrcDecimals(getToken(srcToken)?.decimals)
       setDestDecimals(getToken(destToken)?.decimals)
     }, [srcToken, destToken])
 
     useEffect(() => {
-      if(srcToken !== null && destToken !== null && srcAmount !== '') {
-        handleSubmit()
+      if (srcToken !== null && destToken !== null && srcAmount !== '') {
+        // Function to handle the interval
+        const handleInterval = () => {
+          handleSubmit();
+        };
+    
+        // Call the function initially
+        handleInterval();
+    
+        // Set up the interval to call the function every 10 seconds (10000 ms)
+        const intervalId = setInterval(handleInterval, 10000);
+    
+        // Clean up the interval when the component is unmounted
+        return () => {
+          clearInterval(intervalId);
+        };
       }
+    }, [srcToken, destToken, account.data, network.data, srcAmount]);
 
-    }, [srcToken, destToken, account.data, network.data, srcAmount])
+    // useEffect(() => {
+    //   if(srcToken !== null && destToken !== null && srcAmount !== '') {
+    //     handleSubmit()
+    //   }
+    // }, [srcToken, destToken, account.data, network.data, srcAmount])
+
+    useEffect(() => {
+      
+      if(error !== null) {
+        const tokenAddress = extractTokenAddress(error);
+        setApprovalAddress(tokenAddress);
+      } else {
+        setApprovalAddress(null);
+      }
+    }, [error, txParams])
 
     return (
         <>
           {console.log('txParams: ', txParams)}
+          {error ? console.log('approvalAddress: ', approvalAddress) : null}
           <Head><title>Swap</title></Head>
             <div className="flex justify-center">
               <div className="lightBlueGlassLessBlur mt-36 rounded-2xl container fade-in-slide-up" style={{maxWidth: '500px'}}>
@@ -111,6 +177,7 @@ export default function Swap() {
                                 setSrcAmount={setSrcAmount}
                                 srcToken={srcToken}
                                 tokens={tokens}
+                                txParams={txParams}
                               />
                               <SwapAssetsPanelFrom.Header
                                 srcToken={srcToken}
@@ -192,11 +259,19 @@ export default function Swap() {
                 )}
                 {error && <p>Error: {error}</p>}
                 <div className="flex justify-center p-6 pt-3 pb-3">
-                  <Button
-                    onClick={handleTx}
-                    className='border-indigo-600 text-lg fontTurrentRoad font-bold'
-                    style={{width: '450px'}}
-                  >Swap Tokens</Button>
+                  {approvalAddress !== null ?
+                    <Button
+                      onClick={approvalHandler}
+                      className='border-indigo-600 text-lg fontTurrentRoad font-bold'
+                      style={{width: '450px'}}
+                    >Approve_Tokens</Button> :
+                    <Button
+                      onClick={handleTx}
+                      className='border-indigo-600 text-lg fontTurrentRoad font-bold'
+                      style={{width: '450px'}}
+                    >Swap_Tokens</Button>
+                  }
+                  
                 </div>
 
               </div>

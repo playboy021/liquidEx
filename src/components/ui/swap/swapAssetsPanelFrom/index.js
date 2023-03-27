@@ -28,7 +28,7 @@ const SwapAssetsPanelFrom = (
     )
 }
 
-export const InputPanel = ({srcAmount, setSrcAmount, tokens, srcToken}) => {
+export const InputPanel = ({srcAmount, setSrcAmount, tokens, srcToken, txParams}) => {
 
     const [selectedTokenBalance, setSelectedTokenBalance] = useState('')
 
@@ -77,7 +77,7 @@ export const InputPanel = ({srcAmount, setSrcAmount, tokens, srcToken}) => {
 
         getBalance()
 
-    }, [srcToken, tokens, network.data, account.data, srcAmount])
+    }, [srcToken, tokens, network.data, account.data, srcAmount, txParams])
 
     return (
         <>
