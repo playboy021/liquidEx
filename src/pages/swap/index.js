@@ -18,6 +18,7 @@ export default function Swap() {
     const [transactionData, setTransactionData] = useState(null);
     const [isLoading, setIsLoading] = useState(false);
     const [error, setError] = useState(null);
+    const [txParams, setTxParams] = useState(null);
 
     const { tokens } = useParaswapTokens();
     const { account, network } = useWalletInfo();
@@ -53,10 +54,10 @@ export default function Swap() {
           const provider = new ethers.providers.Web3Provider(window.ethereum);
           const signer = provider.getSigner();
           const tx = signer.sendTransaction({
-            to: transactionData?.to,
-            data: transactionData?.data,
-            value: transactionData?.value,
-            from: transactionData?.from
+            to: transactionData.transactionRequest?.to,
+            data: transactionData.transactionRequest?.data,
+            value: transactionData.transactionRequest?.value,
+            from: transactionData.transactionRequest?.from
           });
           tx.then((tx) => {
             console.log(tx);
@@ -86,6 +87,7 @@ export default function Swap() {
     useEffect(() => {
       if(srcToken !== null && destToken !== null && srcAmount !== '') {
         handleSubmit()
+
       }
 
     }, [srcToken, destToken, account.data, network.data, srcAmount])

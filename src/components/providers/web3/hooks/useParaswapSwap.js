@@ -1,5 +1,6 @@
 import axios from "axios";
 import BigNumber from "bignumber.js";
+import { useEffect } from "react";
 
 
 const API_URL = "https://apiv5.paraswap.io";
@@ -111,7 +112,7 @@ export async function getSwapTransaction({
     });
     console.log("TransactionRequest", transactionRequest);
 
-    return transactionRequest;
+    return { transactionRequest, priceRoute };
   } catch (error) {
     console.error(error.response.data);
     throw new Error(error.response.data.error);
