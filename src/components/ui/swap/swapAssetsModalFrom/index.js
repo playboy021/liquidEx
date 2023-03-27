@@ -10,6 +10,7 @@ export default function SwapAssetsModalFrom({ closeModal, open, setOpen, setSrcT
     const [search, setSearch] = useState('')
     const [topTokens, setTopTokens] = useState([])
     const [maxHeight, setMaxHeight] = useState(false)
+    const [maxHeight2, setMaxHeight2] = useState(false)
 
     const { tokens } = useParaswapTokens()
 
@@ -26,10 +27,15 @@ export default function SwapAssetsModalFrom({ closeModal, open, setOpen, setSrcT
                 if(tokens[key]?.symbol == 'USDC' || tokens[key]?.symbol == 'DAI' || tokens[key]?.symbol == 'USDT' || tokens[key]?.symbol == 'WBTC' || tokens[key]?.symbol == 'WETH' || tokens[key]?.symbol == 'fUSDT' || tokens[key]?.symbol == 'MATIC' || tokens[key]?.symbol == 'FTM' || tokens[key]?.symbol == 'WFTM' || tokens[key]?.symbol == 'AVAX' || tokens[key]?.symbol == 'WAVAX' || tokens[key]?.symbol == 'BNB' || tokens[key]?.symbol == 'WBNB'){
                     data.push(key)
                     setTopTokens(data)
-                    if (data.length > 4) {
+                    if (data.length <= 8) {
                         setMaxHeight(true)
+                        setMaxHeight2(false)
+                    } else if (data.length > 8) {
+                        setMaxHeight(false)
+                        setMaxHeight2(true)
                     } else {
                         setMaxHeight(false)
+                        setMaxHeight2(false)
                     }
                 }
             }
@@ -109,7 +115,9 @@ export default function SwapAssetsModalFrom({ closeModal, open, setOpen, setSrcT
                                         }
 
                                     </div>
-                                    <div className="rounded-lg overflow-y-auto mb-4" style={maxHeight == true ? { maxHeight: '245px'} : {maxHeight: '290px'}}>
+                                    {console.log('maxHeight: ', maxHeight)}
+                                    {console.log('maxHeight2: ', maxHeight2)}
+                                    <div className="rounded-lg overflow-y-auto mb-4" style={maxHeight == true ? { maxHeight: '245px'} : maxHeight2 == true ? {height: '200px'} : { maxHeight: '290px' }}>
                                         <div className='rounded-lg bg-white bg-opacity-50 p-1 border_brdg'>
 
                                             <div className='rounded-lg'>
