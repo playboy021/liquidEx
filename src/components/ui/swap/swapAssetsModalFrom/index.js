@@ -115,8 +115,6 @@ export default function SwapAssetsModalFrom({ closeModal, open, setOpen, setSrcT
                                         }
 
                                     </div>
-                                    {console.log('maxHeight: ', maxHeight)}
-                                    {console.log('maxHeight2: ', maxHeight2)}
                                     <div className="rounded-lg overflow-y-auto mb-4" style={maxHeight == true ? { maxHeight: '245px'} : maxHeight2 == true ? {height: '200px'} : { maxHeight: '290px' }}>
                                         <div className='rounded-lg bg-white bg-opacity-50 p-1 border_brdg'>
 

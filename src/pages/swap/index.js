@@ -102,7 +102,6 @@ export default function Swap() {
       for (let i = 0; i < tokens.length; i++) {
         if (tokens[i].address === address) {
           const token = tokens[i]
-          console.log('token: ', token)
           return token;
         }
       }
@@ -164,7 +163,6 @@ export default function Swap() {
     return (
         <>
           {console.log('txParams: ', txParams)}
-          {error ? console.log('approvalAddress: ', approvalAddress) : null}
           <Head><title>Swap</title></Head>
             <div className="flex justify-center">
               <div className="lightBlueGlassLessBlur mt-36 rounded-2xl container fade-in-slide-up" style={{maxWidth: '500px'}}>
@@ -286,20 +284,20 @@ export default function Swap() {
             </div>
             <div className="flex justify-center mt-4">
               <div className="rounded-2xl container fade-in-slide-up" style={{maxWidth: '500px'}}>
-            <div className="w-full p-6 pt-0 pb-2">
-              <div className="bg-white bg-opacity-40 p-3 rounded-lg h-full items-center border-1 border-indigo-600">
-                <div>
-                    <div className='flex justify-between'>
-                        <h4 className="text-indigo-600 font-bold">More info: </h4>
-                        <ChevronDownIcon width={18} //style = {{transform: 'rotate(180deg)' }}
-                        />
+                <div className="w-full p-6 pt-0 pb-2">
+                  <div className="bg-white bg-opacity-40 p-3 rounded-lg h-full items-center border-1 border-indigo-600">
+                    <div>
+                        <div className='flex justify-between'>
+                            <h4 className="text-indigo-600 font-bold">More info: </h4>
+                            <ChevronDownIcon width={18} //style = {{transform: 'rotate(180deg)' }}
+                            />
+                        </div>
                     </div>
+                    <hr className="h-px my-2 bg-indigo-600 border-0 dark:bg-indigo-700"/>
+                  </div>
+                  <div>Add more params to this section (look up 1inch or some other dex for more info) also add more token lists</div>
                 </div>
-                <hr className="h-px my-2 bg-indigo-600 border-0 dark:bg-indigo-700"/>
               </div>
-              <div>Add more params to this section (look up 1inch or some other dex for more info) also add more token lists</div>
-            </div>
-            </div>
             </div>
         </>
     )
