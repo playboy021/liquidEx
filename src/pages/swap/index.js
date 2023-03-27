@@ -227,18 +227,7 @@ export default function Swap() {
 
                   </div>
                 </div>
-                <div className="w-full p-6 pt-0 pb-2">
-                  <div className="bg-white bg-opacity-60 p-3 rounded-lg h-full items-center">
-                    <div>
-                        <div className='flex justify-between'>
-                            <h4 className="text-indigo-600 font-bold">More info: </h4>
-                            <ChevronDownIcon width={18} //style = {{transform: 'rotate(180deg)' }}
-                            />
-                        </div>
-                    </div>
-                    <hr className="h-px my-2 bg-indigo-600 border-0 dark:bg-indigo-700"/>
-                  </div>
-                </div>
+                
                 
                 {/* <div>
                   <label htmlFor="srcToken">Source Token:</label>
@@ -266,14 +255,14 @@ export default function Swap() {
                   ///onClick={handleTx}
                 >Get TX Data</button> */}
                     
-                {isLoading && <p>Loading...</p>}
+                {/* {isLoading && <p>Loading...</p>}
                 {transactionData && (
                     <div>
                     <h2>Transaction Data</h2>
                     <pre>{JSON.stringify(transactionData, null, 2)}</pre>
                     </div>
                 )}
-                {error && <p>Error: {error}</p>}
+                {error && <p>Error: {error}</p>} */}
                 <div className="flex justify-center p-6 pt-3 pb-3">
                   {approvalAddress !== null ?
                     <Button
@@ -290,7 +279,27 @@ export default function Swap() {
                   
                 </div>
 
+                
+
               </div>
+              
+            </div>
+            <div className="flex justify-center mt-4">
+              <div className="rounded-2xl container fade-in-slide-up" style={{maxWidth: '500px'}}>
+            <div className="w-full p-6 pt-0 pb-2">
+              <div className="bg-white bg-opacity-40 p-3 rounded-lg h-full items-center border-1 border-indigo-600">
+                <div>
+                    <div className='flex justify-between'>
+                        <h4 className="text-indigo-600 font-bold">More info: </h4>
+                        <ChevronDownIcon width={18} //style = {{transform: 'rotate(180deg)' }}
+                        />
+                    </div>
+                </div>
+                <hr className="h-px my-2 bg-indigo-600 border-0 dark:bg-indigo-700"/>
+              </div>
+              <div>Add more params to this section (look up 1inch or some other dex for more info) also add more token lists</div>
+            </div>
+            </div>
             </div>
         </>
     )
