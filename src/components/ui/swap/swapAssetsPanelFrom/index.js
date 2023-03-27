@@ -145,7 +145,6 @@ export const SwapAssetsPanelFromHeader = ({srcToken, setSrcToken, tokens}) => {
 
     return (
         <>
-            {console.log('srcTokenObject', tokens[srcToken])}
             <div className="flex flex-row-reverse items-end justify-between float-right gap-2">
                 {account?.data == undefined ?
                     <ButtonSmall

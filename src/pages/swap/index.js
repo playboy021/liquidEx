@@ -38,6 +38,7 @@ export default function Swap() {
           destDecimals: tokens[destToken]?.decimals,
         })
         if(transactionParams !== null) {
+          setTxParams(transactionParams?.priceRoute);
           setTransactionData(transactionParams);
         }
         
@@ -87,13 +88,13 @@ export default function Swap() {
     useEffect(() => {
       if(srcToken !== null && destToken !== null && srcAmount !== '') {
         handleSubmit()
-
       }
 
     }, [srcToken, destToken, account.data, network.data, srcAmount])
 
     return (
         <>
+          {console.log('txParams: ', txParams)}
           <Head><title>Swap</title></Head>
             <div className="flex justify-center">
               <div className="lightBlueGlassLessBlur mt-36 rounded-2xl container fade-in-slide-up" style={{maxWidth: '500px'}}>
@@ -139,6 +140,10 @@ export default function Swap() {
                       header={(props) => (
                           <>
                               <SwapAssetsPanelTo.Panel {...props}
+                                srcAmount={srcAmount}
+                                destToken={destToken}
+                                tokens={tokens}
+                                txParams={txParams}
                               />
                               <SwapAssetsPanelTo.Header
                                 destToken={destToken}

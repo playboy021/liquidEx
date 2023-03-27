@@ -25,7 +25,7 @@ function createSwapper(networkID, apiURL) {
     const searchString = new URLSearchParams(queryParams);
 
     const pricesURL = `${apiURL}/prices/?${searchString}`;
-    console.log("GET /price URL", pricesURL);
+    //console.log("GET /price URL", pricesURL);
 
     const {
       data: { priceRoute },
@@ -110,7 +110,7 @@ export async function getSwapTransaction({
       priceRoute,
       ...rest,
     });
-    console.log("TransactionRequest", transactionRequest);
+    //console.log("TransactionRequest", transactionRequest);
 
     return { transactionRequest, priceRoute };
   } catch (error) {

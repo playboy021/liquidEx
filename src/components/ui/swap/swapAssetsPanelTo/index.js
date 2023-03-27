@@ -28,58 +28,70 @@ const SwapAssetsPanelTo = (
     )
 }
 
-export const InputPanel = ({}) => {
+export const InputPanel = ({tokens, destToken, srcAmount, txParams}) => {
 
     const [selectedTokenBalance, setSelectedTokenBalance] = useState('')
+    const [destAmount, setDestAmount] = useState('')
 
     const { account, network } = useWalletInfo()
 
-    // useEffect(() => {
-    //     async function getBalance() {
-    //         const ERC20ABI = require('../../bridge/bridgeAssetsPanel/abi/Token.json')
-    //         const provider = new ethers.providers.Web3Provider(window.ethereum)
-    //         const fromAddress = await provider.getSigner()
-    //         if (account != null && (network.data)?.toString() != destinationChain) {
-    //             try {
-    //                 const signerAddress = await fromAddress?.getAddress()
-    //                 if (selectedToken != '' && tokens[selectedToken]?.isNative !=
-    //                     "NATIVE") {
-    //                     try {
-    //                         let Token = new ethers.Contract(tokens[selectedToken]?.srcAddress, ERC20ABI, fromAddress)
-    //                         const result = await Token.connect(fromAddress).balanceOf(signerAddress)
-    //                         const balance = ethers.utils.formatUnits(result, tokens[selectedToken]?.originalDecimals)
+    useEffect(() => {
+        async function getBalance() {
+            const ERC20ABI = require('../../bridge/bridgeAssetsPanel/abi/Token.json')
+            const provider = new ethers.providers.Web3Provider(window.ethereum)
+            const fromAddress = await provider.getSigner()
+            if (account != null) {
+                const signerAddress = await fromAddress?.getAddress()
+                if (tokens[destToken]?.address == "0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee") {
+                    try {
+                        const getBalance = async (address) => {
+                            const provider = new ethers.providers.Web3Provider(window.ethereum);
+                            const balance = await provider.getBalance(address);
+                            const balanceInEth = ethers.utils.formatEther(balance);
 
-    //                         setSelectedTokenBalance(balance)
-    //                     } catch (error) {
-    //                         console.log(error)
-    //                     }
+                            setSelectedTokenBalance( parseFloat(balanceInEth).toFixed(6))
+                        }
+                        getBalance(signerAddress)
+                    } catch(error) {
+                        console.log(error)
+                    }
+                } else {
+                    try {
+                        if (destToken != null) {
+                            try {
+                                let Token = new ethers.Contract(tokens[destToken]?.address, ERC20ABI, fromAddress)
+                                const result = await Token.connect(fromAddress).balanceOf(signerAddress)
+                                const balance = ethers.utils.formatUnits(result, tokens[destToken]?.decimals)
 
-    //                 } else if (tokens[selectedToken]?.isNative ==
-    //                     "NATIVE") {
-    //                     const getBalance = async (address) => {
-    //                         const provider = new ethers.providers.Web3Provider(window.ethereum);
-    //                         const balance = await provider.getBalance(address);
-    //                         const balanceInEth = ethers.utils.formatEther(balance);
-    //                         setSelectedTokenBalance(balanceInEth)
-    //                     }
-    //                     getBalance(signerAddress)
-    //                 }
-    //             } catch (error) {
-    //                 console.log(error)
-    //             }
-    //         }
-    //     }
+                                setSelectedTokenBalance(balance)
+                            } catch (error) {
+                                console.log(error)
+                            }
 
-    //     getBalance()
+                        } 
+                    } catch (error) {
+                        console.log(error)
+                    }
+                }
+            }
+        }
 
-    // }, [selectedToken, tokens, network.data, account.data, amount])
+        getBalance()
+
+    }, [destToken, tokens, network.data, account.data, srcAmount])
+
+    useEffect(() => {
+        if (txParams?.destAmount) {
+            setDestAmount(parseFloat(ethers.utils.formatUnits(txParams?.destAmount, tokens[destToken]?.decimals)).toFixed(6))
+        }
+    }, [txParams])
 
     return (
         <>
             <div className='text-2xl leading-7 tracking-[-0.01em] relative flex items-baseline flex-grow gap-3 font-bold'>
                 <>
                     <input
-                        //value={amount}
+                        value={txParams?.destAmount ? destAmount : null}
                         // universal input options
                         inputMode="decimal"
                         title="Token Amount"
@@ -103,7 +115,7 @@ export const InputPanel = ({}) => {
                 <div className='text-sm leading-5 absolute mt-8 text-secondary top-margin hover:shadow-md rounded-lg px-1' style={{ top: '20px' }}>
                         <div className='pt-2 cursor-pointer' //onClick={() => {setAmount(selectedTokenBalance)}}
                         >
-                            <span className='text-gray-400 fontTurrentRoad font-bold'>Balance:&nbsp;</span><span className='text-indigo-600'>0.00</span>
+                            <span className='text-gray-400 fontTurrentRoad font-bold'>Balance:&nbsp;</span><span className='text-indigo-600'>{selectedTokenBalance}</span>
                         </div>
                 </div>
             </div>
