@@ -39,7 +39,7 @@ export const InputPanel = ({srcAmount, setSrcAmount, tokens, srcToken, txParams}
             const ERC20ABI = require('../../bridge/bridgeAssetsPanel/abi/Token.json')
             const provider = new ethers.providers.Web3Provider(window.ethereum)
             const fromAddress = await provider.getSigner()
-            if (account != null) {
+            if (account.data != undefined) {
                 const signerAddress = await fromAddress?.getAddress()
                 if (tokens[srcToken]?.address == "0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee") {
                     try {

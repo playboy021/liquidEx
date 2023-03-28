@@ -22,6 +22,7 @@ export default function Swap() {
     const [error, setError] = useState(null);
     const [txParams, setTxParams] = useState(null);
     const [approvalAddress, setApprovalAddress] = useState(null);
+    const [displayMoreInfo, setDisplayMoreInfo] = useState(false);
 
     const { tokens } = useParaswapTokens();
     const { account, network } = useWalletInfo();
@@ -92,6 +93,8 @@ export default function Swap() {
             console.log(tx);
           });
           setTransactionData(null);
+          setTxParams(null);
+          setSrcAmount('');
         }
       } catch (err) {
         console.log(err);
@@ -159,6 +162,12 @@ export default function Swap() {
         setApprovalAddress(null);
       }
     }, [error, txParams])
+
+    useEffect(() => {
+      if(error !== null) {
+        setTxParams(null);
+      } 
+    }, [error])
 
     return (
         <>
@@ -285,7 +294,7 @@ export default function Swap() {
             <div className="flex justify-center mt-4">
               <div className="rounded-2xl container fade-in-slide-up" style={{maxWidth: '500px'}}>
                 <div className="w-full p-6 pt-0 pb-2">
-                  <div className="bg-white bg-opacity-40 p-3 rounded-lg h-full items-center border-1 border-indigo-600">
+                  <div className="bg-white bg-opacity-40 rounded-lg h-full items-center border-1 border-indigo-600">
                     <div>
                         <div className='flex justify-between'>
                             <h4 className="text-indigo-600 font-bold">More info: </h4>

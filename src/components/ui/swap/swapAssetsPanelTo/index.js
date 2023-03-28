@@ -40,7 +40,7 @@ export const InputPanel = ({tokens, destToken, srcAmount, txParams}) => {
             const ERC20ABI = require('../../bridge/bridgeAssetsPanel/abi/Token.json')
             const provider = new ethers.providers.Web3Provider(window.ethereum)
             const fromAddress = await provider.getSigner()
-            if (account != null) {
+            if (account.data != undefined) {
                 const signerAddress = await fromAddress?.getAddress()
                 if (tokens[destToken]?.address == "0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee") {
                     try {
@@ -49,7 +49,7 @@ export const InputPanel = ({tokens, destToken, srcAmount, txParams}) => {
                             const balance = await provider.getBalance(address);
                             const balanceInEth = ethers.utils.formatEther(balance);
 
-                            setSelectedTokenBalance( parseFloat(balanceInEth).toFixed(6))
+                            setSelectedTokenBalance(parseFloat(balanceInEth).toFixed(6))
                         }
                         getBalance(signerAddress)
                     } catch(error) {
@@ -63,7 +63,7 @@ export const InputPanel = ({tokens, destToken, srcAmount, txParams}) => {
                                 const result = await Token.connect(fromAddress).balanceOf(signerAddress)
                                 const balance = ethers.utils.formatUnits(result, tokens[destToken]?.decimals)
 
-                                setSelectedTokenBalance(balance)
+                                setSelectedTokenBalance(parseFloat(balance).toFixed(6))
                             } catch (error) {
                                 console.log(error)
                             }
@@ -81,17 +81,19 @@ export const InputPanel = ({tokens, destToken, srcAmount, txParams}) => {
     }, [destToken, tokens, network.data, account.data, srcAmount, txParams])
 
     useEffect(() => {
-        if (txParams?.destAmount) {
+        if (txParams != null) {
             setDestAmount(parseFloat(ethers.utils.formatUnits(txParams?.destAmount, tokens[destToken]?.decimals)).toFixed(6))
+        } else if (txParams == null) {
+            setDestAmount('')
         }
-    }, [txParams])
+    }, [txParams, srcAmount])
 
     return (
         <>
             <div className='text-2xl leading-7 tracking-[-0.01em] relative flex items-baseline flex-grow gap-3 font-bold'>
                 <>
                     <input
-                        value={srcAmount !== null ? destAmount : null}
+                        value={srcAmount !== '' ? destAmount : ''}
                         // universal input options
                         inputMode="decimal"
                         title="Token Amount"
