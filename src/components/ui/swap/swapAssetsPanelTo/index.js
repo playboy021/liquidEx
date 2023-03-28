@@ -82,7 +82,7 @@ export const InputPanel = ({tokens, destToken, srcAmount, txParams}) => {
 
     useEffect(() => {
         if (txParams != null) {
-            setDestAmount(parseFloat(ethers.utils.formatUnits(txParams?.destAmount, tokens[destToken]?.decimals)).toFixed(6))
+            setDestAmount(parseFloat(ethers.utils.formatUnits(txParams?.destAmount, tokens[destToken]?.decimals)).toFixed(4))
         } else if (txParams == null) {
             setDestAmount('')
         }

@@ -112,7 +112,7 @@ export async function getSwapTransaction({
     });
     //console.log("TransactionRequest", transactionRequest);
 
-    return { transactionRequest, priceRoute };
+    return { transactionRequest, priceRoute, slippage };
   } catch (error) {
     console.error(error.response.data);
     throw new Error(error.response.data.error);

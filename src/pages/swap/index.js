@@ -172,6 +172,7 @@ export default function Swap() {
     return (
         <>
           {console.log('txParams: ', txParams)}
+          {console.log('transactionData.transactionRequest: ', transactionData.slippage)}
           <Head><title>Swap</title></Head>
             <div className="flex justify-center">
               <div className="lightBlueGlassLessBlur mt-36 rounded-2xl container fade-in-slide-up" style={{maxWidth: '500px'}}>
@@ -304,7 +305,28 @@ export default function Swap() {
                     </div>
                     <hr className="h-px my-2 bg-indigo-600 border-0 dark:bg-indigo-700"/>
                   </div>
-                  <div>Add more params to this section (look up 1inch or some other dex for more info) also add more token lists</div>
+                  <div className="pl-2 pr-2 text-sm">
+                    <div className="flex justify-between">
+                      <div>From: </div>
+                      <div>${txParams && parseFloat(txParams.srcUSD).toFixed(2)} {srcToken && tokens[srcToken]?.symbol}</div>
+                    </div>
+                    <div className="flex justify-between">
+                      <div>To: </div>
+                      <div>${txParams && parseFloat(txParams.destUSD).toFixed(2)} {srcToken && tokens[destToken]?.symbol}</div>
+                    </div>
+                    <div className="flex justify-between">
+                      <div>TxCost: </div>
+                      <div>${txParams && parseFloat(txParams.gasCostUSD).toFixed(6)}</div>
+                    </div>
+                    <div className="flex justify-between">
+                      <div>Slippage: </div>
+                      <div>{transactionData.slippage && transactionData.slippage} %</div>
+                    </div>
+                    <div className="flex justify-between">
+                      <div>Route: </div>
+                      <div>{srcToken && tokens[srcToken]?.symbol} &gt; {destToken && tokens[destToken]?.symbol}</div>
+                    </div>
+                  </div>
                 </div>
               </div>
             </div>
