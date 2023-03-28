@@ -108,6 +108,10 @@ input::-webkit-inner-spin-button {
   transform: rotate(180deg);
 }
 
+.specialPadding {
+  padding-top: 0.2rem/* 4px */;
+}
+
 
 /* 
   DIV ANIMATIONS START

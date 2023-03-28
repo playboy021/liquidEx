@@ -22,7 +22,7 @@ export default function Swap() {
     const [error, setError] = useState(null);
     const [txParams, setTxParams] = useState(null);
     const [approvalAddress, setApprovalAddress] = useState(null);
-    const [displayMoreInfo, setDisplayMoreInfo] = useState(false);
+    const [displayMoreInfo, setDisplayMoreInfo] = useState(true);
 
     const { tokens } = useParaswapTokens();
     const { account, network } = useWalletInfo();
@@ -172,7 +172,7 @@ export default function Swap() {
     return (
         <>
           {console.log('txParams: ', txParams)}
-          {console.log('transactionData.transactionRequest: ', transactionData.slippage)}
+          {console.log('transactionData.transactionRequest: ', transactionData?.slippage)}
           <Head><title>Swap</title></Head>
             <div className="flex justify-center">
               <div className="lightBlueGlassLessBlur mt-36 rounded-2xl container fade-in-slide-up" style={{maxWidth: '500px'}}>
@@ -293,42 +293,82 @@ export default function Swap() {
               
             </div>
             <div className="flex justify-center mt-4">
-              <div className="rounded-2xl container fade-in-slide-up" style={{maxWidth: '500px'}}>
+              {srcToken && destToken && srcAmount !== '' && txParams !== null && displayMoreInfo == true ?
+                <div className="rounded-2xl container cursor-pointer" style={{maxWidth: '500px'}} onClick={() => {setDisplayMoreInfo(!displayMoreInfo)}}>
                 <div className="w-full p-6 pt-0 pb-2">
                   <div className="bg-white bg-opacity-40 rounded-lg h-full items-center border-1 border-indigo-600">
                     <div>
                         <div className='flex justify-between'>
                             <h4 className="text-indigo-600 font-bold">More info: </h4>
-                            <ChevronDownIcon width={18} //style = {{transform: 'rotate(180deg)' }}
+                            <ChevronDownIcon width={18} style = {{transform: 'rotate(180deg)' }}
                             />
                         </div>
                     </div>
                     <hr className="h-px my-2 bg-indigo-600 border-0 dark:bg-indigo-700"/>
                   </div>
-                  <div className="pl-2 pr-2 text-sm">
+                  <div className="pl-2 pr-2 text-sm fade-in-slide-up">
                     <div className="flex justify-between">
                       <div>From: </div>
-                      <div>${txParams && parseFloat(txParams.srcUSD).toFixed(2)} {srcToken && tokens[srcToken]?.symbol}</div>
+                      <div><span className='font-bold'>${txParams && parseFloat(txParams.srcUSD).toFixed(2)}</span> {srcToken && tokens[srcToken]?.symbol}</div>
                     </div>
                     <div className="flex justify-between">
                       <div>To: </div>
-                      <div>${txParams && parseFloat(txParams.destUSD).toFixed(2)} {srcToken && tokens[destToken]?.symbol}</div>
+                      <div><span className='font-bold'>${txParams && parseFloat(txParams.destUSD).toFixed(2)}</span> {srcToken && tokens[destToken]?.symbol}</div>
                     </div>
                     <div className="flex justify-between">
                       <div>TxCost: </div>
-                      <div>${txParams && parseFloat(txParams.gasCostUSD).toFixed(6)}</div>
+                      <div><span className='font-bold'>${txParams && parseFloat(txParams.gasCostUSD).toFixed(6)}</span></div>
                     </div>
                     <div className="flex justify-between">
                       <div>Slippage: </div>
-                      <div>{transactionData.slippage && transactionData.slippage} %</div>
+                        <div><span className='font-bold'>{transactionData?.slippage && transactionData?.slippage} %</span></div>
+                      
                     </div>
                     <div className="flex justify-between">
                       <div>Route: </div>
-                      <div>{srcToken && tokens[srcToken]?.symbol} &gt; {destToken && tokens[destToken]?.symbol}</div>
+                        <div className="flex">{srcToken && tokens[srcToken]?.symbol} 
+                          <div className="specialPadding">
+                            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="4.5" stroke="currentColor" class="w-3 h-3">
+                              <path stroke-linecap="round" stroke-linejoin="round" d="M8.25 4.5l7.5 7.5-7.5 7.5" />
+                            </svg>
+                          </div>
+                          {destToken && tokens[destToken]?.symbol}
+                        </div>
                     </div>
                   </div>
                 </div>
+              </div> : srcToken && destToken && srcAmount !== '' && txParams !== null && displayMoreInfo == false ? 
+              <div className="rounded-2xl container cursor-pointer" style={{maxWidth: '500px'}} onClick={() => {setDisplayMoreInfo(!displayMoreInfo)}}>
+              <div className="w-full p-6 pt-0 pb-2">
+                <div className="bg-white bg-opacity-40 rounded-lg h-full items-center border-1 border-indigo-600">
+                  <div>
+                      <div className='flex justify-between'>
+                          <h4 className="text-indigo-600 font-bold">More info: </h4>
+                          <div className="flex fade-in-slide-up text-sm specialPadding">
+                            <div className="mr-2">
+                              <span className='font-bold'>{txParams && srcAmount}</span> {srcToken && tokens[srcToken]?.symbol}
+                            </div>
+                            <div className="specialPadding mr-2">
+                              <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="4.5" stroke="currentColor" class="w-3 h-3">
+                                <path stroke-linecap="round" stroke-linejoin="round" d="M8.25 4.5l7.5 7.5-7.5 7.5" />
+                              </svg>
+                            </div>
+                            <div className="mr-2">
+                              <span className='font-bold'>{txParams && parseFloat(ethers.utils.formatUnits(txParams?.destAmount, tokens[destToken]?.decimals)).toFixed(4)}</span> {srcToken && tokens[destToken]?.symbol}
+                            </div>
+                            <div className="mr-2"><span className="font-bold">${txParams && parseFloat(txParams.gasCostUSD).toFixed(6)}</span> TxCost</div>
+                            {/* <div className="mr-2">${txParams && parseFloat(txParams.destUSD).toFixed(2)}</div> */}
+                          </div>
+                          <ChevronDownIcon width={18} //style = {{transform: 'rotate(180deg)' }}
+                          />
+                      </div>
+                  </div>
+                  <hr className="h-px my-2 bg-indigo-600 border-0 dark:bg-indigo-700"/>
+                </div>
               </div>
+            </div> : null
+            }
+              
             </div>
         </>
     )
