@@ -62,7 +62,7 @@ export const InputPanel = ({srcAmount, setSrcAmount, tokens, srcToken, txParams}
                                 const result = await Token.connect(fromAddress).balanceOf(signerAddress)
                                 const balance = ethers.utils.formatUnits(result, tokens[srcToken]?.decimals)
 
-                                setSelectedTokenBalance(balance)
+                                setSelectedTokenBalance(parseFloat(balance).toFixed(6))
                             } catch (error) {
                                 console.log(error)
                             }
