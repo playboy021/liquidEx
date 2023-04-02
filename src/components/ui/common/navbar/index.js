@@ -32,7 +32,7 @@ export default function Navbar() {
                 //data-active={openNav == true ? `'>Close'` : `'>Open'`}
                 hoverable={false}
               >
-                <span>'&gt;Liquid_EX'</span>
+                <span>&apos;&gt;Liquid_EX&apos;</span>
               </Button>
               { openNav == true ? 
               <div className="inline-flex fade-in-slide-right">

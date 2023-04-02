@@ -9,6 +9,7 @@ import { Button } from "@/components/ui/common";
 import SwapAssetsPanelFrom from "@/components/ui/swap/swapAssetsPanelFrom";
 import SwapAssetsPanelTo from "@/components/ui/swap/swapAssetsPanelTo";
 import { ChevronDownIcon } from "@heroicons/react/solid";
+import ConfirmSwapModal from "@/components/ui/swap/confirmSwapModal";
 
 export default function Swap() {
 
@@ -23,6 +24,16 @@ export default function Swap() {
     const [txParams, setTxParams] = useState(null);
     const [approvalAddress, setApprovalAddress] = useState(null);
     const [displayMoreInfo, setDisplayMoreInfo] = useState(true);
+    const [open, setOpen] = useState(false)
+    
+    function closeModal() {
+        setOpen(false)
+    }
+
+    function openModal() {
+        setOpen(true)
+    }
+
 
     const { tokens } = useParaswapTokens();
     const { account, network } = useWalletInfo();
@@ -93,7 +104,6 @@ export default function Swap() {
             console.log(tx);
           });
           setTransactionData(null);
-          setTxParams(null);
           setSrcAmount('');
         }
       } catch (err) {
@@ -172,7 +182,8 @@ export default function Swap() {
     return (
         <>
           {console.log('txParams: ', txParams)}
-          {console.log('transactionData.transactionRequest: ', transactionData?.slippage)}
+          {console.log('approvalAddress: ', approvalAddress)}
+          {console.log('error: ', error)}
           <Head><title>Swap</title></Head>
             <div className="flex justify-center">
               <div className="lightBlueGlassLessBlur mt-36 rounded-2xl container fade-in-slide-up" style={{maxWidth: '500px'}}>
@@ -279,15 +290,16 @@ export default function Swap() {
                       style={{width: '450px'}}
                     >Approve_Tokens</Button> :
                     <Button
-                      onClick={handleTx}
+                      onClick={openModal}
                       className='border-indigo-600 text-lg fontTurrentRoad font-bold'
                       style={{width: '450px'}}
-                    >Swap_Tokens</Button>
+                    >Confirm_Swap</Button>
                   }
                   
                 </div>
-
-                
+                <div className="text-center">
+                  ADD CONFIRMATION MODAL (done) AND ADD TX STATUS INFO
+                </div>
 
               </div>
               
@@ -328,8 +340,8 @@ export default function Swap() {
                       <div>Route: </div>
                         <div className="flex">{srcToken && tokens[srcToken]?.symbol} 
                           <div className="specialPadding">
-                            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="4.5" stroke="currentColor" class="w-3 h-3">
-                              <path stroke-linecap="round" stroke-linejoin="round" d="M8.25 4.5l7.5 7.5-7.5 7.5" />
+                            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth="4.5" stroke="currentColor" className="w-3 h-3">
+                              <path strokeLinecap="round" strokeLinejoin="round" d="M8.25 4.5l7.5 7.5-7.5 7.5" />
                             </svg>
                           </div>
                           {destToken && tokens[destToken]?.symbol}
@@ -349,8 +361,8 @@ export default function Swap() {
                               <span className='font-bold'>{txParams && srcAmount}</span> {srcToken && tokens[srcToken]?.symbol}
                             </div>
                             <div className="specialPadding mr-2">
-                              <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="4.5" stroke="currentColor" class="w-3 h-3">
-                                <path stroke-linecap="round" stroke-linejoin="round" d="M8.25 4.5l7.5 7.5-7.5 7.5" />
+                              <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth="4.5" stroke="currentColor" className="w-3 h-3">
+                                <path strokeLinecap="round" strokeLinejoin="round" d="M8.25 4.5l7.5 7.5-7.5 7.5" />
                               </svg>
                             </div>
                             <div className="mr-2">
@@ -368,8 +380,20 @@ export default function Swap() {
               </div>
             </div> : null
             }
-              
+            
+              <ConfirmSwapModal 
+                open={open}
+                closeModal={closeModal}
+                txParams={txParams}
+                srcAmount={srcAmount}
+                srcToken={srcToken}
+                destToken={destToken}
+                tokens={tokens}
+                handleTx={handleTx}
+                transactionData={transactionData}
+              />
             </div>
+            
         </>
     )
 }

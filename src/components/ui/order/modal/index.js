@@ -10,7 +10,7 @@ const defaultOrder = {
 
 const _createFormState = (isDisabled = false, message =  "") => ({isDisabled, message})
 
-const createFormState = ({price, email, confirmationEmail}, hasAgreedTOS) => {
+const useCreateFormState = ({price, email, confirmationEmail}, hasAgreedTOS) => {
     const { eth } = useEthPrice()
 
     if (email !== confirmationEmail) {
@@ -36,7 +36,7 @@ export default function OrderModal({course, setSelectedCourse, onSubmit}) {
 
     const { eth } = useEthPrice()
 
-    const formState = createFormState(order, hasAgreedTOS)
+    const formState = useCreateFormState(order, hasAgreedTOS)
 
     useEffect(() => {
         if(!!course) {

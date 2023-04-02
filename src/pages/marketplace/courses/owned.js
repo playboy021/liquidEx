@@ -36,7 +36,7 @@ export default function OwnedCourses({courses}) {
                 : ownedCourses.isEmpty ?
                 <div>
                     <Message type="WARNING">
-                        You don't own any items yet.
+                        You don&apos;t own any items yet.
                         <Link href='/marketplace'>
                             <a>&nbsp;
                                 <span className="font-normal hover:underline"><i>Browse Marketplace</i></span>

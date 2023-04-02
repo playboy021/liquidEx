@@ -220,7 +220,7 @@ export default function Bridge() {
                                 className='w-full border-indigo-600 text-lg fontTurrentRoad font-bold inline-flex justify-center items-center'
                                 disabled={true}
                             >
-                                <LoaderXS />&nbsp;'&gt; Approving_Tokens'
+                                <LoaderXS />&nbsp;&apos;&gt; Approving_Tokens&apos;
                             </Button> 
                         </div> 
                         // : tokens[selectedToken]?.routerABI == 'sendTransaction' ?
@@ -246,7 +246,7 @@ export default function Bridge() {
                                 //         || chainId.toString() == bridgedTo
                                 //         || amount <= '0.0000000000000000000000' ? true : false}
                             >
-                                '&gt; Approve_Tokens'
+                                &apos;&gt; Approve_Tokens&apos;
                             </Button>
                         </div> :
                         <div className="w-full p-6 pt-0">
@@ -264,7 +264,7 @@ export default function Bridge() {
                                 //         || chainId.toString() == bridgedTo
                                 //         || amount <= '0.0000000000000000000000' ? true : false}
                             >
-                                '&gt; Bridge_Funds'
+                                &apos;&gt; Bridge_Funds&apos;
                             </Button>
                         </div>
                     }

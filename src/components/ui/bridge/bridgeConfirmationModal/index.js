@@ -483,7 +483,7 @@ export default function BridgeConfirmationModal({openConformationModal, setOpenC
                                             //         || chainId.toString() == destinationChain
                                             //         || amount <= '0.0000000000000000000000' ? true : false}
                                         >
-                                            '&gt; Confirm_Swap'
+                                            &apos;&gt; Confirm_Swap&apos;
                                         </Button>}
 
                                 </Dialog.Panel>

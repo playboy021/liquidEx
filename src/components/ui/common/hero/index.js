@@ -1,10 +1,12 @@
+import Link from "next/link";
+
 export default function Hero() {
 
   return (
     <div className="lg:2/6 text-left my-20">
         <svg width="100%" height="30%">
           <text x="0%" y="76%" className="font-black">
-            '&gt;Liquid_EX'
+          &apos;&gt;Liquid_EX&apos;
           </text>
           {/* <text x="35%" y="76%" className="font-extralight">
             EX
@@ -71,9 +73,9 @@ export default function Hero() {
 
       <div className="mt-4 flex lg:justify-start">
         <div className="rounded-md shadow">
-          <a href="/marketplace" className="w-full flex items-center justify-center px-8 py-3 border border-transparent text-xl font-medium rounded-md text-white bg-indigo-600 hover:bg-indigo-700 md:py-4 md:text-lg md:px-10">
+          <Link href="/marketplace" className="w-full flex items-center justify-center px-8 py-3 border border-transparent text-xl font-medium rounded-md text-white bg-indigo-600 hover:bg-indigo-700 md:py-4 md:text-lg md:px-10">
             Get started
-          </a>
+          </Link>
         </div>
       </div>
 

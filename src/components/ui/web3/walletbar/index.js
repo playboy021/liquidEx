@@ -62,7 +62,7 @@ export default function WalletBar() {
   return (
     <div className="text-white bg-indigo-600 rounded-md">
       <div className="p-8">
-        <h1 className="text-base xs:text-2xl break-words">Hello, {network.data === undefined ? 'please use "Install Metamask" button.' : account.data === undefined ? 'please use "Connect Wallet" button.' : <a className="btn btn-one" href={`https://goerli.etherscan.io/address/${account.data}`} target="_blank"><span className="p-2">{account.data}</span></a>}</h1>
+        <h1 className="text-base xs:text-2xl break-words">Hello, {network.data === undefined ? 'please use "Install Metamask" button.' : account.data === undefined ? 'please use "Connect Wallet" button.' : <a className="btn btn-one" href={`https://goerli.etherscan.io/address/${account.data}`} target="_blank" rel="noreferrer"><span className="p-2">{account.data}</span></a>}</h1>
         <h2 className="subtitle mb-5 text-xl">{account.data === undefined ? null : 'I hope you are having a great day!'}</h2>
         <div className="flex justify-between items-center">
           <div className="sm:flex sm:justify-center lg:justify-start">
