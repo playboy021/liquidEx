@@ -41,5 +41,8 @@
     "hardhat": "^2.13.0",
     "postcss": "^8.3.6",
     "tailwindcss": "^2.2.8"
+  },
+  "engines": {
+    "node": "16.x"
   }
 }
