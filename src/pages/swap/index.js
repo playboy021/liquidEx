@@ -293,6 +293,7 @@ export default function Swap() {
                       onClick={openModal}
                       className='border-indigo-600 text-lg fontTurrentRoad font-bold'
                       style={{width: '450px'}}
+                      disabled={srcToken === null || destToken === null || srcAmount === '' || txParams === null}
                     >Confirm_Swap</Button>
                   }
                   
