@@ -195,7 +195,7 @@ export default function Swap() {
             setTransactionData(null);
             clearInterval(intervalId); // Clear the interval when the desired conditions are met
           }
-        }, 10000);
+        }, 18000);
       }
 
       fetchTransactionStatus()
