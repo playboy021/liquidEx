@@ -10,6 +10,7 @@ import SwapAssetsPanelFrom from "@/components/ui/swap/swapAssetsPanelFrom";
 import SwapAssetsPanelTo from "@/components/ui/swap/swapAssetsPanelTo";
 import { ChevronDownIcon } from "@heroicons/react/solid";
 import ConfirmSwapModal from "@/components/ui/swap/confirmSwapModal";
+import { getTransactionStatus } from "@/utils/getTransactionStatus";
 
 export default function Swap() {
 
@@ -21,6 +22,7 @@ export default function Swap() {
     const [srcToken, setSrcToken] = useState(null);
     const [destToken, setDestToken] = useState(null);
     const [error, setError] = useState(null);
+    const [txHash, setTxHash] = useState(null);
     const [txParams, setTxParams] = useState(null);
     const [approvalAddress, setApprovalAddress] = useState(null);
     const [displayMoreInfo, setDisplayMoreInfo] = useState(true);
@@ -101,6 +103,7 @@ export default function Swap() {
             from: transactionData.transactionRequest?.from
           });
           tx.then((tx) => {
+            setTxHash(tx.hash);
             console.log(tx);
           });
           setTransactionData(null);
@@ -179,10 +182,30 @@ export default function Swap() {
       } 
     }, [error])
 
+    useEffect(() => {
+      if (txHash === null) {
+        return;
+      }
+
+      async function fetchTransactionStatus() {
+        const intervalId = setInterval(async () => {
+          const status = await getTransactionStatus(txHash);
+          console.log(`Transaction status: ${status}`);
+
+          if (status === 'Success' || status === 'Failed') {
+            setTxHash(null);
+            clearInterval(intervalId); // Clear the interval when the desired conditions are met
+          }
+        }, 10000);
+      }
+
+      fetchTransactionStatus()
+    }, [txHash])
+
     return (
         <>
           {console.log('txParams: ', txParams)}
-          {console.log('approvalAddress: ', approvalAddress)}
+          {console.log('txHash: ', txHash)}
           {console.log('error: ', error)}
           <Head><title>Swap</title></Head>
             <div className="flex justify-center">
