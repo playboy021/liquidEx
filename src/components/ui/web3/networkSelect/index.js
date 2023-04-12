@@ -4,28 +4,28 @@ import React from 'react'
 import Select from 'react-select'
 
 export const SUPPORTED_NETWORKS = {
-    // [ChainId.ETHEREUM]: {
-    //   chainId: '0x1',
-    //   chainName: 'Ethereum',
-    //   nativeCurrency: {
-    //     name: 'Ethereum',
-    //     symbol: 'ETH',
-    //     decimals: 18,
-    //   },
-    //   rpcUrls: ['https://mainnet.infura.io/v3'],
-    //   blockExplorerUrls: ['https://etherscan.com'],
-    // },
-    // [ChainId.FANTOM]: {
-    //   chainId: '0xfa',
-    //   chainName: 'Fantom',
-    //   nativeCurrency: {
-    //     name: 'Fantom',
-    //     symbol: 'FTM',
-    //     decimals: 18,
-    //   },
-    //   rpcUrls: ['https://rpcapi.fantom.network'],
-    //   blockExplorerUrls: ['https://ftmscan.com'],
-    // },
+    1 : {
+      chainId: '0x1',
+      chainName: 'Ethereum',
+      nativeCurrency: {
+        name: 'Ethereum',
+        symbol: 'ETH',
+        decimals: 18,
+      },
+      rpcUrls: ['https://mainnet.infura.io/v3'],
+      blockExplorerUrls: ['https://etherscan.com'],
+    },
+    250 : {
+      chainId: '0xfa',
+      chainName: 'Fantom',
+      nativeCurrency: {
+        name: 'Fantom',
+        symbol: 'FTM',
+        decimals: 18,
+      },
+      rpcUrls: ['https://rpcapi.fantom.network'],
+      blockExplorerUrls: ['https://ftmscan.com'],
+    },
     56 : {
       chainId: '0x38',
       chainName: 'Binance Smart Chain Mainnet',
@@ -51,17 +51,17 @@ export const SUPPORTED_NETWORKS = {
       ],
       blockExplorerUrls: ['https://bscscan.com'],
     },
-    // [ChainId.MATIC]: {
-    //   chainId: '0x89',
-    //   chainName: 'Matic',
-    //   nativeCurrency: {
-    //     name: 'Matic',
-    //     symbol: 'MATIC',
-    //     decimals: 18,
-    //   },
-    //   rpcUrls: ['https://polygon-rpc.com'], // ['https://matic-mainnet.chainstacklabs.com/'],
-    //   blockExplorerUrls: ['https://polygonscan.com'],
-    // },
+    137 : {
+      chainId: '0x89',
+      chainName: 'Matic',
+      nativeCurrency: {
+        name: 'Matic',
+        symbol: 'MATIC',
+        decimals: 18,
+      },
+      rpcUrls: ['https://polygon-rpc.com'], // ['https://matic-mainnet.chainstacklabs.com/'],
+      blockExplorerUrls: ['https://polygonscan.com'],
+    },
     // [ChainId.HECO]: {
     //   chainId: '0x80',
     //   chainName: 'Heco',
@@ -100,17 +100,17 @@ export const SUPPORTED_NETWORKS = {
     //   ],
     //   blockExplorerUrls: ['https://explorer.harmony.one/'],
     // },
-    // [ChainId.AVALANCHE]: {
-    //   chainId: '0xA86A',
-    //   chainName: 'Avalanche Mainnet C-Chain',
-    //   nativeCurrency: {
-    //     name: 'Avalanche Token',
-    //     symbol: 'AVAX',
-    //     decimals: 18,
-    //   },
-    //   rpcUrls: ['https://api.avax.network/ext/bc/C/rpc'],
-    //   blockExplorerUrls: ['https://snowtrace.io'],
-    // },
+    43114 : {
+      chainId: '0xA86A',
+      chainName: 'Avalanche Mainnet C-Chain',
+      nativeCurrency: {
+        name: 'Avalanche Token',
+        symbol: 'AVAX',
+        decimals: 18,
+      },
+      rpcUrls: ['https://api.avax.network/ext/bc/C/rpc'],
+      blockExplorerUrls: ['https://snowtrace.io'],
+    },
     // [ChainId.OKEX]: {
     //   chainId: '0x42',
     //   chainName: 'OKEx',
@@ -122,17 +122,17 @@ export const SUPPORTED_NETWORKS = {
     //   rpcUrls: ['https://exchainrpc.okex.org'],
     //   blockExplorerUrls: ['https://www.oklink.com/okexchain'],
     // },
-    // [ChainId.ARBITRUM]: {
-    //   chainId: '0xA4B1',
-    //   chainName: 'Arbitrum',
-    //   nativeCurrency: {
-    //     name: 'Ethereum',
-    //     symbol: 'ETH',
-    //     decimals: 18,
-    //   },
-    //   rpcUrls: ['https://arb1.arbitrum.io/rpc'],
-    //   blockExplorerUrls: ['https://arbiscan.io'],
-    // },
+    42161 : {
+      chainId: '0xA4B1',
+      chainName: 'Arbitrum',
+      nativeCurrency: {
+        name: 'Ethereum',
+        symbol: 'ETH',
+        decimals: 18,
+      },
+      rpcUrls: ['https://arb1.arbitrum.io/rpc'],
+      blockExplorerUrls: ['https://arbiscan.io'],
+    },
     // [ChainId.CELO]: {
     //   chainId: '0xA4EC',
     //   chainName: 'Celo',
@@ -199,24 +199,24 @@ export const SUPPORTED_NETWORKS = {
     //   rpcUrls: ['https://rpc.api.moonbeam.network'],
     //   blockExplorerUrls: ['https://moonbeam.moonscan.io'],
     // },
-    // [ChainId.OPTIMISM]: {
-    //   chainId: '0xA',
-    //   chainName: 'Optimism',
-    //   nativeCurrency: {
-    //     name: 'Eth',
-    //     symbol: 'ETH',
-    //     decimals: 18,
-    //   },
-    //   rpcUrls: [
-    //     "https://opt-mainnet.g.alchemy.com/v2/5MH6DrsQh41RWFFWP58-qZ6ODW0W846Y",
-    //     "https://mainnet.optimism.io/",
-    //     "https://opt-mainnet.g.alchemy.com/v2/demo",
-    //     "https://optimism-mainnet.public.blastapi.io",
-    //     "https://rpc.ankr.com/optimism",
-    //     "https://1rpc.io/op"
-    //   ],
-    //   blockExplorerUrls: ['https://optimistic.etherscan.io/'],
-    // },
+    10 : {
+      chainId: '0xA',
+      chainName: 'Optimism',
+      nativeCurrency: {
+        name: 'Eth',
+        symbol: 'ETH',
+        decimals: 18,
+      },
+      rpcUrls: [
+        "https://opt-mainnet.g.alchemy.com/v2/5MH6DrsQh41RWFFWP58-qZ6ODW0W846Y",
+        "https://mainnet.optimism.io/",
+        "https://opt-mainnet.g.alchemy.com/v2/demo",
+        "https://optimism-mainnet.public.blastapi.io",
+        "https://rpc.ankr.com/optimism",
+        "https://1rpc.io/op"
+      ],
+      blockExplorerUrls: ['https://optimistic.etherscan.io/'],
+    },
   }
 
 const options = [
@@ -305,62 +305,34 @@ function ChainSelect({ onChange }) {
                 <Select
                     isSearchable={false}
                     onChange={async (e) => {
-                        let key = e.value
-                        console.debug(`Switching to chain ${key}`, SUPPORTED_NETWORKS[key])
-                        const params = SUPPORTED_NETWORKS[key]
-                        console.log(params, key)
-                        try {
-                            await ethereum.request({
-                                method: 'wallet_switchEthereumChain',
-                                params: [{ chainId: `0x${key.toString(16)}` }],
-                              });
-                        } catch (switchError) {
-                          // This error code indicates that the chain has not been added to MetaMask.
-                          // @ts-ignore TYPE NEEDS FIXING
-                          // if (switchError.code === 4902 || switchError.code === -32603) {
-                          //   try {
-                            // TODO fix this stupid hack
-                            // await ethereum.request({
-                            //   method: 'wallet_addEthereumChain',
-                            //   params: [
-                            //     {
-                            //       chainId: '0x38',
-                            //       chainName: 'Binance Smart Chain Mainnet',
-                            //       nativeCurrency: {
-                            //         name: 'Binance Coin',
-                            //         symbol: 'BNB',
-                            //         decimals: 18,
-                            //       },
-                            //       rpcUrls: [
-                            //         "https://bsc-dataseed1.binance.org",
-                            //         "https://bsc-dataseed2.binance.org",
-                            //         "https://bsc-dataseed3.binance.org",
-                            //         "https://bsc-dataseed4.binance.org",
-                            //         "https://bsc-dataseed1.defibit.io",
-                            //         "https://bsc-dataseed2.defibit.io",
-                            //         "https://bsc-dataseed3.defibit.io",
-                            //         "https://bsc-dataseed4.defibit.io",
-                            //         "https://bsc-dataseed1.ninicoin.io",
-                            //         "https://bsc-dataseed2.ninicoin.io",
-                            //         "https://bsc-dataseed3.ninicoin.io",
-                            //         "https://bsc-dataseed4.ninicoin.io",
-                            //         "wss://bsc-ws-node.nariox.org"
-                            //       ],
-                            //       blockExplorerUrls: ['https://bscscan.com'],
-                            //     },
-                            //   ],
-                            // });
-                        
-                          // } catch (addError) {
-                          //   // handle "add" error
-                          //   console.error(`Add chain error ${addError}`)
-                          // }
-                          // }
-                          console.error(`Switch chain error ${switchError}`)
-                          // handle other "switch" errors
-                        }}
+                      let key = e.value
+                      console.debug(`Switching to chain ${key}`, SUPPORTED_NETWORKS[key])
+                      const params = SUPPORTED_NETWORKS[key]
+                      console.log(params, key)
+                      try {
+                          await ethereum.request({
+                              method: 'wallet_switchEthereumChain',
+                              params: [{ chainId: `0x${key.toString(16)}` }],
+                            });
+                      } catch (switchError) {
+                        // This error code indicates that the chain has not been added to MetaMask.
+                        // @ts-ignore TYPE NEEDS FIXING
+                        // if (switchError.code === 4902 || switchError.code === -32603) {
+                          try {
+                          // TODO fix this stupid hack
+                          await ethereum.request({
+                            method: 'wallet_addEthereumChain',
+                            params: [params],
+                          });
+                      
+                        } catch (addError) {
+                          // handle "add" error
+                          console.error(`Add chain error ${addError}`)
+                        }
+                        }
                       }
-                    //}
+                    }
+                        
                     options={options}
                     className="crncy_select"
                     placeholder="Client"
