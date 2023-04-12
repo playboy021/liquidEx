@@ -21,6 +21,7 @@ export default function ConfirmSwapModal({open, txParams, srcAmount, srcToken, d
         setSrcAmount('');
         setTxStatus(null);
         setTransactionData(null);
+        setTxMode(false);
     }
 
     useEffect(() => {
@@ -193,12 +194,12 @@ export default function ConfirmSwapModal({open, txParams, srcAmount, srcToken, d
                                             : null
                                         }
                                         { txStatus === null && txMode === true ?
-                                            <div >
+                                            <div className='flex justify-center'>
                                                 <Loader/>
                                             </div>
                                         :
-                                            <div>
-                                                <span className={txStatus === 'Success' ? 'text-indigo-600 font-bold items-center flex' : 'text-red-600 font-bold text-center'}>{txStatus === 'Success' ? 'Swap Successful' : 'Swap Failed'}</span>
+                                            <div className='text-center'>
+                                                <span className={txStatus === 'Success' ? 'text-indigo-600 font-bold text-lg' : 'text-red-600 font-bold text-lg'}>{txStatus === 'Success' ? 'Swap Successful' : txStatus === 'Failed' ? 'Swap Failed' : null}</span>
                                             </div>
                                         }
                                     

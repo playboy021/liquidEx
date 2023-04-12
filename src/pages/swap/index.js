@@ -11,6 +11,7 @@ import SwapAssetsPanelTo from "@/components/ui/swap/swapAssetsPanelTo";
 import { ChevronDownIcon } from "@heroicons/react/solid";
 import ConfirmSwapModal from "@/components/ui/swap/confirmSwapModal";
 import { getTransactionStatus } from "@/utils/getTransactionStatus";
+import Loader, { LoaderSmall, LoaderXS } from "@/components/ui/common/loader";
 
 export default function Swap() {
 
@@ -303,13 +304,23 @@ export default function Swap() {
                     </div>
                 )}
                 {error && <p>Error: {error}</p>} */}
-                <div className="flex justify-center p-6 pt-3 pb-3">
+                <div className="flex justify-center p-6 pt-3 pb-6">
                   {approvalAddress !== null ?
                     <Button
                       onClick={approvalHandler}
                       className='border-indigo-600 text-lg fontTurrentRoad font-bold'
                       style={{width: '450px'}}
-                    >Approve_Tokens</Button> :
+                    >Approve_Tokens</Button> : srcToken === null || destToken === null || (srcAmount === '' && txParams === null) ?
+                    <Button
+                      className='border-indigo-600 text-lg fontTurrentRoad font-bold'
+                      style={{width: '450px'}}
+                      disabled={true}
+                    >Set Swap Amount</Button> : txParams === null ?
+                    <Button
+                      className='border-indigo-600 text-lg fontTurrentRoad font-bold'
+                      style={{width: '450px'}}
+                      disabled={true}
+                    >Loading Tx...</Button> :
                     <Button
                       onClick={openModal}
                       className='border-indigo-600 text-lg fontTurrentRoad font-bold'
@@ -318,9 +329,6 @@ export default function Swap() {
                     >Confirm_Swap</Button>
                   }
                   
-                </div>
-                <div className="text-center">
-                  ADD CONFIRMATION MODAL (done) AND ADD TX STATUS INFO
                 </div>
 
               </div>
