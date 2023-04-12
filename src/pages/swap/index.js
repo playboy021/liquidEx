@@ -28,9 +28,7 @@ export default function Swap() {
     const [displayMoreInfo, setDisplayMoreInfo] = useState(true);
     const [open, setOpen] = useState(false)
     
-    function closeModal() {
-        setOpen(false)
-    }
+
 
     function openModal() {
         setOpen(true)
@@ -106,8 +104,7 @@ export default function Swap() {
             setTxHash(tx.hash);
             console.log(tx);
           });
-          setTransactionData(null);
-          setSrcAmount('');
+          // setSrcAmount(''); fix this
         }
       } catch (err) {
         console.log(err);
@@ -194,6 +191,7 @@ export default function Swap() {
 
           if (status === 'Success' || status === 'Failed') {
             setTxHash(null);
+            setTransactionData(null);
             clearInterval(intervalId); // Clear the interval when the desired conditions are met
           }
         }, 10000);
@@ -407,7 +405,6 @@ export default function Swap() {
             
               <ConfirmSwapModal 
                 open={open}
-                closeModal={closeModal}
                 txParams={txParams}
                 srcAmount={srcAmount}
                 srcToken={srcToken}
@@ -415,6 +412,11 @@ export default function Swap() {
                 tokens={tokens}
                 handleTx={handleTx}
                 transactionData={transactionData}
+                setTransactionData={setTransactionData}
+                txHash={txHash}
+                setTxHash={setTxHash}
+                setSrcAmount={setSrcAmount}
+                setOpen={setOpen}
               />
             </div>
             

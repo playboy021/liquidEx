@@ -5,11 +5,43 @@ import { useWalletInfo } from '@/components/hooks/web3';
 import useParaswapTokens from '@/components/providers/web3/hooks/useParaswapTokens';
 import { ethers } from 'ethers';
 import { Button } from '../../common';
+import { getTransactionStatus } from '@/utils/getTransactionStatus';
+import Loader, { LoaderV2 } from '../../common/loader';
 
 
-export default function ConfirmSwapModal({open, closeModal, txParams, srcAmount, srcToken, destToken, tokens, handleTx, transactionData}) {
+export default function ConfirmSwapModal({open, txParams, srcAmount, srcToken, destToken, tokens, handleTx, transactionData, setTransactionData, txHash, setTxHash, setSrcAmount, setOpen}) {
 
     const [displayMoreInfo, setDisplayMoreInfo] = useState(true)
+    const [txStatus, setTxStatus] = useState(null)
+    const [txMode, setTxMode] = useState(false)
+
+    function closeModal() {
+        setOpen(false)
+        setTxHash(null);
+        setSrcAmount('');
+        setTxStatus(null);
+        setTransactionData(null);
+    }
+
+    useEffect(() => {
+        if (txHash === null) {
+          return;
+        }
+  
+        async function fetchTransactionStatus() {
+          const intervalId = setInterval(async () => {
+            const status = await getTransactionStatus(txHash);
+            setTxStatus(status)
+            console.log(`Transaction status: ${status}`);
+  
+            if (status === 'Success' || status === 'Failed') {
+              clearInterval(intervalId); // Clear the interval when the desired conditions are met
+            }
+          }, 15000);
+        }
+  
+        fetchTransactionStatus()
+    }, [txHash])
 
     return (
         <>
@@ -93,11 +125,11 @@ export default function ConfirmSwapModal({open, closeModal, txParams, srcAmount,
                                                 </div>
                                                 <hr className="h-px my-2 bg-indigo-600 border-0 dark:bg-indigo-700"/>
                                             </div>
-                                            <Button
-                                                onClick={() => {handleTx(); closeModal()}}
+                                            {/* <Button
+                                                onClick={() => {handleTx()}}
                                                 className='border-indigo-600 text-lg fontTurrentRoad font-bold'
                                                 style={{width: '460px'}}
-                                            >Confirm_Swap</Button>
+                                            >Confirm_Swap</Button> */}
                                         </div>
                                     </div> : srcToken && destToken && srcAmount !== '' && txParams !== null && displayMoreInfo == false ?
                                     <div className="rounded-2xl container cursor-pointer" style={{maxWidth: '500px'}} onClick={() => {setDisplayMoreInfo(!displayMoreInfo)}}>
@@ -142,15 +174,35 @@ export default function ConfirmSwapModal({open, closeModal, txParams, srcAmount,
                                             </div>
                                         </div>
                                       </div>
-                                      <Button
-                                        onClick={() => {handleTx(); closeModal()}}
+                                      {/* <Button
+                                        onClick={() => {handleTx()}}
                                         className='border-indigo-600 text-lg fontTurrentRoad font-bold mt-2'
                                         style={{width: '460px'}}
-                                    >Confirm_Swap</Button>
+                                    >Confirm_Swap</Button> */}
                                     </div>
-                                    
                                   </div>
                                    : null }
+                                   
+                                   <div className='w-full p-6 pt-0 pb-2'>
+                                        {txMode === false ?
+                                            <Button
+                                                onClick={() => {handleTx(); setTxMode(true)}}
+                                                className='border-indigo-600 text-lg fontTurrentRoad font-bold mt-2'
+                                                style={{width: '460px'}}
+                                            >Confirm_Swap</Button>
+                                            : null
+                                        }
+                                        { txStatus === null && txMode === true ?
+                                            <div >
+                                                <Loader/>
+                                            </div>
+                                        :
+                                            <div>
+                                                <span className={txStatus === 'Success' ? 'text-indigo-600 font-bold items-center flex' : 'text-red-600 font-bold text-center'}>{txStatus === 'Success' ? 'Swap Successful' : 'Swap Failed'}</span>
+                                            </div>
+                                        }
+                                    
+                                    </div>
                                 </Dialog.Panel>
 
                             </Transition.Child>
