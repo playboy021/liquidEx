@@ -217,7 +217,7 @@ export const SUPPORTED_NETWORKS = {
       ],
       blockExplorerUrls: ['https://optimistic.etherscan.io/'],
     },
-  }
+}
 
 const options = [
   {
